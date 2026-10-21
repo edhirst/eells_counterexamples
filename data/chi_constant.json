@@ -1,0 +1,15 @@
+{
+ "description": "coefficients of the G-invariant polynomial chi = sum chi_{n,j} Re(z^{2n} w^n) P_j^{(2n,n)}(1 - 2|z|^2)  (n even >= 0; unnormalised basis)",
+ "degree": 0,
+ "coefficients": [
+  {
+   "n": 0,
+   "j": 0,
+   "l": 0,
+   "value": 1.0
+  }
+ ],
+ "meta": {
+  "note": "chi = 1 (degree 0)"
+ }
+}

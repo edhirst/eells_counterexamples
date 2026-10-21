@@ -1,0 +1,16 @@
+# generated caches and large outputs
+certificate/output/cache/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# environments
+.venv/
+venv/
+env/
+
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/

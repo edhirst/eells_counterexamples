@@ -1,0 +1,245 @@
+{
+ "inputs": {
+  "coefficients": "data/Wbar_D40.json",
+  "chi": "data/chi_constant.json",
+  "deg_Wbar": 40,
+  "deg_chi": 0,
+  "cutoff_l": 40,
+  "quadrature_grid": [
+   203,
+   135
+  ],
+  "bounding_grid": [
+   163,
+   217
+  ]
+ },
+ "table_A1": [
+  {
+   "name": "deg Wbar",
+   "latex": "$\\deg\\bar W$",
+   "value": "40",
+   "kind": "exact"
+  },
+  {
+   "name": "deg chi",
+   "latex": "$\\deg\\chi$",
+   "value": "0",
+   "kind": "exact"
+  },
+  {
+   "name": "l",
+   "latex": "$l$",
+   "value": "40",
+   "kind": "exact"
+  },
+  {
+   "name": "c_inf",
+   "latex": "$c_\\infty$",
+   "value": "0.141449",
+   "kind": "upper"
+  },
+  {
+   "name": "c_4",
+   "latex": "$c_4$",
+   "value": "0.387367",
+   "kind": "upper"
+  },
+  {
+   "name": "C_residual",
+   "latex": "$\\Cr{const:residual}$",
+   "value": "1.987e-8",
+   "kind": "upper"
+  },
+  {
+   "name": "C_energy-lower",
+   "latex": "$\\Cr{const:energy-lower}$",
+   "value": "125.2744885848985",
+   "kind": "lower"
+  },
+  {
+   "name": "C_energy-upper",
+   "latex": "$\\Cr{const:energy-upper}$",
+   "value": "125.2744885856989",
+   "kind": "upper"
+  },
+  {
+   "name": "C_homotopy",
+   "latex": "$\\Cr{const:homotopy}$",
+   "value": "0.6230",
+   "kind": "lower"
+  },
+  {
+   "name": "norm_X(Wbar)",
+   "latex": "$\\|\\bar W\\|_X$",
+   "value": "69.058",
+   "kind": "upper"
+  },
+  {
+   "name": "sup |chi Wbar|",
+   "latex": "$\\|\\chi\\bar W\\|_{C^0}$",
+   "value": "1.00001",
+   "kind": "upper"
+  },
+  {
+   "name": "eta",
+   "latex": "$\\eta$",
+   "value": "2.959e-9",
+   "kind": "upper"
+  },
+  {
+   "name": "b_1",
+   "latex": "$b_1$",
+   "value": "11.41",
+   "kind": "upper"
+  },
+  {
+   "name": "b_0",
+   "latex": "$b_0$",
+   "value": "5.753",
+   "kind": "upper"
+  },
+  {
+   "name": "gamma",
+   "latex": "$\\gamma$",
+   "value": "1278",
+   "kind": "lower"
+  },
+  {
+   "name": "||A^-1||",
+   "latex": "$\\|A^{-1}\\|_{L^2\\to L^2}$",
+   "value": "0.1476",
+   "kind": "upper"
+  },
+  {
+   "name": "||B||",
+   "latex": "$\\|B\\|_{L^2\\to L^2}$",
+   "value": "168.5",
+   "kind": "upper"
+  },
+  {
+   "name": "||C||",
+   "latex": "$\\|C\\|_{L^2\\to L^2}$",
+   "value": "143.1",
+   "kind": "upper"
+  },
+  {
+   "name": "||B(-Delta)^-1||",
+   "latex": "$\\|B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
+   "value": "0.08376",
+   "kind": "upper"
+  },
+  {
+   "name": "||A^-1 B(-Delta)^-1||",
+   "latex": "$\\|A^{-1}B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
+   "value": "5.529e-5",
+   "kind": "upper"
+  },
+  {
+   "name": "||L^-1||_L2",
+   "latex": "$\\|\\mathscr L^{-1}\\|_{L^2\\to L^2}$",
+   "value": "0.1519",
+   "kind": "upper"
+  },
+  {
+   "name": "M",
+   "latex": "$\\|\\mathscr L^{-1}\\|_{Y\\to X}$",
+   "value": "23.65",
+   "kind": "upper"
+  },
+  {
+   "name": "C_nl",
+   "latex": "$\\Cr{const:non-linear}$",
+   "value": "0.03534",
+   "kind": "upper"
+  },
+  {
+   "name": "r",
+   "latex": "$r$",
+   "value": "9.4e-7",
+   "kind": "exact"
+  }
+ ],
+ "details": {
+  "residual_square": {
+   "mid": 3.9458400976734506e-16,
+   "radius": 2.1509040323540689e-19
+  },
+  "energy": {
+   "E_lower": 125.27448858489859,
+   "E_upper": 125.2744885856988,
+   "E_over_8pi2_lower": 1.5866199329513062,
+   "E_over_8pi2_upper": 1.586619932961443,
+   "sup_abs_norm4_minus_1": 2.890749667900791e-09,
+   "int_N": 250.54897717059742,
+   "int_N_delta": 2.4842115252219054e-14
+  },
+  "homotopy": {
+   "min_lower": 0.6230019646451781,
+   "max_upper": 1.0010674266121697
+  },
+  "coefficient_bounds": {
+   "eta": 2.9581256389391516e-09,
+   "b1": 11.40431654897759,
+   "b0": 5.752592391556814,
+   "chiW_sup": 1.0000000004307261,
+   "eta_grid": 9.126397415570864e-10,
+   "b1_grid": 11.391099328381578,
+   "b0_grid": 5.7445626487053945
+  },
+  "gamma": 1278.4018922560326,
+  "blocks": {
+   "d_low": 217,
+   "d_high": 4866,
+   "max_degree": 200,
+   "normB_lambda": 0.08375041438839245,
+   "normB_float": 160.67185692223893,
+   "normC_float": 138.514965613799,
+   "normB_frobenius": 464.96577116974476,
+   "normC_frobenius": 391.99413761252737,
+   "max_radius_A": 1.578964531229287e-08,
+   "max_radius_B": 3.0405816659043607e-07,
+   "max_radius_C": 1.3450307409702503e-08,
+   "seconds": 414.3132219314575
+  },
+  "inverse": {
+   "normE": 3.220386671388722e-08,
+   "normZ": 0.14751306006456388,
+   "sigma_min_midA": 9.255440034631295,
+   "sigma_max_midA": 1746.227380473796
+  },
+  "schur_weighted": {
+   "normZBlam": 5.528234099495396e-05,
+   "normA_inv_B_lam": 5.528234277525919e-05,
+   "lambda_over_gamma": 1.3790655432219234,
+   "theta": 0.010902893530197227,
+   "normS_inv": 0.14913911268181304,
+   "normBD_inv": 0.11549731071358967,
+   "normD_invC": 0.11186726475357892
+  },
+  "L2_inverse": 0.15184924164641742,
+  "L2_inverse_literal_schur": null,
+  "M": 23.648177822508025,
+  "nonlinear": {
+   "C_nl": 0.03533770304082443,
+   "c_inf": 0.14144820096725258,
+   "c_4": 0.38736638904210313,
+   "norm_X": 69.05772446298023
+  },
+  "newton_kantorovich": {
+   "r": "9.4e-7",
+   "k": 0.0004752388743010316,
+   "Mk": 0.011238533407639334,
+   "M_eps_plus_kr": 4.804429224295275e-07,
+   "homotopy_margin": 0.6230018316838689,
+   "conditions": {
+    "Mk_lt_1": true,
+    "M_eps_plus_kr_le_r": true,
+    "homotopy_margin_positive": true
+   },
+   "all_ok": true
+  },
+  "seconds": 449.43983006477356
+ },
+ "passed": true
+}

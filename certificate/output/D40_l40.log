@@ -1,0 +1,53 @@
+Wbar: degree 40, 217 coefficients;  chi: degree 0;  cutoff l = 40
+quadrature grid 203 x 135, bounding grid 163 x 217  (3s)
+Wbar evaluated on both grids (23s)
+[3.1] ||F(0)||_L2 <= 1.9870e-08   (ball of the square: mid 3.946e-16, radius 2.2e-19)  (23s)
+[3.1] energy of Wbar/|Wbar|: [125.274488584898592, 125.274488585698805]  = 8 pi^2 x [1.586619932951306, 1.586619932961443]  (24s)
+[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (29s)
+  eta <= 2.958e-09 (grid 9.126e-10),  b1 <= 11.4043 (grid 11.3911),  b0 <= 5.7526 (grid 5.7446),  ||chi Wbar||_inf <= 1.000000
+[3.2] gamma >= 1278.4019  (l = 40)
+  A block 217x217 assembled (15s)
+    high modes 48/4866 (18s)
+    high modes 528/4866 (57s)
+    high modes 1008/4866 (98s)
+    high modes 1488/4866 (140s)
+    high modes 1968/4866 (181s)
+    high modes 2448/4866 (219s)
+    high modes 2928/4866 (265s)
+    high modes 3408/4866 (302s)
+    high modes 3888/4866 (339s)
+    high modes 4368/4866 (376s)
+    high modes 4848/4866 (412s)
+  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [4866 high modes up to degree 200, 414s]
+  ||E|| <= 3.220e-08,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
+[3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = -12.0636: NOT certified (negative)
+  ||Z B Lambda^-1|| <= 5.5282e-05,  ||A^-1 B (-Delta)^-1|| <= 5.5282e-05,  ||(-Delta) D^-1|| <= 1.3791,  theta <= 1.0903e-02,  ||S^-1|| <= 0.1491,  ||B D^-1|| <= 0.1155,  ||D^-1 C|| <= 0.1119
+[3.2] ||L^-1||_(L2->L2) <= 0.1518 (weighted Schur bound),   ||L^-1||_(Y->X) <= M = 23.6482  (449s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 9.4e-7:  M k = 1.124e-02 < 1 True,  M(eps + k r) = 4.804e-07 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
+CERTIFICATE PASSED  (449s)
+wrote certificate/output/D40_l40.json and certificate/output/D40_l40_tableA1.tex
+
+                deg Wbar  exact  40
+                 deg chi  exact  0
+                       l  exact  40
+                   c_inf  upper  0.141449
+                     c_4  upper  0.387367
+              C_residual  upper  1.987e-8
+          C_energy-lower  lower  125.2744885848985
+          C_energy-upper  upper  125.2744885856989
+              C_homotopy  lower  0.6230
+            norm_X(Wbar)  upper  69.058
+          sup |chi Wbar|  upper  1.00001
+                     eta  upper  2.959e-9
+                     b_1  upper  11.41
+                     b_0  upper  5.753
+                   gamma  lower  1278
+                ||A^-1||  upper  0.1476
+                   ||B||  upper  168.5
+                   ||C||  upper  143.1
+        ||B(-Delta)^-1||  upper  0.08376
+   ||A^-1 B(-Delta)^-1||  upper  5.529e-5
+             ||L^-1||_L2  upper  0.1519
+                       M  upper  23.65
+                    C_nl  upper  0.03534
+                       r  exact  9.4e-7
