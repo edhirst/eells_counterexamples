@@ -131,6 +131,16 @@ class OperatorCoefficients:
             out.append(v)
         return ar.stack(out, axis=1)
 
+    def outer_cross_batch(self, val):
+        """(chi/2) h x (W x Q) for a stack of fields h: the derivative of the residual
+        (chi/2) Wbar x (Wbar x Q) with respect to its *outer* factor Wbar (needed when Wbar itself is
+        the unknown, as in the solver; DF(0) keeps that factor fixed)."""
+        Wv, Q = self.val_W, self.Q
+        WxQ = cross(Wv, Q)
+        return ar.stack([(val[:, 1] * WxQ[2] - val[:, 2] * WxQ[1]) * (self.chi * 0.5),
+                         (val[:, 2] * WxQ[0] - val[:, 0] * WxQ[2]) * (self.chi * 0.5),
+                         (val[:, 0] * WxQ[1] - val[:, 1] * WxQ[0]) * (self.chi * 0.5)], axis=1)
+
     def gauge_batch(self, val, lap):
         """The gauge term  chi |Wbar|^2 (Wbar . (1 - Delta) h) Wbar  for a stack of fields h."""
         Wv = self.val_W

@@ -57,16 +57,18 @@ def _up_k(r, k):
 
 
 def val_up(x, k=3):
-    """Upper bound of the exact value of a quantity computed from exact doubles with at most k
-    rounded operations (relative error <= (1+u)^k - 1 < (k+1) u) and no cancellation issue:
-    the bound  x + (k+1) u |x|  is itself computed with one more rounding, which the extra u and
-    the ETA term absorb."""
-    return x + ((k + 1) * U * np.abs(x) + ETA)
+    """Upper bound of the exact value y of a quantity whose floating-point evaluation x was
+    obtained from exact doubles with at most k (<= 1000) rounded operations and no cancellation
+    (x = y * prod(1 + delta_i), |delta_i| <= u):  |y - x| <= ((1-u)^-k - 1)|x| < (k + 1/2) u |x|.
+    The returned float is fl(x + fl(fl((k+2) u |x|) + ETA)); its three roundings cost less than
+    (3/2 + 3(k+2)u) u |x| in total, so the result is at least x + (k + 1/2) u |x| >= y when x is
+    normal, while ETA covers the subnormal range."""
+    return x + ((k + 2) * U * np.abs(x) + ETA)
 
 
 def val_down(x, k=3):
     """Lower bound, see :func:`val_up`."""
-    return x - ((k + 1) * U * np.abs(x) + ETA)
+    return x - ((k + 2) * U * np.abs(x) + ETA)
 
 
 class Ball:
@@ -357,21 +359,35 @@ def norm_2(M, squarings=2):
     matrix G = M M^T (or M^T M, whichever is smaller):  ||M||_2^2 = rho(G) <= ||G^{2^q}||^{1/2^q}
     for any induced norm, so  ||M||_2 <= ||G^{2^q}||^{1/2^{q+1}}  with q = `squarings`.  G is
     rescaled by an exact power of two before squaring to avoid overflow."""
+    import math
     M = asball(M)
     best = _norm_2_direct(M)
-    if M.m.ndim != 2:
+    if M.m.ndim != 2 or squarings <= 0:
         return best
     G = matmul(M, M.T) if M.m.shape[0] <= M.m.shape[1] else matmul(M.T, M)
-    scale = 1.0
-    for _ in range(squarings):
-        c = 2.0 ** np.ceil(np.log2(max(norm_inf(G), 1e-300)))     # exact rescaling
-        G = Ball(G.m / c, G.r / c)
-        scale = scale * c
+    exponent = 0                                     # ||G^{2^q}||_2 <= direct(G_q) * 2^exponent
+    for i in range(squarings):
+        n = norm_inf(G)
+        if n == 0:
+            return 0.0 if best == 0 else min(best, 0.0)
+        e = math.frexp(n)[1]                          # 2^(e-1) <= n < 2^e, exact integer
+        if abs(e) > 900:
+            return best                               # scaling would leave the double range
+        G = Ball(np.ldexp(G.m, -e), np.ldexp(G.r, -e))   # exact rescaling by 2^-e
+        exponent = (exponent + e) * 2                 # G <- (G 2^-e)^2
         G = matmul(G, G)
-        scale = scale * scale
-    val = _norm_2_direct(G) * scale                                  # >= ||G^{2^q}||_2
+    # ||M||_2 <= (direct(G_q) 2^exponent)^(1/2^(q+1)) = direct(G_q)^(1/2^(q+1)) 2^(k) 2^(r/2^(q+1)),
+    # exponent = 2^(q+1) k + r,  0 <= r < 2^(q+1)
+    p = 2 ** (squarings + 1)
+    k, r = divmod(exponent, p)
+    if abs(k) > 900:
+        return best
+    val = _norm_2_direct(G)
+    frac = float(2 ** r)                              # exact
     for _ in range(squarings + 1):
         val = float(val_up(np.sqrt(val), 1))
+        frac = float(val_up(np.sqrt(frac), 1))
+    val = float(val_up(val * frac, 1)) * (2.0 ** k)   # the last factor is an exact power of two
     return min(best, val)
 
 
@@ -426,8 +442,10 @@ def cos_sin_table(N, rigorous=True):
         C, S = Ball.from_mp_interval(c), Ball.from_mp_interval(s)
     finally:
         iv.prec = old
-    # exact values at the multiples of pi/2 (so that, e.g., s = (1 - cos 0)/2 is exactly 0)
-    for p, (cv, sv) in ((0, (1.0, 0.0)), (N // 4, (0.0, 1.0)), (N // 2, (-1.0, 0.0)), (3 * N // 4, (0.0, -1.0))):
-        if (4 * p) % N == 0 and p < N:
+    # exact values at the multiples of pi/2 (so that, e.g., s = (1 - cos 0)/2 is exactly 0):
+    # the quarter turn q (= 0, 1, 2, 3) is the grid point p = q N / 4 when q N is divisible by 4
+    for q, (cv, sv) in ((0, (1.0, 0.0)), (1, (0.0, 1.0)), (2, (-1.0, 0.0)), (3, (0.0, -1.0))):
+        if (q * N) % 4 == 0:
+            p = q * N // 4
             C.m[p], C.r[p], S.m[p], S.r[p] = cv, 0.0, sv, 0.0
     return C, S

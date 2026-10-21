@@ -103,7 +103,7 @@ def finite_blocks(W_quad, chi_quad, grid_quad, H, l, deg, batch=48, log=print):
     B, C = Ball(Bm, Br), Ball(Cm, Cr)
     nB, nC = norm_2(B), norm_2(C)
     lam_high = np.array([float(m.l * (m.l + 2)) for m in high])
-    B_lam = B * Ball.exact(1.0 / lam_high).reshape(1, -1)            # B (-Delta)^{-1} on the high modes
+    B_lam = B * Ball.exact(lam_high).inv().reshape(1, -1)             # B (-Delta)^{-1} on the high modes
     nB_lam = norm_2(B_lam)
     info = {"d_low": d, "d_high": dh, "max_degree": l + K, "normB_lambda": nB_lam,
             "normB_float": float(np.linalg.norm(Bm, 2)), "normC_float": float(np.linalg.norm(Cm, 2)),

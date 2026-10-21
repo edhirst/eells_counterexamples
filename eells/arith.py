@@ -1,6 +1,8 @@
 """Backend dispatch: the geometric code runs unchanged on numpy float arrays (fast, non-rigorous
 numerics) and on :class:`eells.ball.Ball` arrays (rigorous certificate).  Only the handful of
 operations below differ between the two backends."""
+from fractions import Fraction
+
 import numpy as np
 
 from .ball import Ball, stack as _ball_stack
@@ -37,8 +39,10 @@ def ones(shape, rigorous):
 
 
 def const(c, rigorous):
-    """A scalar constant given exactly as a float (or integer)."""
-    return Ball.exact(float(c)) if rigorous else float(c)
+    """A scalar constant: exact for ints and floats, an enclosure for other rationals (Fraction)."""
+    if not rigorous:
+        return float(c)
+    return Ball.from_fraction(Fraction(c))
 
 
 def upper(x):

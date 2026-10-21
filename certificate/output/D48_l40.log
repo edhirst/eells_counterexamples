@@ -1,33 +1,33 @@
 Wbar: degree 48, 308 coefficients;  chi: degree 0;  cutoff l = 40
-quadrature grid 243 x 162, bounding grid 195 x 259  (4s)
-Wbar evaluated on both grids (42s)
-[3.1] ||F(0)||_L2 <= 1.6713e-10   (ball of the square: mid 2.611e-20, radius 1.8e-21)  (42s)
-[3.1] energy of Wbar/|Wbar|: [125.274488584731074, 125.274488585866266]  = 8 pi^2 x [1.586619932949185, 1.586619932963564]  (43s)
-[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (48s)
-  eta <= 2.897e-09 (grid 7.409e-12),  b1 <= 11.4043 (grid 11.3911),  b0 <= 5.7526 (grid 5.7446),  ||chi Wbar||_inf <= 1.000000
+quadrature grid 243 x 162, bounding grid 195 x 259  (2s)
+Wbar evaluated on both grids (25s)
+[3.1] ||F(0)||_L2 <= 1.6763e-10   (ball of the square: mid 2.611e-20, radius 2.0e-21)  (25s)
+[3.1] energy of Wbar/|Wbar|: [125.274488584730037, 125.274488585867303]  = 8 pi^2 x [1.586619932949172, 1.586619932963577]  (26s)
+[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (28s)
+  eta <= 3.078e-09 (grid 7.409e-12),  b1 <= 11.4043 (grid 11.3911),  b0 <= 5.7526 (grid 5.7446),  ||chi Wbar||_inf <= 1.000000
 [3.2] gamma >= 1278.4019  (l = 40)
-  A block 217x217 assembled (26s)
-    high modes 48/6608 (32s)
-    high modes 528/6608 (91s)
-    high modes 1008/6608 (154s)
-    high modes 1488/6608 (212s)
-    high modes 1968/6608 (272s)
-    high modes 2448/6608 (325s)
-    high modes 2928/6608 (378s)
-    high modes 3408/6608 (422s)
-    high modes 3888/6608 (461s)
-    high modes 4368/6608 (499s)
-    high modes 4848/6608 (545s)
-    high modes 5328/6608 (589s)
-    high modes 5808/6608 (630s)
-    high modes 6288/6608 (669s)
-  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [6608 high modes up to degree 232, 696s]
-  ||E|| <= 4.609e-08,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
+  A block 217x217 assembled (17s)
+    high modes 48/6608 (21s)
+    high modes 528/6608 (57s)
+    high modes 1008/6608 (95s)
+    high modes 1488/6608 (131s)
+    high modes 1968/6608 (168s)
+    high modes 2448/6608 (204s)
+    high modes 2928/6608 (241s)
+    high modes 3408/6608 (270s)
+    high modes 3888/6608 (296s)
+    high modes 4368/6608 (322s)
+    high modes 4848/6608 (348s)
+    high modes 5328/6608 (373s)
+    high modes 5808/6608 (400s)
+    high modes 6288/6608 (425s)
+  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [6608 high modes up to degree 232, 443s]
+  ||E|| <= 4.611e-08,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
 [3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = -12.0636: NOT certified (negative)
   ||Z B Lambda^-1|| <= 5.5282e-05,  ||A^-1 B (-Delta)^-1|| <= 5.5282e-05,  ||(-Delta) D^-1|| <= 1.3791,  theta <= 1.0903e-02,  ||S^-1|| <= 0.1491,  ||B D^-1|| <= 0.1155,  ||D^-1 C|| <= 0.1119
-[3.2] ||L^-1||_(L2->L2) <= 0.1518 (weighted Schur bound),   ||L^-1||_(Y->X) <= M = 23.6482  (750s)
-[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 8e-9:  M k = 9.565e-05 < 1 True,  M(eps + k r) = 3.953e-09 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
-CERTIFICATE PASSED  (750s)
+[3.2] ||L^-1||_(L2->L2) <= 0.1518 (weighted Schur bound),   ||L^-1||_(Y->X) <= M = 23.6482  (474s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 8e-9:  M k = 9.565e-05 < 1 True,  M(eps + k r) = 3.965e-09 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
+CERTIFICATE PASSED  (474s)
 wrote certificate/output/D48_l40.json and certificate/output/D48_l40_tableA1.tex
 
                 deg Wbar  exact  48
@@ -35,13 +35,13 @@ wrote certificate/output/D48_l40.json and certificate/output/D48_l40_tableA1.tex
                        l  exact  40
                    c_inf  upper  0.141449
                      c_4  upper  0.387367
-              C_residual  upper  1.672e-10
-          C_energy-lower  lower  125.2744885847310
-          C_energy-upper  upper  125.2744885858663
+              C_residual  upper  1.677e-10
+          C_energy-lower  lower  125.2744885847300
+          C_energy-upper  upper  125.2744885858674
               C_homotopy  lower  0.6230
             norm_X(Wbar)  upper  69.058
           sup |chi Wbar|  upper  1.00001
-                     eta  upper  2.897e-9
+                     eta  upper  3.079e-9
                      b_1  upper  11.41
                      b_0  upper  5.753
                    gamma  lower  1278

@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -50,7 +51,7 @@ def grids(D, Dchi, l):
 def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, batch=48, log=print):
     t0 = time.time()
     modes, values, data = load_coefficients(coeff_path)
-    D = data["degree"]
+    D = max(m.l for m in modes)                      # validated against the header by the loader
     chi_modes, chi_values, _ = load_scalar_coefficients(chi_path)
     Dchi = max(m.l for m in chi_modes)
     name = name or f"D{D}_l{l}"
@@ -170,6 +171,9 @@ def main():
     print()
     for row in out["table_A1"]:
         print(f"  {row['name']:>22s}  {row['kind']:>5s}  {row['value']}")
+    if not out["passed"]:
+        print("CERTIFICATE FAILED")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -176,8 +176,10 @@ class ChebFourier:
             return float(vals.min()), float(vals.max())
         Lx, Lp = self.lipschitz()
         # every x in [-1, 1] is within pi/(2 N1) of a node, every phi within pi/N2 of a node
-        rem = (Lx * self.pi * ar.const(Fraction(1, 2 * N1), True) + Lp * self.pi * ar.const(Fraction(1, N2), True)).upper()
-        return float(vals.lower().min() - rem), float(vals.upper().max() + rem)
+        rem = Lx * self.pi * ar.const(Fraction(1, 2 * N1), True) + Lp * self.pi * ar.const(Fraction(1, N2), True)
+        lo = (Ball.exact(vals.lower().min()) - rem).lower()
+        hi = (Ball.exact(vals.upper().max()) + rem).upper()
+        return float(lo), float(hi)
 
     def coefficient_sum_bound(self):
         """sup |f| <= sum of amplitudes (a cruder but grid-free bound)."""

@@ -76,12 +76,24 @@ def save_coefficients(path, modes, values, meta=None):
 
 
 def load_coefficients(path):
+    """Read and validate a coefficient file.  Every mode must be one of the basis fields of
+    Proposition 2.2 (U with n even, V with n odd >= 1, j >= 0, l = |m| + |n| + 2j), the modes
+    must be distinct (the coefficient-squares formula for ||Wbar||_X needs orthonormality), the
+    values finite, and the header degree must equal the largest degree present."""
     data = json.loads(Path(path).read_text())
-    modes = [Mode(c["l"], c["kind"], c["n"], c["j"]) for c in data["coefficients"]]
-    values = np.array([c["value"] for c in data["coefficients"]], dtype=float)
-    for m, c in zip(modes, data["coefficients"]):
-        assert m.l == abs(m.m) + abs(m.n) + 2 * m.j == c["l"]
-    return modes, values, data
+    modes, values = [], []
+    for c in data["coefficients"]:
+        kind, n, j, l, v = c["kind"], int(c["n"]), int(c["j"]), int(c["l"]), float(c["value"])
+        assert kind in ("U", "V"), f"unknown mode kind {kind}"
+        assert j >= 0 and np.isfinite(v), f"invalid mode {c}"
+        assert (kind == "U" and n % 2 == 0) or (kind == "V" and n % 2 == 1 and n >= 1), f"mode {c} violates the selection rule"
+        m = Mode(l, kind, n, j)
+        assert m.l == abs(m.m) + abs(m.n) + 2 * m.j, f"wrong degree in {c}"
+        modes.append(m)
+        values.append(v)
+    assert len(set(modes)) == len(modes), "duplicate modes"
+    assert int(data["degree"]) == max(m.l for m in modes), "header degree does not match the coefficients"
+    return modes, np.array(values, dtype=float), data
 
 
 def save_scalar_coefficients(path, modes, values, meta=None):
@@ -95,7 +107,16 @@ def save_scalar_coefficients(path, modes, values, meta=None):
 
 
 def load_scalar_coefficients(path):
+    """Read and validate the file of the G-invariant polynomial chi (n even >= 0, j >= 0)."""
     data = json.loads(Path(path).read_text())
-    modes = [Mode(c["l"], "S", c["n"], c["j"]) for c in data["coefficients"]]
-    values = np.array([c["value"] for c in data["coefficients"]], dtype=float)
-    return modes, values, data
+    modes, values = [], []
+    for c in data["coefficients"]:
+        n, j, l, v = int(c["n"]), int(c["j"]), int(c["l"]), float(c["value"])
+        assert n >= 0 and n % 2 == 0 and j >= 0 and np.isfinite(v), f"invalid scalar mode {c}"
+        m = Mode(l, "S", n, j)
+        assert m.l == 3 * n + 2 * j, f"wrong degree in {c}"
+        modes.append(m)
+        values.append(v)
+    assert len(set(modes)) == len(modes), "duplicate modes"
+    assert int(data["degree"]) == max(m.l for m in modes), "header degree does not match the coefficients"
+    return modes, np.array(values, dtype=float), data

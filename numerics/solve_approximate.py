@@ -10,9 +10,11 @@ residual of the paper's equation (F-equation) with chi = 1.  The residual F(0) i
 (F(0) . Wbar = 0) and the term kappa (|Wbar|^2 - 1) Wbar is normal, so a zero of R has, up to the
 Galerkin truncation error, both a vanishing tension-type residual and |Wbar| = 1; the normal
 term removes the degeneracy of the tangential residual under pointwise rescalings of Wbar.
-The Jacobian of R is the Galerkin matrix of  L - G + kappa (2 Wbar Wbar^T + (|Wbar|^2 - 1)),
-where L is the linearisation (linearisation) and G its gauge term, so Newton's method
-converges quadratically.
+The Jacobian of R is the Galerkin matrix of
+    L - G + (1/2) h x (Wbar x Q) + kappa (2 Wbar Wbar^T + (|Wbar|^2 - 1)),
+where L is the linearisation (linearisation), G its gauge term and the cross-product term the
+derivative with respect to the outer factor Wbar of the residual (1/2) Wbar x (Wbar x Q)
+(DF(0) holds that factor fixed), so Newton's method converges quadratically.
 
 Starting point: the L^2-projection of V_0 / |V_0|, with V_0 = (w^2 - zbar^4, 2 Re(z^2 w)) the
 reference field of Proposition 2.7.
@@ -82,14 +84,14 @@ class GalerkinSystem:
         return res, W, op, F0
 
     def matrix(self, op):
-        """Jacobian of R: Galerkin matrix of  L - G + kappa (2 W W^T + (|W|^2 - 1) I)."""
+        """Jacobian of R: Galerkin matrix of  L - G + (1/2) h x (W x Q) + kappa (2 W W^T + (|W|^2 - 1) I)."""
         d = len(self.modes)
         J = np.empty((d, d))
         Wv = op.val_W
         defect = op.rho - 1.0
         for i in range(0, d, self.batch):
             v, g, lp = self.H.evaluate(self.modes[i:i + self.batch])
-            LPsi = op.apply_batch(v, g, lp) - op.gauge_batch(v, lp)
+            LPsi = op.apply_batch(v, g, lp) - op.gauge_batch(v, lp) + op.outer_cross_batch(v)
             Wh = v[:, 0] * Wv[0] + v[:, 1] * Wv[1] + v[:, 2] * Wv[2]
             for c in range(3):
                 LPsi[:, c] += self.kappa * (2.0 * Wh * Wv[c] + defect * v[:, c])
