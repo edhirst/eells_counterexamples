@@ -1,30 +1,32 @@
 Wbar: degree 40, 217 coefficients;  chi: degree 0;  cutoff l = 40
 quadrature grid 203 x 135, bounding grid 163 x 217  (1s)
-Wbar evaluated on both grids (13s)
-[3.1] ||F(0)||_L2 <= 1.9870e-08   (ball of the square: mid 3.946e-16, radius 2.3e-19)  (13s)
-[3.1] energy of Wbar/|Wbar|: [125.274488584897512, 125.274488585699856]  = 8 pi^2 x [1.586619932951293, 1.586619932961456]  (14s)
-[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (16s)
+Wbar evaluated on both grids (14s)
+[3.1] ||F(0)||_L2 <= 1.9870e-08   (ball of the square: mid 3.946e-16, radius 2.3e-19)  (15s)
+[3.1] energy of Wbar/|Wbar|: [125.274488584897512, 125.274488585699856]  = 8 pi^2 x [1.586619932951293, 1.586619932961456]  (15s)
+[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (18s)
   eta <= 3.058e-09 (grid 9.126e-10),  b1 <= 11.4043 (grid 11.3911),  b0 <= 5.7526 (grid 5.7446),  ||chi Wbar||_inf <= 1.000000
 [3.2] gamma >= 1278.4019  (l = 40)
-  A block 217x217 assembled (9s)
-    high modes 48/4866 (11s)
-    high modes 528/4866 (37s)
-    high modes 1008/4866 (62s)
-    high modes 1488/4866 (87s)
-    high modes 1968/4866 (112s)
-    high modes 2448/4866 (137s)
-    high modes 2928/4866 (162s)
-    high modes 3408/4866 (187s)
-    high modes 3888/4866 (212s)
-    high modes 4368/4866 (238s)
-    high modes 4848/4866 (262s)
-  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [4866 high modes up to degree 200, 264s]
+  A block 217x217 assembled (10s)
+    high modes 48/4866 (12s)
+    high modes 528/4866 (39s)
+    high modes 1008/4866 (66s)
+    high modes 1488/4866 (94s)
+    high modes 1968/4866 (122s)
+    high modes 2448/4866 (151s)
+    high modes 2928/4866 (178s)
+    high modes 3408/4866 (203s)
+    high modes 3888/4866 (229s)
+    high modes 4368/4866 (254s)
+    high modes 4848/4866 (279s)
+  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [4866 high modes up to degree 200, 281s]
   ||E|| <= 3.223e-08,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
 [3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = -12.0636: NOT certified (negative)
   ||Z B Lambda^-1|| <= 5.5282e-05,  ||A^-1 B (-Delta)^-1|| <= 5.5282e-05,  ||(-Delta) D^-1|| <= 1.3791,  theta <= 1.0903e-02,  ||S^-1|| <= 0.1491,  ||B D^-1|| <= 0.1155,  ||D^-1 C|| <= 0.1119
-[3.2] ||L^-1||_(L2->L2) <= 0.1518 (weighted Schur bound),   ||L^-1||_(Y->X) <= M = 23.6482  (283s)
-[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 9.4e-7:  M k = 1.124e-02 < 1 True,  M(eps + k r) = 4.805e-07 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
-CERTIFICATE PASSED  (283s)
+[3.2] weighted Schur bound: ||L^-1||_(L2->L2) <= 0.1518
+  ||Z B|| <= 1.0734e-01,  ||A^-1 B|| <= 1.0734e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 1.2008e-02,  ||S^-1|| <= 0.1493
+[3.2] ||L^-1||_(L2->L2) <= 0.1523 (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = 23.7150  (302s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 9.5e-7:  M k = 1.139e-02 < 1 True,  M(eps + k r) = 4.820e-07 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
+CERTIFICATE PASSED  (302s)
 wrote certificate/output/D40_l40.json and certificate/output/D40_l40_tableA1.tex
 
                 deg Wbar  exact  40
@@ -45,9 +47,8 @@ wrote certificate/output/D40_l40.json and certificate/output/D40_l40_tableA1.tex
                 ||A^-1||  upper  0.1476
                    ||B||  upper  168.5
                    ||C||  upper  143.1
-        ||B(-Delta)^-1||  upper  0.08376
-   ||A^-1 B(-Delta)^-1||  upper  5.529e-5
-             ||L^-1||_L2  upper  0.1519
-                       M  upper  23.65
+              ||A^-1 B||  upper  0.1074
+             ||L^-1||_L2  upper  0.1524
+                       M  upper  23.72
                     C_nl  upper  0.03534
-                       r  exact  9.4e-7
+                       r  exact  9.5e-7

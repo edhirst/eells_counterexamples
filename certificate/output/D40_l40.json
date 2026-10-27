@@ -124,27 +124,21 @@
    "kind": "upper"
   },
   {
-   "name": "||B(-Delta)^-1||",
-   "latex": "$\\|B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
-   "value": "0.08376",
-   "kind": "upper"
-  },
-  {
-   "name": "||A^-1 B(-Delta)^-1||",
-   "latex": "$\\|A^{-1}B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
-   "value": "5.529e-5",
+   "name": "||A^-1 B||",
+   "latex": "$\\|A^{-1}B\\|_{L^2\\to L^2}$",
+   "value": "0.1074",
    "kind": "upper"
   },
   {
    "name": "||L^-1||_L2",
    "latex": "$\\|\\mathscr L^{-1}\\|_{L^2\\to L^2}$",
-   "value": "0.1519",
+   "value": "0.1524",
    "kind": "upper"
   },
   {
    "name": "M",
    "latex": "$\\|\\mathscr L^{-1}\\|_{Y\\to X}$",
-   "value": "23.65",
+   "value": "23.72",
    "kind": "upper"
   },
   {
@@ -156,7 +150,7 @@
   {
    "name": "r",
    "latex": "$r$",
-   "value": "9.4e-7",
+   "value": "9.5e-7",
    "kind": "exact"
   }
  ],
@@ -200,7 +194,7 @@
    "max_radius_A": 1.5824488068857588e-08,
    "max_radius_B": 3.0422638565271764e-07,
    "max_radius_C": 1.3465358393283057e-08,
-   "seconds": 263.7978079319
+   "seconds": 280.8448021411896
   },
   "inverse": {
    "normE": 3.2232956166451425e-08,
@@ -208,6 +202,13 @@
    "sigma_min_midA": 9.255440034631292,
    "sigma_max_midA": 1746.2273804737938
   },
+  "schur_paper": {
+   "normZB": 0.10734012674300734,
+   "normA_inv_B": 0.10734013020289714,
+   "theta": 0.012007846770754785,
+   "normS_inv": 0.14930590727588366
+  },
+  "L2_inverse": 0.15231789077217736,
   "schur_weighted": {
    "normZBlam": 5.5282340995218116e-05,
    "normA_inv_B_lam": 5.5282342777131485e-05,
@@ -217,9 +218,9 @@
    "normBD_inv": 0.115497310777742,
    "normD_invC": 0.11186726481565881
   },
-  "L2_inverse": 0.15184924165436528,
+  "L2_inverse_weighted_schur": 0.15184924165436528,
   "L2_inverse_literal_schur": null,
-  "M": 23.64817789303149,
+  "M": 23.71499020870992,
   "nonlinear": {
    "C_nl": 0.03533770304092939,
    "c_inf": 0.14144820096725266,
@@ -227,11 +228,11 @@
    "norm_X": 69.05772446298027
   },
   "newton_kantorovich": {
-   "r": "9.4e-7",
-   "k": 0.0004752388743024438,
-   "Mk": 0.011238533441188223,
-   "M_eps_plus_kr": 4.804544552115228e-07,
-   "homotopy_margin": 0.6230018316834833,
+   "r": "9.5e-7",
+   "k": 0.0004802946070773387,
+   "Mk": 0.011390181904135266,
+   "M_eps_plus_kr": 4.820384699513059e-07,
+   "homotopy_margin": 0.6230018302690014,
    "conditions": {
     "Mk_lt_1": true,
     "M_eps_plus_kr_le_r": true,
@@ -239,7 +240,7 @@
    },
    "all_ok": true
   },
-  "seconds": 282.763797044754
+  "seconds": 302.0738670825958
  },
  "passed": true
 }

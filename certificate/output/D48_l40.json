@@ -124,27 +124,21 @@
    "kind": "upper"
   },
   {
-   "name": "||B(-Delta)^-1||",
-   "latex": "$\\|B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
-   "value": "0.08376",
-   "kind": "upper"
-  },
-  {
-   "name": "||A^-1 B(-Delta)^-1||",
-   "latex": "$\\|A^{-1}B(-\\Delta)^{-1}\\|_{L^2\\to L^2}$",
-   "value": "5.529e-5",
+   "name": "||A^-1 B||",
+   "latex": "$\\|A^{-1}B\\|_{L^2\\to L^2}$",
+   "value": "0.1074",
    "kind": "upper"
   },
   {
    "name": "||L^-1||_L2",
    "latex": "$\\|\\mathscr L^{-1}\\|_{L^2\\to L^2}$",
-   "value": "0.1519",
+   "value": "0.1524",
    "kind": "upper"
   },
   {
    "name": "M",
    "latex": "$\\|\\mathscr L^{-1}\\|_{Y\\to X}$",
-   "value": "23.65",
+   "value": "23.72",
    "kind": "upper"
   },
   {
@@ -200,7 +194,7 @@
    "max_radius_A": 2.2615427478021556e-08,
    "max_radius_B": 5.949879552479687e-07,
    "max_radius_C": 1.9262879287742406e-08,
-   "seconds": 443.050724029541
+   "seconds": 457.0015940666199
   },
   "inverse": {
    "normE": 4.611476402659598e-08,
@@ -208,6 +202,13 @@
    "sigma_min_midA": 9.255440034631288,
    "sigma_max_midA": 1746.227380471304
   },
+  "schur_paper": {
+   "normZB": 0.1073401269205,
+   "normA_inv_B": 0.10734013187046494,
+   "theta": 0.012007847047340679,
+   "normS_inv": 0.1493059093817194
+  },
+  "L2_inverse": 0.15231789294851555,
   "schur_weighted": {
    "normZBlam": 5.528234108262168e-05,
    "normA_inv_B_lam": 5.528234363195395e-05,
@@ -217,9 +218,9 @@
    "normBD_inv": 0.115497311664673,
    "normD_invC": 0.11186726565448435
   },
-  "L2_inverse": 0.1518492438154758,
+  "L2_inverse_weighted_schur": 0.1518492438154758,
   "L2_inverse_literal_schur": null,
-  "M": 23.64817920013758,
+  "M": 23.71499152107003,
   "nonlinear": {
    "C_nl": 0.03533770303238257,
    "c_inf": 0.14144820096725266,
@@ -229,8 +230,8 @@
   "newton_kantorovich": {
    "r": "8e-9",
    "k": 4.044586108712371e-06,
-   "Mk": 9.56470970892173e-05,
-   "M_eps_plus_kr": 3.9648584722805455e-09,
+   "Mk": 9.59173252743515e-05,
+   "M_eps_plus_kr": 3.976060239421256e-09,
    "homotopy_margin": 0.623001963493086,
    "conditions": {
     "Mk_lt_1": true,
@@ -239,7 +240,7 @@
    },
    "all_ok": true
   },
-  "seconds": 474.0667338371277
+  "seconds": 489.9493899345398
  },
  "passed": true
 }

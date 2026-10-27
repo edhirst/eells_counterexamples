@@ -8,9 +8,13 @@
                      B: l_a <= l < l_b <= l + K,   C: l_b <= l < l_a <= l + K,  K = 4 deg Wbar + deg chi,
   by exact quadrature in ball arithmetic;  ||B||_2, ||C||_2 <= min(sqrt(||.||_1 ||.||_inf), ||.||_F).
 * ||A^{-1}||_2 <= sqrt(||Z||_1 ||Z||_inf) / (1 - sqrt(||E||_1 ||E||_inf)),  E = I - Z A,  Z ~ mid(A)^{-1}.
-* Schur complement S = A - B D^{-1} C.  Two bounds are computed:
-  (literal, as in the draft)
+* Schur complement S = A - B D^{-1} C.  Three bounds are computed:
+  (literal, first draft)
       ||S^{-1}|| <= 1 / (||A^{-1}||^{-1} - ||B|| ||D^{-1}|| ||C||),
+  (paper) with the approximate inverse Z also applied to B,
+      ||A^{-1} B|| <= ||Z B|| / (1 - ||E||),   ||S u|| >= ||A^{-1} S u|| / ||A^{-1}||
+      = ||u - A^{-1} B D^{-1} C u|| / ||A^{-1}||  >=  (1 - ||A^{-1} B|| ||D^{-1}|| ||C||) ||u|| / ||A^{-1}||,
+      so  ||S^{-1}|| <= ||A^{-1}|| / (1 - ||A^{-1} B|| ||D^{-1}|| ||C||),
   (weighted) using the Laplacian weight on the high modes: the lower bound for D gives
       ||D h||_{L^2} >= (gamma / lambda_{l+1}) ||Delta h||_{L^2},  lambda_{l+1} = (l+1)(l+3),
   i.e.  ||(-Delta) D^{-1}||_{L^2->L^2} <= lambda_{l+1}/gamma, and (-Delta)^{-1} is diagonal on
@@ -137,6 +141,24 @@ def L2_inverse_bound_literal(invA, nB, nC, gamma):
         return None
     num = ((1.0 + b * b * invD * invD) * (1.0 + c * c * invD * invD)).sqrt()
     return float((invD + num / denom).upper())
+
+
+def L2_inverse_bound_paper(invA, Z, nE, B, nB, nC, gamma, log=print):
+    """||L^{-1}||_{L^2 -> L^2} by the Schur complement with ||A^{-1} B|| <= ||Z B|| / (1 - ||E||)
+    (the argument of the paper)."""
+    nZB = norm_2(matmul(Ball(Z), B))
+    AB = Ball.exact(nZB) / (1.0 - Ball.exact(nE))                # ||A^{-1} B||
+    invD = 1.0 / Ball.exact(gamma)
+    theta = AB * invD * Ball.exact(nC)                           # ||A^{-1} B|| ||D^{-1}|| ||C||
+    assert theta.upper() < 1, f"paper's Schur bound not certified: ||A^-1 B|| ||D^-1|| ||C|| = {theta.upper()}"
+    invS = Ball.exact(invA) / (1.0 - theta)
+    BD = Ball.exact(nB) * invD
+    DC = Ball.exact(nC) * invD
+    Linv = invD + invS * ((1.0 + BD * BD) * (1.0 + DC * DC)).sqrt()
+    log(f"  ||Z B|| <= {nZB:.4e},  ||A^-1 B|| <= {float(AB.upper()):.4e},  ||A^-1 B|| ||D^-1|| ||C|| <= {float(theta.upper()):.4e},  "
+        f"||S^-1|| <= {float(invS.upper()):.4f}")
+    return float(Linv.upper()), {"normZB": nZB, "normA_inv_B": float(AB.upper()), "theta": float(theta.upper()),
+                                 "normS_inv": float(invS.upper())}
 
 
 def L2_inverse_bound_weighted(invA, Z, nE, B_lam, nB_lam, nC, gamma, l, log=print):

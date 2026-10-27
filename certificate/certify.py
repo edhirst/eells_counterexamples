@@ -89,9 +89,11 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
     L2inv_literal = le.L2_inverse_bound_literal(invA, nB, nC, gamma)
     log(f"[3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = {1 / invA - nB * nC / gamma:.4f}: "
         + (f"||L^-1|| <= {L2inv_literal:.4f}" if L2inv_literal else "NOT certified (negative)"))
-    L2inv, sinfo = le.L2_inverse_bound_weighted(invA, Z, nE, B_lam, nB_lam, nC, gamma, l, log=log)
+    L2inv_w, winfo = le.L2_inverse_bound_weighted(invA, Z, nE, B_lam, nB_lam, nC, gamma, l, log=log)
+    log(f"[3.2] weighted Schur bound: ||L^-1||_(L2->L2) <= {L2inv_w:.4f}")
+    L2inv, sinfo = le.L2_inverse_bound_paper(invA, Z, nE, B, nB, nC, gamma, log=log)
     M = le.M_bound(cb["eta"], cb["b1"], cb["b0"], L2inv)
-    log(f"[3.2] ||L^-1||_(L2->L2) <= {L2inv:.4f} (weighted Schur bound),   ||L^-1||_(Y->X) <= M = {M:.4f}  ({time.time() - t0:.0f}s)")
+    log(f"[3.2] ||L^-1||_(L2->L2) <= {L2inv:.4f} (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = {M:.4f}  ({time.time() - t0:.0f}s)")
 
     # ---- Proposition 3.3 / Theorem 2.9
     Cnl, c_inf, c_4 = ne.nonlinear_constant(cb["chiW_sup"])
@@ -120,8 +122,7 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
         ("||A^-1||", r"$\|A^{-1}\|_{L^2\to L^2}$", round_up(invA, 4), "upper"),
         ("||B||", r"$\|B\|_{L^2\to L^2}$", round_up(nB, 4), "upper"),
         ("||C||", r"$\|C\|_{L^2\to L^2}$", round_up(nC, 4), "upper"),
-        ("||B(-Delta)^-1||", r"$\|B(-\Delta)^{-1}\|_{L^2\to L^2}$", round_up(nB_lam, 4), "upper"),
-        ("||A^-1 B(-Delta)^-1||", r"$\|A^{-1}B(-\Delta)^{-1}\|_{L^2\to L^2}$", round_up(sinfo["normA_inv_B_lam"], 4), "upper"),
+        ("||A^-1 B||", r"$\|A^{-1}B\|_{L^2\to L^2}$", round_up(sinfo["normA_inv_B"], 4), "upper"),
         ("||L^-1||_L2", r"$\|\mathscr L^{-1}\|_{L^2\to L^2}$", round_up(L2inv, 4), "upper"),
         ("M", r"$\|\mathscr L^{-1}\|_{Y\to X}$", round_up(M, 4), "upper"),
         ("C_nl", r"$\Cr{const:non-linear}$", round_up(Cnl, 4), "upper"),
@@ -130,7 +131,8 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
     out["table_A1"] = [{"name": a, "latex": b, "value": c, "kind": d} for a, b, c, d in table]
     out["details"] = {"residual_square": {"mid": float(sq.m), "radius": float(sq.r)}, "energy": {k: (float(v.m) if hasattr(v, "m") else v) for k, v in energy.items()},
                       "homotopy": {"min_lower": hom_lo, "max_upper": hom_hi}, "coefficient_bounds": cb, "gamma": gamma,
-                      "blocks": binfo, "inverse": ainfo, "schur_weighted": sinfo, "L2_inverse": L2inv,
+                      "blocks": binfo, "inverse": ainfo, "schur_paper": sinfo, "L2_inverse": L2inv,
+                      "schur_weighted": winfo, "L2_inverse_weighted_schur": L2inv_w,
                       "L2_inverse_literal_schur": L2inv_literal, "M": M, "nonlinear": {"C_nl": Cnl, "c_inf": c_inf, "c_4": c_4, "norm_X": nX},
                       "newton_kantorovich": nk, "seconds": time.time() - t0}
     out["passed"] = nk["all_ok"]
