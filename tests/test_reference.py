@@ -1,7 +1,8 @@
-"""Propositions 2.3, 2.6, 2.7: Sobolev constants, the Hopf map and the reference field."""
+"""Propositions 2.3, 2.4, 2.6, 2.7: Sobolev constants, the Hopf map and the reference field."""
 import numpy as np
 
 from eells.grid import OrbitGrid
+from eells.harmonics import vector_modes
 from eells.reference import reference_field, extended_hopf_map, sobolev_constants
 
 
@@ -28,6 +29,11 @@ def test_sobolev_constants():
     cb = sobolev_constants(True)
     assert abs(cf[0] - np.sqrt((np.pi ** 2 / 6 - 1.25) / (2 * np.pi ** 2))) < 1e-15
     assert abs(cf[1] - (2 / (9 * np.pi ** 2)) ** 0.25) < 1e-15
-    assert cb[0].lower() <= cf[0] <= cb[0].upper() and cb[1].lower() <= cf[1] <= cb[1].upper()
+    assert abs(cf[2] - 2 * np.sqrt(2) / 9) < 1e-15
+    assert all(b.lower() <= f <= b.upper() and b.r < 1e-15 for f, b in zip(cf, cb))
     # the series behind c_inf: sum_{l>=2} 1/(l+1)^2 = pi^2/6 - 5/4
     assert abs(sum(1 / (l + 1) ** 2 for l in range(2, 200000)) - (np.pi ** 2 / 6 - 1.25)) < 1e-5
+    # c_5^2 = max_{l>=2} l(l+2)/(l+1)^4 = 8/81, attained at l = 2 (Proposition 2.4)
+    assert max(l * (l + 2) / (l + 1) ** 4 for l in range(2, 1000)) == 8 / 81
+    # both constants assume that X contains no modes of degree 0 or 1
+    assert min(m.l for m in vector_modes(40)) == 2

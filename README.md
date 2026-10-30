@@ -26,15 +26,17 @@ eells/            library (runs on plain floats for the numerics and on rigorous
                     values / tangential gradients / Laplacians on the grid
   fields.py         Wbar = sum_k a_k Psi_k from a coefficient file; the polynomial chi
   equation.py       the map F (eq. F-equation), its linearisation (eq. linearisation) and the
-                    expanded coefficients P, M_a, M_0 used in Section 3.2
+                    expanded coefficients P, M_a, M_0 used in Section 3.3
   reference.py      the reference field V_0 of Proposition 2.7, the Hopf map, the Sobolev constants
+                    c_inf, c_4, c_5 of Propositions 2.3 and 2.4
 numerics/         non-rigorous floating point
   solve_approximate.py   Newton–Galerkin construction of Wbar (Section 3.1)
   make_tables.py         LaTeX table of the coefficients of Wbar (appendix)
 certificate/      rigorous verification of Table A.1
   approximate_bounds.py  Proposition 3.1: residual, energy, homotopy constant
-  linear_estimate.py     Section 3.2: eta, b_1, b_0, gamma, the blocks A, B, C, ||L^{-1}||, M
-  nonlinear_estimate.py  Proposition 3.3 and Theorem 2.9: C_nl, the radius r and the final inequalities
+  linear_estimate.py     Section 3.3: eta, b_1, b_0, gamma, the blocks A, B, C, ||L^{-1}||, M
+  nonlinear_estimate.py  Proposition 3.2 and Theorem 2.10: C_nl, the radius r and the final inequalities
+  energy_estimate.py     Proposition 4.2: the energy of the harmonic map (min |Wbar|, C_6, C_7, C_8)
   certify.py             driver: runs all steps, writes certificate/output/<name>.json and <name>_tableA1.tex
 data/             coefficient files Wbar_D*.json (exact IEEE doubles), chi_constant.json, solver logs
 tests/            unit tests (basis orthonormality, Green's identity, operator identities, enclosures, ...)
@@ -65,8 +67,10 @@ All commands are run from the repository root.
    ```
 
 2. **Certificate** (rigorous, ~10–30 minutes depending on the degree).  Verifies every row of
-   Table A.1 for the given $\bar W$, $\chi$ and cutoff $l$, and checks the Newton–Kantorovich
-   inequalities $Mk<1$, $M(\varepsilon+kr)\le r$ and $C_{\text{homotopy}}-c_\infty r>0$:
+   Table A.1 for the given $\bar W$, $\chi$ and cutoff $l$, checks the Newton–Kantorovich
+   inequalities $Mk<1$, $M(\varepsilon+kr)\le r$ and $C_{\text{homotopy}}-c_\infty r>0$, and then
+   encloses the energy of the harmonic map itself (Proposition 4.2: $\min|\bar W|$, $C_8=\min|\bar W|-c_\infty r$,
+   the check $\|w\|_{C^0}<1$ and the enclosure $[C_6,C_7]$):
 
    ```bash
    python -u -m certificate.certify --coefficients data/Wbar_D40.json --chi data/chi_constant.json --cutoff 40
@@ -93,17 +97,17 @@ All commands are run from the repository root.
   polynomial degree at hand (the degree of every integrand is tracked in `eells/equation.py`), so
   the only error is rounding, which the balls enclose.
 * Suprema and infima (the constants $\eta,b_1,b_0$, $\|\chi\bar W\|_{C^0}$, $C_{\text{homotopy}}$,
-  the energy error) come from the exact Chebyshev–Fourier coefficients of the polynomial in
+  $\min|\bar W|$, the energy error) come from the exact Chebyshev–Fourier coefficients of the polynomial in
   question: the expansion is evaluated on a fine grid and a Lipschitz remainder is added.
 * The coefficients of $\bar W$ are IEEE doubles and are used exactly; the published table is the
   polynomial that was certified.
 
-A note on Section 3.2: the literal Schur-complement bound
+A note on Section 3.3: the Schur-complement step follows the paper, which bounds
+$\|A^{-1}B\|\le\|ZB\|/(1-\|E\|)$ with the approximate inverse $Z$ of $A$ and then
+$\|S^{-1}\|\le\|A^{-1}\|/(1-\|A^{-1}B\|\|D^{-1}\|\|C\|)$.  The cruder product bound
 $\|A^{-1}\|^{-1}-\|B\|\|D^{-1}\|\|C\|$ is negative for this problem (the coupling norms grow like
-$b_1 l$ while $\gamma\sim l^2$), so the certificate uses the weighted form
-$\|A^{-1}BD^{-1}C\|\le\|A^{-1}B(-\Delta)^{-1}\|\,\|(-\Delta)D^{-1}\|\,\|C\|$ with
-$\|(-\Delta)D^{-1}\|\le(l+1)(l+3)/\gamma$ (which follows from the same lower bound for $D$);
-both are reported in the log, see `certificate/linear_estimate.py`.
+$b_1 l$ while $\gamma\sim l^2$); it and a weighted variant are reported in the log for information only,
+see `certificate/linear_estimate.py`.
 
 ## License
 

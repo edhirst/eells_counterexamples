@@ -1,5 +1,5 @@
 """The equation F(v) = 0 of Section 2.2, its linearisation (eq. linearisation) and the
-expanded coefficients used in the linear estimate of Section 3.2.
+expanded coefficients used in the linear estimate of Section 3.3.
 
 Notation: W = Wbar + v, Delta the (non-positive) Laplacian of S^3, d_a (a = 0..3) tangential
 partial derivatives along the ambient axes, so that  sum_a d_a f d_a g = <grad f, grad g>  and
@@ -26,7 +26,7 @@ second-order terms combine to  -chi (Pi^2 + |Wbar|^2 Wbar Wbar^T) Delta h = -chi
 The residual is  F(0) = (chi/2) Wbar x (Wbar x Q) = -(chi/2) Pi Q.
 
 With R = L + Delta the first- and zeroth-order coefficient matrices are M_a and M_0 and the
-second-order coefficient is (P - 1)(-Delta); eta, b_1, b_0 of Section 3.2 bound
+second-order coefficient is (P - 1)(-Delta); eta, b_1, b_0 of Section 3.3 bound
 sup |P - 1|,  sup sum_a ||M_a||_F^2,  sup ||M_0||_F^2.
 
 Polynomial degrees (Wbar of degree D, chi of degree D_chi), see :func:`degrees`.

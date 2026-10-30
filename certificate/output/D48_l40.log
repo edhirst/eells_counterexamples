@@ -1,35 +1,37 @@
 Wbar: degree 48, 308 coefficients;  chi: degree 0;  cutoff l = 40
 quadrature grid 243 x 162, bounding grid 195 x 259  (2s)
-Wbar evaluated on both grids (26s)
-[3.1] ||F(0)||_L2 <= 1.6763e-10   (ball of the square: mid 2.611e-20, radius 2.0e-21)  (27s)
-[3.1] energy of Wbar/|Wbar|: [125.274488584730037, 125.274488585867303]  = 8 pi^2 x [1.586619932949172, 1.586619932963577]  (27s)
-[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (30s)
+Wbar evaluated on both grids (29s)
+[3.1] ||F(0)||_L2 <= 1.6763e-10   (ball of the square: mid 2.611e-20, radius 2.0e-21)  (29s)
+[3.1] energy of Wbar/|Wbar|: [125.274488584730037, 125.274488585867303]  = 8 pi^2 x [1.586619932949172, 1.586619932963577]  (30s)
+[3.1] min Wbar . V0 >= 0.623002   (max <= 1.001067)  (32s)
   eta <= 3.078e-09 (grid 7.409e-12),  b1 <= 11.4043 (grid 11.3911),  b0 <= 5.7526 (grid 5.7446),  ||chi Wbar||_inf <= 1.000000
-[3.2] gamma >= 1278.4019  (l = 40)
+[3.3] gamma >= 1278.4019  (l = 40)
   A block 217x217 assembled (19s)
     high modes 48/6608 (23s)
-    high modes 528/6608 (61s)
-    high modes 1008/6608 (101s)
-    high modes 1488/6608 (142s)
-    high modes 1968/6608 (180s)
-    high modes 2448/6608 (216s)
-    high modes 2928/6608 (253s)
-    high modes 3408/6608 (283s)
-    high modes 3888/6608 (309s)
-    high modes 4368/6608 (335s)
-    high modes 4848/6608 (361s)
-    high modes 5328/6608 (387s)
-    high modes 5808/6608 (413s)
-    high modes 6288/6608 (439s)
-  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [6608 high modes up to degree 232, 457s]
+    high modes 528/6608 (65s)
+    high modes 1008/6608 (105s)
+    high modes 1488/6608 (146s)
+    high modes 1968/6608 (185s)
+    high modes 2448/6608 (226s)
+    high modes 2928/6608 (267s)
+    high modes 3408/6608 (296s)
+    high modes 3888/6608 (324s)
+    high modes 4368/6608 (352s)
+    high modes 4848/6608 (379s)
+    high modes 5328/6608 (406s)
+    high modes 5808/6608 (433s)
+    high modes 6288/6608 (460s)
+  ||B|| <= 168.4379 (spectral mid 160.6719),  ||C|| <= 143.0113 (spectral mid 138.5150)  [6608 high modes up to degree 232, 478s]
   ||E|| <= 4.611e-08,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
-[3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = -12.0636: NOT certified (negative)
+[3.3] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = -12.0636: NOT certified (negative)
   ||Z B Lambda^-1|| <= 5.5282e-05,  ||A^-1 B (-Delta)^-1|| <= 5.5282e-05,  ||(-Delta) D^-1|| <= 1.3791,  theta <= 1.0903e-02,  ||S^-1|| <= 0.1491,  ||B D^-1|| <= 0.1155,  ||D^-1 C|| <= 0.1119
-[3.2] weighted Schur bound: ||L^-1||_(L2->L2) <= 0.1518
+[3.3] weighted Schur bound: ||L^-1||_(L2->L2) <= 0.1518
   ||Z B|| <= 1.0734e-01,  ||A^-1 B|| <= 1.0734e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 1.2008e-02,  ||S^-1|| <= 0.1493
-[3.2] ||L^-1||_(L2->L2) <= 0.1523 (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = 23.7150  (490s)
+[3.3] ||L^-1||_(L2->L2) <= 0.1523 (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = 23.7150  (513s)
 [4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 8e-9:  M k = 9.592e-05 < 1 True,  M(eps + k r) = 3.976e-09 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
-CERTIFICATE PASSED  (490s)
+[4.2] min |Wbar| >= 0.9999999998 (max |Wbar| <= 1.0000000002),  C_energyparameter >= 0.9999999987,  ||w||_C0 <= 2.263e-09 < 1 True,  ||dw||_L2 <= 1.007e-07,  c_5 <= 0.314270
+[4.2] energy of the harmonic map u: [125.274488584729980, 125.274488869385053]  (514s)
+CERTIFICATE PASSED  (514s)
 wrote certificate/output/D48_l40.json and certificate/output/D48_l40_tableA1.tex
 
                 deg Wbar  exact  48
@@ -37,10 +39,15 @@ wrote certificate/output/D48_l40.json and certificate/output/D48_l40_tableA1.tex
                        l  exact  40
                    c_inf  upper  0.141449
                      c_4  upper  0.387367
+                     c_5  upper  0.314270
               C_residual  upper  1.677e-10
           C_energy-lower  lower  125.2744885847300
           C_energy-upper  upper  125.2744885858674
               C_homotopy  lower  0.6230
+                    C_nl  upper  0.03534
+         C_energy-lower2  lower  125.2744885847299
+         C_energy-upper2  upper  125.2744889
+       C_energyparameter  lower  0.99999999
             norm_X(Wbar)  upper  69.058
           sup |chi Wbar|  upper  1.00001
                      eta  upper  3.079e-9
@@ -53,5 +60,4 @@ wrote certificate/output/D48_l40.json and certificate/output/D48_l40_tableA1.tex
               ||A^-1 B||  upper  0.1074
              ||L^-1||_L2  upper  0.1524
                        M  upper  23.72
-                    C_nl  upper  0.03534
                        r  exact  8e-9

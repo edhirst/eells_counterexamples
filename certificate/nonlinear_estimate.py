@@ -1,4 +1,4 @@
-"""Proposition 3.3 and Theorem 2.9: the nonlinear constant and the Newton-Kantorovich check.
+"""Proposition 3.2 and Theorem 2.10: the nonlinear constant and the Newton-Kantorovich check.
 
     C_nl = 4 ||chi Wbar||_inf (c_inf^3 + 2 c_inf^2 c_4^2),
     k(r) = C_nl r (3 ||Wbar||_X^2 + 3 r ||Wbar||_X + r^2),
@@ -11,7 +11,7 @@ from eells.reference import sobolev_constants
 
 
 def nonlinear_constant(chiW_sup):
-    c_inf, c_4 = sobolev_constants(True)
+    c_inf, c_4, _ = sobolev_constants(True)
     C = 4.0 * Ball.exact(chiW_sup) * (c_inf * c_inf * c_inf + 2.0 * c_inf * c_inf * c_4 * c_4)
     return float(C.upper()), float(c_inf.upper()), float(c_4.upper())
 

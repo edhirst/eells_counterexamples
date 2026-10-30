@@ -4,15 +4,17 @@
 Inputs
     --coefficients  JSON with the coefficients of Wbar in the basis of Proposition 2.2
     --chi           JSON with the G-invariant polynomial chi (default: chi = 1)
-    --cutoff        the mode cutoff l of the linear estimate (Section 3.2)
+    --cutoff        the mode cutoff l of the linear estimate (Section 3.3)
 
 Steps (all arithmetic rigorous: ball arithmetic of eells/ball.py, exact quadrature of eells/grid.py)
     1. grids: a quadrature grid exact for every integrand that is integrated, and a bounding grid
        whose Chebyshev-Fourier coefficients are exact for every function whose sup/inf is bounded;
     2. Proposition 3.1: C_residual = eps, the energy interval, C_homotopy  (approximate_bounds.py);
-    3. Section 3.2: eta, b_1, b_0, gamma, ||A^{-1}||, ||B||, ||C||, ||L^{-1}||, M  (linear_estimate.py);
-    4. Proposition 3.3 and Theorem 2.9: C_nl, r, and the inequalities M k < 1, M(eps + k r) <= r,
-       C_homotopy - c_inf r > 0  (nonlinear_estimate.py).
+    3. Section 3.3: eta, b_1, b_0, gamma, ||A^{-1}||, ||B||, ||C||, ||L^{-1}||, M  (linear_estimate.py);
+    4. Proposition 3.2 and Theorem 2.10: C_nl, r, and the inequalities M k < 1, M(eps + k r) <= r,
+       C_homotopy - c_inf r > 0  (nonlinear_estimate.py);
+    5. Proposition 4.2: c_5, min |Wbar|, C_energyparameter and the energy enclosure
+       [C_energy-lower2, C_energy-upper2] of the harmonic map, with ||w||_{C^0} < 1  (energy_estimate.py).
 Outputs: certificate/output/<name>.json (all bounds, rounded outward) and <name>_tableA1.tex.
 
 Usage:  python -m certificate.certify --coefficients data/Wbar_D40.json --cutoff 40
@@ -34,6 +36,7 @@ from eells.equation import degrees
 from . import approximate_bounds as ab
 from . import linear_estimate as le
 from . import nonlinear_estimate as ne
+from . import energy_estimate as ee
 from .rounding import round_up, round_down, sci
 
 
@@ -79,29 +82,38 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
     log(f"[3.1] min Wbar . V0 >= {hom_lo:.6f}   (max <= {hom_hi:.6f})  ({time.time() - t0:.0f}s)")
     nX = ne.norm_X(modes, values)
 
-    # ---- Section 3.2
+    # ---- Section 3.3
     cb = le.coefficient_bounds(Wb, chib, bound, deg, log=log)
     gamma = le.gamma_bound(cb["eta"], cb["b1"], cb["b0"], l)
-    log(f"[3.2] gamma >= {gamma:.4f}  (l = {l})")
+    log(f"[3.3] gamma >= {gamma:.4f}  (l = {l})")
     assert gamma > 0, "gamma <= 0: increase the cutoff l"
     A, B, C, B_lam, nB, nC, nB_lam, binfo = le.finite_blocks(Wq, chiq, quad, Hq, l, deg, batch=batch, log=log)
     invA, Z, nE, ainfo = le.inverse_bound(A, log=log)
     L2inv_literal = le.L2_inverse_bound_literal(invA, nB, nC, gamma)
-    log(f"[3.2] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = {1 / invA - nB * nC / gamma:.4f}: "
+    log(f"[3.3] literal Schur bound ||A^-1||^-1 - ||B|| ||D^-1|| ||C|| = {1 / invA - nB * nC / gamma:.4f}: "
         + (f"||L^-1|| <= {L2inv_literal:.4f}" if L2inv_literal else "NOT certified (negative)"))
     L2inv_w, winfo = le.L2_inverse_bound_weighted(invA, Z, nE, B_lam, nB_lam, nC, gamma, l, log=log)
-    log(f"[3.2] weighted Schur bound: ||L^-1||_(L2->L2) <= {L2inv_w:.4f}")
+    log(f"[3.3] weighted Schur bound: ||L^-1||_(L2->L2) <= {L2inv_w:.4f}")
     L2inv, sinfo = le.L2_inverse_bound_paper(invA, Z, nE, B, nB, nC, gamma, log=log)
     M = le.M_bound(cb["eta"], cb["b1"], cb["b0"], L2inv)
-    log(f"[3.2] ||L^-1||_(L2->L2) <= {L2inv:.4f} (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = {M:.4f}  ({time.time() - t0:.0f}s)")
+    log(f"[3.3] ||L^-1||_(L2->L2) <= {L2inv:.4f} (paper's Schur bound with ||A^-1 B||),   ||L^-1||_(Y->X) <= M = {M:.4f}  ({time.time() - t0:.0f}s)")
 
-    # ---- Proposition 3.3 / Theorem 2.9
+    # ---- Proposition 3.2 / Theorem 2.10
     Cnl, c_inf, c_4 = ne.nonlinear_constant(cb["chiW_sup"])
     nk = ne.newton_kantorovich(M, eps, Cnl, nX, hom_lo, c_inf)
     log(f"[4]   C_nl <= {Cnl:.5f},  ||Wbar||_X <= {nX:.4f},  r = {nk['r']}:  M k = {nk['Mk']:.3e} < 1 {nk['conditions']['Mk_lt_1']},  "
         f"M(eps + k r) = {nk['M_eps_plus_kr']:.3e} <= r {nk['conditions']['M_eps_plus_kr_le_r']},  "
         f"C_hom - c_inf r = {nk['homotopy_margin']:.5f} > 0 {nk['conditions']['homotopy_margin_positive']}")
-    log(f"CERTIFICATE {'PASSED' if nk['all_ok'] else 'FAILED'}  ({time.time() - t0:.0f}s)")
+
+    # ---- Proposition 4.2
+    minW_lo, maxW_hi = ab.min_norm_bound(Wb, bound, D)
+    en = ee.energy_of_harmonic_map(energy["E_lower"], energy["E_upper"], minW_lo, nX, nk["r"])
+    log(f"[4.2] min |Wbar| >= {minW_lo:.10f} (max |Wbar| <= {maxW_hi:.10f}),  C_energyparameter >= {en['C_energyparameter']:.10f},  "
+        f"||w||_C0 <= {en['w_C0_bound']:.3e} < 1 {en['conditions']['w_C0_lt_1']},  ||dw||_L2 <= {en['dw_L2_bound']:.3e},  c_5 <= {en['c_5']:.6f}")
+    log(f"[4.2] energy of the harmonic map u: [{en['C_energy_lower2']:.15f}, "
+        + (f"{en['C_energy_upper2']:.15f}]" if en["all_ok"] else "no upper bound (||w||_C0 bound >= 1)]") + f"  ({time.time() - t0:.0f}s)")
+    passed = nk["all_ok"] and en["all_ok"]
+    log(f"CERTIFICATE {'PASSED' if passed else 'FAILED'}  ({time.time() - t0:.0f}s)")
 
     table = [  # (label, latex symbol, value string, kind)
         ("deg Wbar", r"$\deg\bar W$", str(D), "exact"),
@@ -109,10 +121,15 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
         ("l", r"$l$", str(l), "exact"),
         ("c_inf", r"$c_\infty$", round_up(c_inf, 6), "upper"),
         ("c_4", r"$c_4$", round_up(c_4, 6), "upper"),
+        ("c_5", r"$c_5$", round_up(en["c_5"], 6), "upper"),
         ("C_residual", r"$\Cr{const:residual}$", round_up(eps, 4), "upper"),
         ("C_energy-lower", r"$\Cr{const:energy-lower}$", round_down(energy["E_lower"], 16), "lower"),
         ("C_energy-upper", r"$\Cr{const:energy-upper}$", round_up(energy["E_upper"], 16), "upper"),
         ("C_homotopy", r"$\Cr{const:homotopy}$", round_down(hom_lo, 4), "lower"),
+        ("C_nl", r"$\Cr{const:non-linear}$", round_up(Cnl, 4), "upper"),
+        ("C_energy-lower2", r"$\Cr{const:energy-lower2}$", round_down(en["C_energy_lower2"], 16), "lower"),
+        ("C_energy-upper2", r"$\Cr{const:energy-upper2}$", round_up(en["C_energy_upper2"], 10) if en["all_ok"] else "--", "upper"),
+        ("C_energyparameter", r"$\Cr{const:energyparameter}$", round_down(en["C_energyparameter"], 8), "lower"),
         ("norm_X(Wbar)", r"$\|\bar W\|_X$", round_up(nX, 5), "upper"),
         ("sup |chi Wbar|", r"$\|\chi\bar W\|_{C^0}$", round_up(cb["chiW_sup"], 6), "upper"),
         ("eta", r"$\eta$", round_up(cb["eta"], 4), "upper"),
@@ -125,7 +142,6 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
         ("||A^-1 B||", r"$\|A^{-1}B\|_{L^2\to L^2}$", round_up(sinfo["normA_inv_B"], 4), "upper"),
         ("||L^-1||_L2", r"$\|\mathscr L^{-1}\|_{L^2\to L^2}$", round_up(L2inv, 4), "upper"),
         ("M", r"$\|\mathscr L^{-1}\|_{Y\to X}$", round_up(M, 4), "upper"),
-        ("C_nl", r"$\Cr{const:non-linear}$", round_up(Cnl, 4), "upper"),
         ("r", r"$r$", nk["r"], "exact"),
     ]
     out["table_A1"] = [{"name": a, "latex": b, "value": c, "kind": d} for a, b, c, d in table]
@@ -134,16 +150,17 @@ def certify(coeff_path, chi_path, l, out_dir="certificate/output", name=None, ba
                       "blocks": binfo, "inverse": ainfo, "schur_paper": sinfo, "L2_inverse": L2inv,
                       "schur_weighted": winfo, "L2_inverse_weighted_schur": L2inv_w,
                       "L2_inverse_literal_schur": L2inv_literal, "M": M, "nonlinear": {"C_nl": Cnl, "c_inf": c_inf, "c_4": c_4, "norm_X": nX},
-                      "newton_kantorovich": nk, "seconds": time.time() - t0}
-    out["passed"] = nk["all_ok"]
+                      "newton_kantorovich": nk, "min_abs_Wbar": {"min_lower": minW_lo, "max_upper": maxW_hi},
+                      "energy_of_u": en, "seconds": time.time() - t0}
+    out["passed"] = passed
     Path(out_dir).mkdir(parents=True, exist_ok=True)
     Path(out_dir, f"{name}.json").write_text(json.dumps(out, indent=1, default=float))
-    Path(out_dir, f"{name}_tableA1.tex").write_text(latex_table(table, D, l, nk))
+    Path(out_dir, f"{name}_tableA1.tex").write_text(latex_table(table, D, Dchi, l, nk, en))
     log(f"wrote {out_dir}/{name}.json and {out_dir}/{name}_tableA1.tex")
     return out
 
 
-def latex_table(table, D, l, nk):
+def latex_table(table, D, Dchi, l, nk, en):
     rows = []
     for name, sym, val, kind in table:
         rel = {"upper": r"$\le$", "lower": r"$\ge$", "exact": "$=$"}[kind]
@@ -155,9 +172,14 @@ def latex_table(table, D, l, nk):
         else:
             rows.append(f"{sym} & {rel} ${v}$\\\\")
     body = "\n".join(rows)
+    chi = r" and $\chi\equiv 1$" if Dchi == 0 else f" and $\\deg\\chi={Dchi}$"
+    checks = (f"$Mk={sci(round_up(nk['Mk'], 3))}<1$, $M(\\varepsilon+kr)={sci(round_up(nk['M_eps_plus_kr'], 3))}\\le r$, "
+              f"$\\Cr{{const:homotopy}}-c_\\infty r>0$ and $\\|w\\|_{{C^0}}\\le{sci(round_up(en['w_C0_bound'], 3))}<1$")
+    caption = (f"Constants for the certificate, for $\\deg\\bar W={D}$, $l={l}${chi}; upper bounds are rounded up and "
+               f"lower bounds down. With these constants {checks}.")
     return (f"% generated by certificate/certify.py (deg Wbar = {D}, cutoff l = {l}); every value is an outward-rounded rigorous bound\n"
             "\\begin{table}[H]\n\\centering\n\\begin{tabular}{lc}\n\\toprule\nVariable & Certified value or bound\\\\\n\\midrule\n"
-            f"{body}\n\\bottomrule\n\\end{{tabular}}\n\\caption{{Constants for the certificate.}}\n\\label{{master-table}}\n\\end{{table}}\n")
+            f"{body}\n\\bottomrule\n\\end{{tabular}}\n\\caption{{{caption}}}\n\\label{{master-table}}\n\\end{{table}}\n")
 
 
 def main():

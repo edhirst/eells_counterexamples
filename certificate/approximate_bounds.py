@@ -8,6 +8,8 @@
                   E = (1/2) [ int N - int N delta ] + err,   |err| <= (1/2) (sup delta^2 / (1 - sup|delta|)) int N,
               the two integrals being exact (polynomial integrands) and sup|delta| a rigorous bound.
 * homotopy:   min Wbar . V_0 >= C_homotopy  (Chebyshev-Fourier bound of the degree D + 4 polynomial).
+* min |Wbar|: a lower bound (Chebyshev-Fourier bound of |Wbar|^2), used for C_energyparameter in
+              Proposition 4.2 (energy_estimate.py).
 """
 from __future__ import annotations
 
@@ -60,3 +62,12 @@ def homotopy_bound(W_bound, grid_bound, D):
     f = dot(W_bound.val, V0)
     lo, hi = grid_bound.analyse(f, D + 4).bounds(N1=8192, N2=1024)
     return lo, hi
+
+
+def min_norm_bound(W_bound, grid_bound, D):
+    """Lower bound of min_{S^3} |Wbar| (and an upper bound of max |Wbar|), from the Chebyshev-Fourier
+    bounds of the degree 2D polynomial |Wbar|^2."""
+    rho = dot(W_bound.val, W_bound.val)
+    lo, hi = grid_bound.analyse(rho, 2 * D).bounds()
+    lo_b, hi_b = Ball.exact(max(lo, 0.0)).sqrt(), Ball.exact(max(hi, 0.0)).sqrt()
+    return float(lo_b.lower()), float(hi_b.upper())

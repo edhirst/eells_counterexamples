@@ -1,4 +1,4 @@
-"""Section 3.2: the linear estimate.
+"""Section 3.3: the linear estimate.
 
 * coefficient bounds   eta >= sup |chi |Wbar|^4 - 1|,  b_1^2 >= sup sum_a ||M_a||_F^2,
                        b_0^2 >= sup ||M_0||_F^2   (Chebyshev-Fourier bounds on the bounding grid),

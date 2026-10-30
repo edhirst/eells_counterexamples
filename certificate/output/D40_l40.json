@@ -46,6 +46,12 @@
    "kind": "upper"
   },
   {
+   "name": "c_5",
+   "latex": "$c_5$",
+   "value": "0.314270",
+   "kind": "upper"
+  },
+  {
    "name": "C_residual",
    "latex": "$\\Cr{const:residual}$",
    "value": "1.988e-8",
@@ -67,6 +73,30 @@
    "name": "C_homotopy",
    "latex": "$\\Cr{const:homotopy}$",
    "value": "0.6230",
+   "kind": "lower"
+  },
+  {
+   "name": "C_nl",
+   "latex": "$\\Cr{const:non-linear}$",
+   "value": "0.03534",
+   "kind": "upper"
+  },
+  {
+   "name": "C_energy-lower2",
+   "latex": "$\\Cr{const:energy-lower2}$",
+   "value": "125.2744885848258",
+   "kind": "lower"
+  },
+  {
+   "name": "C_energy-upper2",
+   "latex": "$\\Cr{const:energy-upper2}$",
+   "value": "125.2745223",
+   "kind": "upper"
+  },
+  {
+   "name": "C_energyparameter",
+   "latex": "$\\Cr{const:energyparameter}$",
+   "value": "0.99999986",
    "kind": "lower"
   },
   {
@@ -142,12 +172,6 @@
    "kind": "upper"
   },
   {
-   "name": "C_nl",
-   "latex": "$\\Cr{const:non-linear}$",
-   "value": "0.03534",
-   "kind": "upper"
-  },
-  {
    "name": "r",
    "latex": "$r$",
    "value": "9.5e-7",
@@ -194,7 +218,7 @@
    "max_radius_A": 1.5824488068857588e-08,
    "max_radius_B": 3.0422638565271764e-07,
    "max_radius_C": 1.3465358393283057e-08,
-   "seconds": 280.8448021411896
+   "seconds": 290.9502058029175
   },
   "inverse": {
    "normE": 3.2232956166451425e-08,
@@ -240,7 +264,24 @@
    },
    "all_ok": true
   },
-  "seconds": 302.0738670825958
+  "min_abs_Wbar": {
+   "min_lower": 0.9999999995561446,
+   "max_upper": 1.0000000004263923
+  },
+  "energy_of_u": {
+   "c_5": 0.3142696805273547,
+   "min_abs_Wbar": 0.9999999995561446,
+   "C_energyparameter": 0.9999998651803532,
+   "w_C0_bound": 2.6875158195706707e-07,
+   "dw_L2_bound": 1.1963855632779933e-05,
+   "C_energy_lower2": 125.27448858482589,
+   "C_energy_upper2": 125.27452225342603,
+   "conditions": {
+    "w_C0_lt_1": true
+   },
+   "all_ok": true
+  },
+  "seconds": 311.3010449409485
  },
  "passed": true
 }
