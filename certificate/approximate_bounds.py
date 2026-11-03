@@ -1,13 +1,14 @@
 """Proposition 3.1: rigorous bounds for the approximate solution Wbar.
 
-* residual:   ||F(0)||_{L^2} <= C_residual     (F(0) = -(chi/2) Pi Q is a polynomial; its
+* residual:   ||F(0)||_{L^2} <= C_residual     (F(0) = -(1/2) Pi Q is a polynomial; its
               squared norm is integrated exactly on the quadrature grid)
 * energy:     C_lower <= E(Wbar/|Wbar|) <= C_upper, with
                   E = (1/2) int N / |Wbar|^4,   N = sum_a |Wbar x d_a Wbar|^2 = sum_a (|Wbar|^2 |d_a Wbar|^2 - (Wbar . d_a Wbar)^2),
               written with delta = |Wbar|^4 - 1 as  1/(1+delta) = 1 - delta + delta^2/(1+delta):
                   E = (1/2) [ int N - int N delta ] + err,   |err| <= (1/2) (sup delta^2 / (1 - sup|delta|)) int N,
               the two integrals being exact (polynomial integrands) and sup|delta| a rigorous bound.
-* homotopy:   min Wbar . V_0 >= C_homotopy  (Chebyshev-Fourier bound of the degree D + 4 polynomial).
+* homotopy:   min Wbar . V >= C_homotopy for the reference field V = V_{q,alpha} of eq. (referencemap)
+              and Remark rem:family (Chebyshev-Fourier bound of the degree D + 2q polynomial).
 * min |Wbar|: a lower bound (Chebyshev-Fourier bound of |Wbar|^2), used for C_energyparameter in
               Proposition 4.2 (energy_estimate.py).
 """
@@ -21,9 +22,9 @@ from eells.equation import OperatorCoefficients, dot
 from eells.reference import reference_field
 
 
-def residual_bound(W, chi, grid, deg):
+def residual_bound(W, grid, deg):
     """Upper bound of ||F(0)||_{L^2}; returns (bound, ball of the squared norm)."""
-    op = OperatorCoefficients(W, chi)
+    op = OperatorCoefficients(W)
     F0 = op.residual()
     sq = grid.integrate(dot(F0, F0), 2 * deg["F0"])
     return float(sq.sqrt(nonneg=True).upper()), sq
@@ -56,11 +57,11 @@ def energy_bounds(W_quad, grid_quad, W_bound, grid_bound, deg, D):
             "sup_abs_norm4_minus_1": dmax, "int_N": I1, "int_N_delta": I2}
 
 
-def homotopy_bound(W_bound, grid_bound, D):
-    """Lower bound C_homotopy of  Wbar . (w^2 - zbar^4, 2 Re(z^2 w))  over S^3 (and an upper bound)."""
-    V0 = reference_field(grid_bound)
-    f = dot(W_bound.val, V0)
-    lo, hi = grid_bound.analyse(f, D + 4).bounds(N1=8192, N2=1024)
+def homotopy_bound(W_bound, grid_bound, D, q, alpha):
+    """Lower bound C_homotopy of  Wbar . V_{q,alpha}  over S^3 (and an upper bound)."""
+    V = reference_field(grid_bound, q, alpha)
+    f = dot(W_bound.val, V)
+    lo, hi = grid_bound.analyse(f, D + 2 * q).bounds(N1=max(8192, 16 * D), N2=max(1024, 16 * (D // (q + 1))))
     return lo, hi
 
 

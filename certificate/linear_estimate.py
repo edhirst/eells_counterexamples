@@ -1,31 +1,26 @@
 """Section 3.3: the linear estimate.
 
-* coefficient bounds   eta >= sup |chi |Wbar|^4 - 1|,  b_1^2 >= sup sum_a ||M_a||_F^2,
+* coefficient bounds   eta >= sup | |Wbar|^4 - 1 |,  b_1^2 >= sup sum_a ||M_a||_F^2,
                        b_0^2 >= sup ||M_0||_F^2   (Chebyshev-Fourier bounds on the bounding grid),
-                       and  ||chi Wbar||_{C^0}.
+                       and  ||Wbar||_{C^0}  (for C_nl of Proposition 3.2).
 * gamma = (1 - eta)(l+1)(l+3) - b_1 sqrt((l+1)(l+3)) - b_0 > 0,    ||D^{-1}||_{L^2 -> L^2} <= 1/gamma.
-* the finite blocks  A = (<Psi_a, L Psi_b>)_{l_a, l_b <= l},
-                     B: l_a <= l < l_b <= l + K,   C: l_b <= l < l_a <= l + K,  K = 4 deg Wbar + deg chi,
-  by exact quadrature in ball arithmetic;  ||B||_2, ||C||_2 <= min(sqrt(||.||_1 ||.||_inf), ||.||_F).
+* the finite block  A = (<Psi_a, L Psi_b>)_{l_a, l_b <= l}  by exact quadrature in ball arithmetic.
 * ||A^{-1}||_2 <= sqrt(||Z||_1 ||Z||_inf) / (1 - sqrt(||E||_1 ||E||_inf)),  E = I - Z A,  Z ~ mid(A)^{-1}.
-* Schur complement S = A - B D^{-1} C.  Three bounds are computed:
-  (literal, first draft)
-      ||S^{-1}|| <= 1 / (||A^{-1}||^{-1} - ||B|| ||D^{-1}|| ||C||),
-  (paper) with the approximate inverse Z also applied to B,
-      ||A^{-1} B|| <= ||Z B|| / (1 - ||E||),   ||S u|| >= ||A^{-1} S u|| / ||A^{-1}||
-      = ||u - A^{-1} B D^{-1} C u|| / ||A^{-1}||  >=  (1 - ||A^{-1} B|| ||D^{-1}|| ||C||) ||u|| / ||A^{-1}||,
-      so  ||S^{-1}|| <= ||A^{-1}|| / (1 - ||A^{-1} B|| ||D^{-1}|| ||C||),
-  (weighted) using the Laplacian weight on the high modes: the lower bound for D gives
-      ||D h||_{L^2} >= (gamma / lambda_{l+1}) ||Delta h||_{L^2},  lambda_{l+1} = (l+1)(l+3),
-  i.e.  ||(-Delta) D^{-1}||_{L^2->L^2} <= lambda_{l+1}/gamma, and (-Delta)^{-1} is diagonal on
-  the high modes with entries 1/lambda_b, lambda_b = l_b (l_b + 2); hence
-      theta := ||A^{-1} B D^{-1} C|| <= ||A^{-1} B Lambda^{-1}|| (lambda_{l+1}/gamma) ||C||,
-      ||A^{-1} B Lambda^{-1}|| <= ||Z B Lambda^{-1}|| / (1 - ||E||),
-      ||S^{-1}|| <= ||A^{-1}|| / (1 - theta),        ||B D^{-1}|| <= ||B Lambda^{-1}|| lambda_{l+1}/gamma.
-  The literal bound fails for this problem (||B||, ||C|| grow like b_1 l while gamma ~ l^2, so
-  ||B|| ||C|| / gamma ~ b_1^2 >> ||A^{-1}||^{-1}); the weighted bound exploits that B D^{-1} C acts
-  on the highest low modes, where A is large.
-* ||L^{-1}||_{L^2->L^2} <= ||D^{-1}|| + ||S^{-1}|| sqrt((1 + ||B D^{-1}||^2)(1 + ||D^{-1} C||^2)).
+* B and C.  Delta preserves the degree and the multipliers of L have degree <= K = 4 deg Wbar, so
+  B (high -> low) and C (low -> high) are finite.  Their norms are obtained from Gram matrices
+  of the low modes: with P_low the L^2-projection onto H_{<= l} and u in H_{<= l},
+      ||C u||^2 = ||L u||^2 - ||P_low L u||^2 = u^T (G_L - A^T A) u,        G_L  = (<L Psi_a, L Psi_b>),
+      ||B^T u||^2 = ||L^* u||^2 - ||P_low L^* u||^2 = u^T (G_L* - A A^T) u,   G_L* = (<L^* Psi_a, L^* Psi_b>),
+  where L^* is the L^2-adjoint of L (eells/equation.py; L and L^* map G-equivariant fields to
+  G-equivariant fields, and <Psi_a, L^* Psi_b> = A_{ba}).  The Gram matrices are integrated
+  exactly (degree 2(l + 4 deg Wbar + 2)), so  ||C||^2 = lambda_max(G_L - A^T A)  and
+  ||B||^2 = lambda_max(G_L* - A A^T)  are bounded rigorously; likewise
+      ||A^{-1} B|| <= ||Z B|| / (1 - ||E||),     ||Z B||^2 = lambda_max(Z (G_L* - A A^T) Z^T).
+  (This replaces the entry-by-entry computation of B and C, whose number of entries grows like
+  (l + 4 deg Wbar)^2 l^2; the norms are the same.)
+* Schur complement S = A - B D^{-1} C:  ||S u|| >= (1 - ||A^{-1} B|| ||D^{-1}|| ||C||) ||u|| / ||A^{-1}||, and
+      ||L^{-1}||_{L^2->L^2} <= ||D^{-1}|| + ||A^{-1}|| sqrt((1 + ||B||^2 ||D^{-1}||^2)(1 + ||C||^2 ||D^{-1}||^2))
+                                             / (1 - ||A^{-1} B|| ||D^{-1}|| ||C||).
 * M = 2/(1-eta) + (1 + 2 b_0/(1-eta) + b_1^2/(1-eta)^2) ||L^{-1}||_{L^2->L^2}  >=  ||L^{-1}||_{Y -> X}.
 """
 from __future__ import annotations
@@ -35,28 +30,35 @@ import time
 import numpy as np
 
 from eells import arith as ar
-from eells.ball import Ball, matmul, norm_1, norm_inf, norm_2, val_up
-from eells.equation import OperatorCoefficients, dot
+from eells.ball import Ball, matmul, concatenate, norm_1, norm_inf, norm_2, val_up
+from eells.equation import OperatorCoefficients
 from eells.harmonics import vector_modes
 
 
-def coefficient_bounds(W_bound, chi_bound, grid_bound, deg, log=print):
-    op = OperatorCoefficients(W_bound, chi_bound)
-    lo, hi = grid_bound.analyse(op.P - 1.0, deg["P"]).bounds()
+def coefficient_bounds(W_bound, grid_bound, deg, log=print):
+    """eta, b_1, b_0 of Section 3.3 and sup |Wbar| (rigorous upper bounds)."""
+    op = OperatorCoefficients(W_bound)
+    lo, hi = grid_bound.analyse(op.P - 1.0, deg["P"]).bounds(*fine_grid(deg["P"], grid_bound.q))
     eta = max(abs(lo), abs(hi))
     m1, m0 = op.frobenius_squares()
-    _, s1 = grid_bound.analyse(m1, 2 * deg["M"]).bounds()
-    _, s0 = grid_bound.analyse(m0, 2 * deg["M0"]).bounds()
+    _, s1 = grid_bound.analyse(m1, 2 * deg["M"]).bounds(*fine_grid(2 * deg["M"], grid_bound.q))
+    _, s0 = grid_bound.analyse(m0, 2 * deg["M0"]).bounds(*fine_grid(2 * deg["M0"], grid_bound.q))
     b1 = float(val_up(np.sqrt(max(s1, 0.0)), 1))
     b0 = float(val_up(np.sqrt(max(s0, 0.0)), 1))
-    _, sc = grid_bound.analyse(chi_bound * chi_bound * op.rho, 2 * deg["chi"] + 2 * deg["W"]).bounds()
-    chiW = float(val_up(np.sqrt(max(sc, 0.0)), 1))
+    _, sw = grid_bound.analyse(op.rho, deg["rho"]).bounds(*fine_grid(deg["rho"], grid_bound.q))
+    W_sup = float(val_up(np.sqrt(max(sw, 0.0)), 1))
     # non-rigorous grid maxima, for information
     info = {"eta_grid": float(np.abs(ar.midpoint(op.P - 1.0)).max()),
             "b1_grid": float(np.sqrt(ar.midpoint(m1).max())), "b0_grid": float(np.sqrt(ar.midpoint(m0).max()))}
     log(f"  eta <= {eta:.3e} (grid {info['eta_grid']:.3e}),  b1 <= {b1:.4f} (grid {info['b1_grid']:.4f}),  "
-        f"b0 <= {b0:.4f} (grid {info['b0_grid']:.4f}),  ||chi Wbar||_inf <= {chiW:.6f}")
-    return {"eta": eta, "b1": b1, "b0": b0, "chiW_sup": chiW, **info}
+        f"b0 <= {b0:.4f} (grid {info['b0_grid']:.4f}),  ||Wbar||_inf <= {W_sup:.6f}")
+    return {"eta": eta, "b1": b1, "b0": b0, "W_sup": W_sup, **info}
+
+
+def fine_grid(deg, q):
+    """Fine evaluation grid (N1, N2) for ChebFourier.bounds, scaled with the degree so that the
+    Lipschitz remainder stays small."""
+    return max(2048, 8 * (deg // 2)), max(512, 8 * (deg // (q + 1)))
 
 
 def gamma_bound(eta, b1, b0, l):
@@ -66,57 +68,55 @@ def gamma_bound(eta, b1, b0, l):
     return float(g.lower())
 
 
-def finite_blocks(W_quad, chi_quad, grid_quad, H, l, deg, batch=48, log=print):
-    """A (ball matrix), ||B||_2 and ||C||_2 (upper bounds), with the mode lists."""
+def lambda_max(S, squarings=4):
+    """Upper bound of the largest eigenvalue of a symmetric positive semi-definite ball matrix
+    (= its spectral norm, bounded through repeated squaring, eells.ball.norm_2)."""
+    S = (S + S.T) * 0.5                     # encloses the (symmetric) exact matrix; rounding is accounted for
+    return norm_2(S, squarings=squarings)
+
+
+def finite_blocks(W_quad, grid_quad, H, l, q, deg, batch=32, chunk_points=6000, log=print):
+    """The ball matrices A, G_L - A^T A (= C^T C) and G_L* - A A^T (= B B^T) of the low modes,
+    accumulated block by block over the rows of the quadrature grid."""
     t0 = time.time()
-    K = deg["K"]
-    low = vector_modes(l)
-    high = [m for m in vector_modes(l + K) if m.l > l]
-    d, dh = len(low), len(high)
-    op = OperatorCoefficients(W_quad, chi_quad)
-    omega = grid_quad.omega
-    G = omega.size
-    p_block = 2 * l + K + deg["Kp"]
-    assert grid_quad.exact_for(p_block)
-    # low modes: values (test functions) and L Psi (weighted)
-    val_low, LPsi_low = [], []
-    for i in range(0, d, batch):
-        v, g, lp = H.evaluate(low[i:i + batch])
-        val_low.append(v)
-        LPsi_low.append(op.apply_batch(v, g, lp) * omega)
-    val_low = ar.stack([x for b in val_low for x in [b[k] for k in range(len(b))]])   # (d, 3, i, b)
-    LPsi_low = ar.stack([x for b in LPsi_low for x in [b[k] for k in range(len(b))]])
-    VL = val_low.reshape(d, 3 * G)
-    WL = LPsi_low.reshape(d, 3 * G)
-    A = matmul(VL, WL.T)
-    log(f"  A block {d}x{d} assembled ({time.time() - t0:.0f}s)")
-    # high modes in batches: C rows (values) and B columns (L Psi)
-    Bm = np.zeros((d, dh)); Br = np.zeros((d, dh))
-    Cm = np.zeros((dh, d)); Cr = np.zeros((dh, d))
-    for i in range(0, dh, batch):
-        mk = high[i:i + batch]
-        v, g, lp = H.evaluate(mk)
-        nb = len(mk)
-        Cblk = matmul(v.reshape(nb, 3 * G), WL.T)
-        Cm[i:i + nb], Cr[i:i + nb] = Cblk.m, Cblk.r
-        LPsi = (op.apply_batch(v, g, lp) * omega).reshape(nb, 3 * G)
-        Bblk = matmul(VL, LPsi.T)
-        Bm[:, i:i + nb], Br[:, i:i + nb] = Bblk.m, Bblk.r
-        if (i // batch) % 10 == 0:
-            log(f"    high modes {i + nb}/{dh} ({time.time() - t0:.0f}s)")
-    B, C = Ball(Bm, Br), Ball(Cm, Cr)
-    nB, nC = norm_2(B), norm_2(C)
-    lam_high = np.array([float(m.l * (m.l + 2)) for m in high])
-    B_lam = B * Ball.exact(lam_high).inv().reshape(1, -1)             # B (-Delta)^{-1} on the high modes
-    nB_lam = norm_2(B_lam)
-    info = {"d_low": d, "d_high": dh, "max_degree": l + K, "normB_lambda": nB_lam,
-            "normB_float": float(np.linalg.norm(Bm, 2)), "normC_float": float(np.linalg.norm(Cm, 2)),
-            "normB_frobenius": float(np.linalg.norm(Bm)), "normC_frobenius": float(np.linalg.norm(Cm)),
-            "max_radius_A": float(A.r.max()), "max_radius_B": float(Br.max()), "max_radius_C": float(Cr.max()),
-            "seconds": time.time() - t0}
-    log(f"  ||B|| <= {nB:.4f} (spectral mid {info['normB_float']:.4f}),  ||C|| <= {nC:.4f} (spectral mid {info['normC_float']:.4f})  "
-        f"[{dh} high modes up to degree {l + K}, {time.time() - t0:.0f}s]")
-    return A, B, C, B_lam, nB, nC, nB_lam, info
+    low = vector_modes(l, q)
+    d = len(low)
+    assert grid_quad.exact_for(2 * (l + deg["Kp"])), "quadrature grid not exact for the Gram matrices"
+    A = GL = GA = None
+    chunks = grid_quad.row_chunks(chunk_points)
+    for ic, rows in enumerate(chunks):
+        op = OperatorCoefficients(W_quad.rows(rows))
+        w = grid_quad.omega[rows].reshape(1, 1, -1)
+        V, L, La = [], [], []
+        for i in range(0, d, batch):
+            v, g, lp = H.evaluate(low[i:i + batch], rows)
+            k = len(low[i:i + batch])
+            V.append(v.reshape(k, 3, -1))
+            L.append(op.apply_batch(v, g, lp).reshape(k, 3, -1))
+            La.append(op.apply_adjoint_batch(v, g, lp).reshape(k, 3, -1))
+        V, L, La = concatenate(V), concatenate(L), concatenate(La)
+        Vw = (V * w).reshape(d, -1)
+        Lw = (L * w).reshape(d, -1)
+        Law = (La * w).reshape(d, -1)
+        L, La = L.reshape(d, -1), La.reshape(d, -1)
+        dA, dGL, dGA = matmul(Vw, L.T), matmul(Lw, L.T), matmul(Law, La.T)
+        A = dA if A is None else A + dA
+        GL = dGL if GL is None else GL + dGL
+        GA = dGA if GA is None else GA + dGA
+        if ic % max(1, len(chunks) // 8) == 0 or ic == len(chunks) - 1:
+            log(f"    grid rows {rows.stop}/{grid_quad.Ns + 1} ({time.time() - t0:.0f}s)")
+    CtC = GL - matmul(A.T, A)
+    BBt = GA - matmul(A, A.T)
+    nC = float(val_up(np.sqrt(lambda_max(CtC)), 1))
+    nB = float(val_up(np.sqrt(lambda_max(BBt)), 1))
+    info = {"d_low": d, "max_degree_coupled": l + deg["K"],
+            "normB_float": float(np.sqrt(max(np.linalg.eigvalsh(0.5 * (BBt.m + BBt.m.T)).max(), 0.0))),
+            "normC_float": float(np.sqrt(max(np.linalg.eigvalsh(0.5 * (CtC.m + CtC.m.T)).max(), 0.0))),
+            "max_radius_A": float(A.r.max()), "max_radius_CtC": float(CtC.r.max()), "max_radius_BBt": float(BBt.r.max()),
+            "chunks": len(chunks), "seconds": time.time() - t0}
+    log(f"  A block {d}x{d};  ||B|| <= {nB:.4f} (float {info['normB_float']:.4f}),  ||C|| <= {nC:.4f} "
+        f"(float {info['normC_float']:.4f})  [coupled modes up to degree {l + deg['K']}, {time.time() - t0:.0f}s]")
+    return A, BBt, nB, nC, info
 
 
 def inverse_bound(A, log=print):
@@ -132,54 +132,19 @@ def inverse_bound(A, log=print):
     return bound, Z, nE, {"normE": nE, "normZ": nZ, "sigma_min_midA": float(sv.min()), "sigma_max_midA": float(sv.max())}
 
 
-def L2_inverse_bound_literal(invA, nB, nC, gamma):
-    """||L^{-1}||_{L^2 -> L^2} by the literal Schur-complement formula of the draft (may fail)."""
-    invD = 1.0 / Ball.exact(gamma)
-    b, c, a = Ball.exact(nB), Ball.exact(nC), Ball.exact(invA)
-    denom = 1.0 / a - b * invD * c
-    if denom.lower() <= 0:
-        return None
-    num = ((1.0 + b * b * invD * invD) * (1.0 + c * c * invD * invD)).sqrt()
-    return float((invD + num / denom).upper())
-
-
-def L2_inverse_bound_paper(invA, Z, nE, B, nB, nC, gamma, log=print):
-    """||L^{-1}||_{L^2 -> L^2} by the Schur complement with ||A^{-1} B|| <= ||Z B|| / (1 - ||E||)
-    (the argument of the paper)."""
-    nZB = norm_2(matmul(Ball(Z), B))
+def L2_inverse_bound(invA, Z, nE, BBt, nB, nC, gamma, log=print):
+    """||L^{-1}||_{L^2 -> L^2} by the Schur complement with ||A^{-1} B|| <= ||Z B|| / (1 - ||E||)."""
+    Zb = Ball(Z)
+    nZB = float(val_up(np.sqrt(lambda_max(matmul(matmul(Zb, BBt), Zb.T))), 1))
     AB = Ball.exact(nZB) / (1.0 - Ball.exact(nE))                # ||A^{-1} B||
     invD = 1.0 / Ball.exact(gamma)
     theta = AB * invD * Ball.exact(nC)                           # ||A^{-1} B|| ||D^{-1}|| ||C||
-    assert theta.upper() < 1, f"paper's Schur bound not certified: ||A^-1 B|| ||D^-1|| ||C|| = {theta.upper()}"
-    invS = Ball.exact(invA) / (1.0 - theta)
+    assert theta.upper() < 1, f"Schur bound not certified: ||A^-1 B|| ||D^-1|| ||C|| = {theta.upper()}"
     BD = Ball.exact(nB) * invD
     DC = Ball.exact(nC) * invD
-    Linv = invD + invS * ((1.0 + BD * BD) * (1.0 + DC * DC)).sqrt()
-    log(f"  ||Z B|| <= {nZB:.4e},  ||A^-1 B|| <= {float(AB.upper()):.4e},  ||A^-1 B|| ||D^-1|| ||C|| <= {float(theta.upper()):.4e},  "
-        f"||S^-1|| <= {float(invS.upper()):.4f}")
-    return float(Linv.upper()), {"normZB": nZB, "normA_inv_B": float(AB.upper()), "theta": float(theta.upper()),
-                                 "normS_inv": float(invS.upper())}
-
-
-def L2_inverse_bound_weighted(invA, Z, nE, B_lam, nB_lam, nC, gamma, l, log=print):
-    """||L^{-1}||_{L^2 -> L^2} by the Schur complement with the Laplacian-weighted coupling bound."""
-    lam = float((l + 1) * (l + 3))
-    nZB = norm_2(matmul(Ball(Z), B_lam))                       # ||Z B Lambda^{-1}||
-    ratio = Ball.exact(lam) / Ball.exact(gamma)                  # ||(-Delta) D^{-1}||
-    AB = Ball.exact(nZB) / (1.0 - Ball.exact(nE))                # ||A^{-1} B (-Delta)^{-1}||
-    theta = AB * ratio * Ball.exact(nC)
-    assert theta.upper() < 1, f"weighted Schur bound not certified: theta = {theta.upper()}"
-    invS = Ball.exact(invA) / (1.0 - theta)
-    BD = Ball.exact(nB_lam) * ratio                              # ||B D^{-1}||
-    DC = Ball.exact(nC) / Ball.exact(gamma)                      # ||D^{-1} C||
-    invD = 1.0 / Ball.exact(gamma)
-    Linv = invD + invS * ((1.0 + BD * BD) * (1.0 + DC * DC)).sqrt()
-    log(f"  ||Z B Lambda^-1|| <= {nZB:.4e},  ||A^-1 B (-Delta)^-1|| <= {float(AB.upper()):.4e},  "
-        f"||(-Delta) D^-1|| <= {float(ratio.upper()):.4f},  theta <= {float(theta.upper()):.4e},  "
-        f"||S^-1|| <= {float(invS.upper()):.4f},  ||B D^-1|| <= {float(BD.upper()):.4f},  ||D^-1 C|| <= {float(DC.upper()):.4f}")
-    return float(Linv.upper()), {"normZBlam": nZB, "normA_inv_B_lam": float(AB.upper()), "lambda_over_gamma": float(ratio.upper()),
-                                 "theta": float(theta.upper()), "normS_inv": float(invS.upper()),
-                                 "normBD_inv": float(BD.upper()), "normD_invC": float(DC.upper())}
+    Linv = invD + Ball.exact(invA) * ((1.0 + BD * BD) * (1.0 + DC * DC)).sqrt() / (1.0 - theta)
+    log(f"  ||Z B|| <= {nZB:.4e},  ||A^-1 B|| <= {float(AB.upper()):.4e},  ||A^-1 B|| ||D^-1|| ||C|| <= {float(theta.upper()):.4e}")
+    return float(Linv.upper()), {"normZB": nZB, "normA_inv_B": float(AB.upper()), "theta": float(theta.upper())}
 
 
 def M_bound(eta, b1, b0, L2inv):

@@ -1,0 +1,67 @@
+Hopf invariant q = 2:  Wbar of degree 40, 217 coefficients;  cutoff l = 40;  reference V_(q,alpha), alpha = 1
+quadrature grid 203 x 135, bounding grid 163 x 217  (1s)
+Wbar evaluated on both grids (11s)
+[3.1] ||F(0)||_L2 <= 1.9868e-08   (ball of the square: mid 3.946e-16, radius 1.5e-19)  (12s)
+[3.1] energy of Wbar/|Wbar|: [125.274488584902912, 125.274488585694485]  = 8 pi^2 x [1.586619932951361, 1.586619932961388]  (12s)
+[3.1] min Wbar . V >= 0.623002   (max <= 1.001067)  (15s)
+  eta <= 2.337e-09 (grid 9.126e-10),  b1 <= 11.4025 (grid 11.3911),  b0 <= 5.7508 (grid 5.7446),  ||Wbar||_inf <= 1.000000
+[3.3] gamma >= 1278.4789  (l = 40)  (18s)
+    grid rows 44/203 (3s)
+    grid rows 88/203 (6s)
+    grid rows 132/203 (9s)
+    grid rows 176/203 (12s)
+    grid rows 203/203 (14s)
+  A block 217x217;  ||B|| <= 160.6747 (float 160.6719),  ||C|| <= 138.5159 (float 138.5150)  [coupled modes up to degree 200, 14s]
+  ||E|| <= 7.133e-09,  ||Z|| <= 0.1475  =>  ||A^-1|| <= 0.1475   (1/sigma_min(mid A) = 0.1080)
+  ||Z B|| <= 1.0371e-01,  ||A^-1 B|| <= 1.0371e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 1.1236e-02
+[3.3] ||L^-1||_(L2->L2) <= 0.1520,   ||L^-1||_(Y->X) <= M = 23.6665  (32s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 69.0577,  r = 9.5e-7:  M k = 1.137e-02 < 1 True,  M(eps + k r) = 4.810e-07 <= r True,  C_hom - c_inf r = 0.62300 > 0 True
+[4.2] min |Wbar| >= 0.9999999996 (max |Wbar| <= 1.0000000004),  C_energyparameter >= 0.9999998652,  ||w||_C0 <= 2.688e-07 < 1 True,  ||dw||_L2 <= 1.196e-05
+[4.2] energy of the harmonic map u: [125.274488584831289, 125.274488585703779]  (32s)
+[5]   5 complex test fields of degree <= 8 from data/index_basis_q2.json;  sup||Wbar|^2 - 1| <= 7.592e-10,  kappa_1 <= 7.592e-10,  kappa_2 <= 1.518e-09
+[5]   beta <= 0.474425,  delta <= 2.7970e-04   (terms 1.114e+01, 2.734e+02, 9.329e+00, 5.658e-01)
+      f_1 (0,-): Q = -53259.072922089 (radius 1.1e-06, proxy error 3.3e-04),  ||xi||_H1^2 = 113484.000000000 (from coefficients 113484.000000000),  Rayleigh L2 -3.168674,  H1 <= -0.469309  (1s)
+      f_2 (1,-): Q = -23508.272763395 (radius 4.4e-06, proxy error 1.2e-03),  ||xi||_H1^2 = 484702.000000000 (from coefficients 484702.000000000),  Rayleigh L2 -0.918471,  H1 <= -0.048500  (2s)
+      f_3 (2,-): Q = -22033.895224228 (radius 3.5e-06, proxy error 9.7e-04),  ||xi||_H1^2 = 367346.000000000 (from coefficients 367346.000000000),  Rayleigh L2 -0.901477,  H1 <= -0.059981  (2s)
+      f_4 (2,+): Q = -52032.400040348 (radius 1.7e-06, proxy error 5.0e-04),  ||xi||_H1^2 = 175946.000000000 (from coefficients 175946.000000000),  Rayleigh L2 -3.065960,  H1 <= -0.295729  (2s)
+      f_5 (3,-): Q = -12704.371086358 (radius 2.8e-06, proxy error 8.1e-04),  ||xi||_H1^2 = 309142.000000000 (from coefficients 309142.000000000),  Rayleigh L2 -0.618579,  H1 <= -0.041096  (3s)
+[5]   real directions: f_1, Re f_2, Im f_2, Re f_3, Im f_3, Re f_4, Im f_4, Re f_5, Im f_5
+[5]   G + delta H negative definite: True (largest Gershgorin bound -6.3090e+03);  G + t H negative definite for t = 0.04109: True;  H positive definite: True  (3s)
+[5]   nine negative directions of Q_W certified: True  (Morse index >= 9)  (35s)
+CERTIFICATE PASSED  (35s)
+wrote certificate/output/q2_D40_l40.json
+
+                       q  exact  2
+                deg Wbar  exact  40
+                       l  exact  40
+                   alpha  exact  1
+                   c_inf  exact  \sqrt{\frac{\pi^2/6-5/4}{2\pi^2}}
+                     c_4  exact  \left(\frac{2}{9\pi^2}\right)^{1/4}
+                     c_5  exact  \frac{2\sqrt2}{9}
+                    beta  exact  (2\pi^2)^{-1/4}
+              C_residual  upper  1.987e-8
+          C_energy-lower  lower  125.2744885849029
+          C_energy-upper  upper  125.2744885856945
+              C_homotopy  lower  0.6230
+                    C_nl  upper  0.03534
+         C_energy-lower2  lower  125.2744885848312
+         C_energy-upper2  upper  125.2744885857038
+       C_energyparameter  lower  0.99999986
+            norm_X(Wbar)  upper  69.058
+              sup |Wbar|  upper  1.00001
+                     eta  upper  2.338e-9
+                     b_1  upper  11.41
+                     b_0  upper  5.751
+                   gamma  lower  1278
+                ||A^-1||  upper  0.1476
+                   ||B||  upper  160.7
+                   ||C||  upper  138.6
+              ||A^-1 B||  upper  0.1038
+             ||L^-1||_L2  upper  0.1521
+                       M  upper  23.67
+                       r  exact  9.5e-7
+                      Mk  upper  0.0114
+               M(eps+kr)  upper  4.82e-7
+                    w_C0  upper  2.69e-7
+                   delta  upper  2.798e-4
+                 lambda*  upper  -0.04109

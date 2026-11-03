@@ -33,13 +33,14 @@ def test_radial_map_estimates():
 def test_energy_constants_follow_the_formulas():
     E_lo, E_hi, minW, nX, r_str = 125.2744885848975, 125.2744885856999, 0.9999999992, 69.058, "9.5e-7"
     en = energy_of_harmonic_map(E_lo, E_hi, minW, nX, r_str)
-    c_inf, _, c_5 = sobolev_constants(False)
+    c_inf, _, c_5, _ = sobolev_constants(False)
     r = float(r_str)
     C8 = minW - c_inf * r
     C6 = E_lo - (c_5 * r) ** 2 / (2 * C8 ** 2) * (1 + 4 * c_inf * nX / C8) ** 2
-    C7 = E_hi * (C8 + c_inf * r) / (C8 - c_inf * r)
+    C7 = E_hi * (C8 + c_inf * r) ** 2 / (C8 ** 2 - 3 * (c_inf * r) ** 2 + 2 * c_inf * r * C8)
     w = 2 * c_inf * r / (C8 + c_inf * r)
     assert abs(en["c_5"] - 2 * np.sqrt(2) / 9) < 1e-15 and en["c_5"] >= 2 * np.sqrt(2) / 9 - 1e-16
+    assert abs(C7 - E_hi / (1 - w ** 2)) < 1e-9                            # = E(ubar) / (1 - ||w||^2)
     assert C8 - 1e-12 <= en["C_energyparameter"] <= C8 + 1e-16            # rigorous lower bounds ...
     assert C6 - 1e-9 <= en["C_energy_lower2"] <= C6 + 1e-12
     assert C7 - 1e-12 <= en["C_energy_upper2"] <= C7 + 1e-9                # ... and upper bounds

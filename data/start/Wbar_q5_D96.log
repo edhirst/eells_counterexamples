@@ -1,0 +1,17 @@
+Hopf invariant q=5, degree D=96: 600 modes, grid 290 x 97 (exact to degree 578)
+  it  0  |R| = 6.720e-02   ||F(0)||_L2 ~ 6.653e-02   E/8pi^2 ~ 2.471610033171   sup||W|^2-1| = 2.29e-03   min W.V = 0.1359   (3s)
+        step 1, |delta| = 4.736e-04
+  it  1  |R| = 3.836e-05   ||F(0)||_L2 ~ 3.742e-05   E/8pi^2 ~ 2.471610018201   sup||W|^2-1| = 3.95e-06   min W.V = 0.1359   (10s)
+        step 1, |delta| = 5.730e-07
+  it  2  |R| = 2.055e-10   ||F(0)||_L2 ~ 4.072e-07   E/8pi^2 ~ 2.471610018201   sup||W|^2-1| = 8.92e-09   min W.V = 0.1359   (17s)
+        step 1, |delta| = 8.658e-13
+  it  3  |R| = 1.129e-14   ||F(0)||_L2 ~ 4.072e-07   E/8pi^2 ~ 2.471610018201   sup||W|^2-1| = 8.92e-09   min W.V = 0.1359   (24s)
+wrote data/start/Wbar_q5_D96.json
+{
+ "energy_over_8pi2": 2.4716100182005682,
+ "residual_L2": 4.072168358696514e-07,
+ "sup_abs_norm2_minus_1": 8.924911254482026e-09,
+ "min_Wbar_dot_V": 0.135866175997386,
+ "norm_X": 162.417783745502,
+ "sup_norm": 1.000000004401004
+}

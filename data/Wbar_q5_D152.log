@@ -1,0 +1,13 @@
+Hopf invariant q=5, degree D=152: 1482 modes, grid 458 x 153 (exact to degree 914)
+  it  0  |R| = 4.085e-07   ||F(0)||_L2 ~ 4.072e-07   E/8pi^2 ~ 2.471610018201   sup||W|^2-1| = 8.92e-09   min W.V = 0.1359   (18s)
+        step 1, |delta| = 1.619e-09
+  it  1  |R| = 1.290e-14   ||F(0)||_L2 ~ 2.034e-12   E/8pi^2 ~ 2.471610018201   sup||W|^2-1| = 3.51e-14   min W.V = 0.1359   (68s)
+wrote data/Wbar_q5_D152.json
+{
+ "energy_over_8pi2": 2.4716100182005674,
+ "residual_L2": 2.033804939105526e-12,
+ "sup_abs_norm2_minus_1": 3.5083047578154947e-14,
+ "min_Wbar_dot_V": 0.13585943615062568,
+ "norm_X": 162.41778374550267,
+ "sup_norm": 1.000000000000016
+}

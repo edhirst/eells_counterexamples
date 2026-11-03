@@ -320,6 +320,11 @@ def stack(balls, axis=0):
     return Ball(np.stack([b.m for b in balls], axis), np.stack([b.r for b in balls], axis))
 
 
+def concatenate(balls, axis=0):
+    balls = [asball(b) for b in balls]
+    return Ball(np.concatenate([b.m for b in balls], axis), np.concatenate([b.r for b in balls], axis))
+
+
 def zeros(shape):
     return Ball(np.zeros(shape))
 

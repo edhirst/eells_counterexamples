@@ -4,18 +4,23 @@ import numpy as np
 from scipy.special import eval_jacobi
 
 from eells.grid import OrbitGrid
-from eells.harmonics import vector_modes, scalar_modes, HarmonicEvaluator, jacobi_table, jacobi_explicit, Mode
+import pytest
+
+from eells.harmonics import vector_modes, HarmonicEvaluator, jacobi_table, jacobi_explicit, Mode
 
 
-def test_mode_counts_and_selection_rules():
+@pytest.mark.parametrize("q", [2, 3, 4, 5, 6])
+def test_mode_counts_and_selection_rules(q):
     for D in (2, 3, 12, 40):
-        ms = vector_modes(D)
+        ms = vector_modes(D, q)
         assert all(m.l == abs(m.m) + abs(m.n) + 2 * m.j <= D for m in ms)
-        assert all((m.kind == "U" and m.n % 2 == 0 and m.m == 2 * m.n - 4) or
-                   (m.kind == "V" and m.n % 2 == 1 and m.n >= 1 and m.m == 2 * m.n) for m in ms)
+        assert all((m.kind == "U" and m.n % 2 == 0 and m.m == q * m.n - 2 * q) or
+                   (m.kind == "V" and m.n % 2 == 1 and m.n >= 1 and m.m == q * m.n) for m in ms)
         assert all(m.l >= 2 for m in ms)
-    assert len(vector_modes(40)) == 217
-    assert all(m.n % 2 == 0 and m.m == 2 * m.n for m in scalar_modes(10))
+    # the lowest modes are w^2 (l = 2) and Re(z^q w) (l = q + 1)
+    assert min(m.l for m in vector_modes(12, q) if m.kind == "V") == q + 1
+    assert len(vector_modes(40, 2)) == 217
+    assert [len(vector_modes(40, k)) for k in (3, 4, 5, 6)] == [165, 130, 110, 93]
 
 
 def test_jacobi_recurrence_matches_scipy_and_paper_formula():
@@ -29,11 +34,12 @@ def test_jacobi_recurrence_matches_scipy_and_paper_formula():
                 assert np.allclose(P[j], jacobi_explicit(a, b, j, (1 - x) / 2), rtol=1e-11, atol=1e-11 * np.abs(ref).max())
 
 
-def test_orthonormality_green_identity_tangentiality_supbound():
+@pytest.mark.parametrize("q", [2, 3, 6])
+def test_orthonormality_green_identity_tangentiality_supbound(q):
     D = 14
-    g = OrbitGrid(D + 2, 2 * D // 3 + 2, False)
+    g = OrbitGrid.for_quadrature(2 * D + 2, q)
     H = HarmonicEvaluator(g, max_degree=D)
-    modes = vector_modes(D)
+    modes = vector_modes(D, q)
     val, grad, lap = H.evaluate(modes)
     w = g.omega
     G = np.einsum("kcib,lcib,ib->kl", val, val, w)

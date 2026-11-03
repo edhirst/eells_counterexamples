@@ -1,0 +1,60 @@
+Hopf invariant q = 6:  Wbar of degree 184, 1847 coefficients;  cutoff l = 80;  reference V_(q,alpha), alpha = 2
+quadrature grid 923 x 264, bounding grid 739 x 421  (25s)
+Wbar evaluated on both grids (744s)
+[3.1] ||F(0)||_L2 <= 6.4818e-11   (ball of the square: mid 4.557e-24, radius 4.2e-21)  (744s)
+[3.1] energy of Wbar/|Wbar|: [209.423663460958409, 209.423663472556001]  = 8 pi^2 x [2.652381683072362, 2.652381683219251]  (745s)
+[3.1] min Wbar . V >= 0.087289   (max <= 1.001726)  (748s)
+  eta <= 2.097e-07 (grid 7.327e-14),  b1 <= 34.4508 (grid 34.3418),  b0 <= 36.6316 (grid 36.4104),  ||Wbar||_inf <= 1.000000
+[3.3] gamma >= 3861.6088  (l = 80)  (755s)
+    grid rows 22/923 (5s)
+    grid rows 132/923 (26s)
+    grid rows 242/923 (46s)
+    grid rows 352/923 (67s)
+    grid rows 462/923 (87s)
+    grid rows 572/923 (108s)
+    grid rows 682/923 (129s)
+    grid rows 792/923 (149s)
+    grid rows 902/923 (170s)
+    grid rows 923/923 (174s)
+  A block 357x357;  ||B|| <= 994.0466 (float 994.0466),  ||C|| <= 715.4704 (float 715.4703)  [coupled modes up to degree 816, 174s]
+  ||E|| <= 2.286e-08,  ||Z|| <= 0.1192  =>  ||A^-1|| <= 0.1192   (1/sigma_min(mid A) = 0.1104)
+  ||Z B|| <= 1.7923e-01,  ||A^-1 B|| <= 1.7923e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 3.3207e-02
+[3.3] ||L^-1||_(L2->L2) <= 0.1297,   ||L^-1||_(Y->X) <= M = 165.5764  (929s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 193.9897,  r = 2.2e-8:  M k = 1.453e-02 < 1 True,  M(eps + k r) = 1.105e-08 <= r True,  C_hom - c_inf r = 0.08729 > 0 True
+[4.2] min |Wbar| >= 0.9999999898 (max |Wbar| <= 1.0000000102),  C_energyparameter >= 0.9999999866,  ||w||_C0 <= 6.224e-09 < 1 True,  ||dw||_L2 <= 7.658e-07
+[4.2] energy of the harmonic map u: [209.423663460958039, 209.423663472556342]  (930s)
+CERTIFICATE PASSED  (930s)
+wrote certificate/output/q6_D184_l80.json
+
+                       q  exact  6
+                deg Wbar  exact  184
+                       l  exact  80
+                   alpha  exact  2
+                   c_inf  exact  \sqrt{\frac{\pi^2/6-5/4}{2\pi^2}}
+                     c_4  exact  \left(\frac{2}{9\pi^2}\right)^{1/4}
+                     c_5  exact  \frac{2\sqrt2}{9}
+                    beta  exact  (2\pi^2)^{-1/4}
+              C_residual  upper  6.482e-11
+          C_energy-lower  lower  209.4236634609584
+          C_energy-upper  upper  209.4236634725561
+              C_homotopy  lower  0.08728
+                    C_nl  upper  0.03534
+         C_energy-lower2  lower  209.4236634609580
+         C_energy-upper2  upper  209.4236634725564
+       C_energyparameter  lower  0.99999998
+            norm_X(Wbar)  upper  193.99
+              sup |Wbar|  upper  1.00001
+                     eta  upper  2.097e-7
+                     b_1  upper  34.46
+                     b_0  upper  36.64
+                   gamma  lower  3861
+                ||A^-1||  upper  0.1192
+                   ||B||  upper  994.1
+                   ||C||  upper  715.5
+              ||A^-1 B||  upper  0.1793
+             ||L^-1||_L2  upper  0.1298
+                       M  upper  165.6
+                       r  exact  2.2e-8
+                      Mk  upper  0.0146
+               M(eps+kr)  upper  1.11e-8
+                    w_C0  upper  6.23e-9

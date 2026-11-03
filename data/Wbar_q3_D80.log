@@ -1,0 +1,15 @@
+Hopf invariant q=3, degree D=80: 630 modes, grid 242 x 121 (exact to degree 482)
+  it  0  |R| = 2.152e-03   ||F(0)||_L2 ~ 2.119e-03   E/8pi^2 ~ 1.970743103149   sup||W|^2-1| = 5.61e-05   min W.V = 0.3397   (3s)
+        step 1, |delta| = 1.870e-05
+  it  1  |R| = 3.222e-08   ||F(0)||_L2 ~ 3.097e-08   E/8pi^2 ~ 1.970743103126   sup||W|^2-1| = 2.37e-09   min W.V = 0.3397   (11s)
+        step 1, |delta| = 9.528e-10
+  it  2  |R| = 8.625e-15   ||F(0)||_L2 ~ 4.215e-11   E/8pi^2 ~ 1.970743103126   sup||W|^2-1| = 6.85e-13   min W.V = 0.3397   (19s)
+wrote data/Wbar_q3_D80.json
+{
+ "energy_over_8pi2": 1.970743103125612,
+ "residual_L2": 4.2146896243631305e-11,
+ "sup_abs_norm2_minus_1": 6.850076061937216e-13,
+ "min_Wbar_dot_V": 0.3397221103222462,
+ "norm_X": 99.7643829949089,
+ "sup_norm": 1.0000000000003397
+}

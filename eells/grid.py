@@ -7,18 +7,20 @@ therefore a function ``f(s, phi)``, and (volume element ``ds dpsi_1 dpsi_2 / 2``
 
     int_{S^3} f dvol = pi * int_0^1 ds int_0^{2 pi} f(s, phi) dphi.
 
-**Polynomial structure.**  A G-invariant polynomial of degree ``p`` in ``(z, zbar, w, wbar)``
+**Polynomial structure.**  For the group G_q of the Hopf invariant q (eells/harmonics.py; q = 2
+is the group G of Section 2.1) a G_q-invariant polynomial of degree ``p`` in ``(z, zbar, w, wbar)``
 is, in the variables ``x = 1 - 2 s in [-1, 1]`` and ``phi``, a polynomial of degree ``<= p/2`` in
-``x`` times trigonometric polynomials of degree ``<= p/3`` in ``phi`` with even frequencies only
-(a monomial ``z^a zbar^b w^c wbar^d`` is circle-invariant iff ``a - b = 2(c - d)``, and
-epsilon-invariant iff ``a + b + c + d`` is even; it equals ``s^{(a+b)/2} (1-s)^{(c+d)/2}
-e^{i (c-d) phi}``).
+``x`` times trigonometric polynomials of degree ``<= p/(q+1)`` in ``phi`` with even frequencies
+only (a monomial ``z^a zbar^b w^c wbar^d`` is circle-invariant iff ``a - b = q(c - d)``, and
+S-invariant iff ``c + d`` is even, so ``c - d`` and ``a + b`` are even and ``(q + 1)|c - d| <= p``;
+at the grid points it equals ``s^{(a+b)/2} (1-s)^{(c+d)/2} e^{i (c-d) phi}``).  Here
+``phi = arg(z^q w)`` on the orbit through ``(z, w)``.
 
 **Grid.**  Chebyshev-Lobatto nodes ``x_i = cos(pi i / Ns)``, ``i = 0..Ns``, in ``x`` and
 equispaced nodes ``phi_b = 2 pi b / Nphi`` in ``phi``.  Clenshaw-Curtis weights integrate
 polynomials of degree ``<= Ns`` in ``x`` exactly; the trapezoidal rule integrates trigonometric
 polynomials exactly as long as no nonzero frequency is a multiple of ``Nphi``.  Hence
-``integrate(f, deg)`` is exact whenever ``deg <= 2 Ns`` and ``deg < 3 Nphi``.
+``integrate(f, deg)`` is exact whenever ``deg <= 2 Ns`` and ``deg < (q + 1) Nphi``.
 
 **Chebyshev-Fourier analysis.**  For the same grid, Chebyshev interpolation in ``x`` (exact for
 degree ``<= Ns``) and the discrete Fourier transform in ``phi`` (exact for frequencies
@@ -40,9 +42,9 @@ from .ball import Ball, cos_sin_table, pi_ball, asball
 
 
 class OrbitGrid:
-    def __init__(self, Ns, Nphi, rigorous=False):
-        assert Ns >= 2 and Nphi >= 2
-        self.Ns, self.Nphi, self.rigorous = Ns, Nphi, rigorous
+    def __init__(self, Ns, Nphi, rigorous=False, q=2):
+        assert Ns >= 2 and Nphi >= 2 and q >= 1
+        self.Ns, self.Nphi, self.rigorous, self.q = Ns, Nphi, rigorous, q
         c2, s2 = cos_sin_table(2 * Ns, rigorous)          # cos(pi p / Ns) = cos(2 pi p / (2 Ns))
         self._cos_pi_over_Ns = c2
         self.x = c2[: Ns + 1]                               # x_i = cos(pi i / Ns), i = 0..Ns
@@ -86,13 +88,29 @@ class OrbitGrid:
     def sin_n_phi(self, n):
         return self.sphi[(n * np.arange(self.Nphi)) % self.Nphi]
 
+    @staticmethod
+    def for_quadrature(deg, q, rigorous=False):
+        """The smallest grid whose quadrature is exact for G_q-invariant polynomials of degree deg."""
+        return OrbitGrid(max(2, -(-deg // 2)), max(2, deg // (q + 1) + 1), rigorous, q)
+
+    @staticmethod
+    def for_analysis(deg, q, rigorous=False):
+        """A grid whose Chebyshev-Fourier coefficients are exact for degree deg."""
+        return OrbitGrid(max(2, deg // 2), max(2, 2 * (deg // (q + 1)) + 1), rigorous, q)
+
     def exact_for(self, deg):
-        """Is the quadrature exact for G-invariant polynomials of degree ``deg``?"""
-        return deg <= 2 * self.Ns and deg < 3 * self.Nphi
+        """Is the quadrature exact for G_q-invariant polynomials of degree ``deg``?"""
+        return deg <= 2 * self.Ns and deg < (self.q + 1) * self.Nphi
 
     def analysis_exact_for(self, deg):
         """Are the Chebyshev-Fourier coefficients exact for degree ``deg``?"""
-        return deg // 2 <= self.Ns and 2 * (deg // 3) < self.Nphi
+        return deg // 2 <= self.Ns and 2 * (deg // (self.q + 1)) < self.Nphi
+
+    def row_chunks(self, max_points):
+        """Slices of the s-nodes such that each block of rows has at most ~max_points grid points
+        (for accumulating integrals of large stacks of fields block by block)."""
+        per = max(1, max_points // self.Nphi)
+        return [slice(i, min(i + per, self.Ns + 1)) for i in range(0, self.Ns + 1, per)]
 
     # ------------------------------------------------------------------ quadrature
     def integrate(self, f, deg):
@@ -110,8 +128,8 @@ class OrbitGrid:
         """Exact Chebyshev-Fourier coefficients of a G-invariant polynomial of degree <= deg."""
         assert self.analysis_exact_for(deg), \
             f"grid ({self.Ns},{self.Nphi}) cannot resolve the coefficients of degree {deg}"
-        K = deg // 2 + 1          # Chebyshev degrees 0..deg//2
-        N = deg // 3 + 1          # frequencies 0..deg//3
+        K = deg // 2 + 1                 # Chebyshev degrees 0..deg//2
+        N = deg // (self.q + 1) + 1      # frequencies 0..deg//(q+1)
         rig = self.rigorous
         idx = (np.arange(N).reshape(1, -1) * np.arange(self.Nphi).reshape(-1, 1)) % self.Nphi   # [b, n]
         Cc = self.cphi[idx]

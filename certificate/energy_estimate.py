@@ -11,9 +11,10 @@ With ||v||_X <= r the constants of the proposition are
     ||dw||_{L^2} <= (c_5 r / C_energyparameter) (1 + 4 c_inf ||Wbar||_X / C_energyparameter)
                                        (|d phi_X| <= 1/|X|,  |d^2 phi_X| <= 4/|X|^2  for phi(X) = X/|X|),
     C_energy-lower2 = C_energy-lower - (c_5 r)^2 / (2 C_energyparameter^2) (1 + 4 c_inf ||Wbar||_X / C_energyparameter)^2,
-    C_energy-upper2 = C_energy-upper (C_energyparameter + c_inf r) / (C_energyparameter - c_inf r),
-the last line using 1 / (1 - ||w||_{C^0}^2) <= (C_energyparameter + c_inf r) / (C_energyparameter - c_inf r),
-which requires C_energyparameter - c_inf r > 0, i.e. the bound on ||w||_{C^0} to be < 1.
+    C_energy-upper2 = C_energy-upper (C_energyparameter + c_inf r)^2
+                      / (C_energyparameter^2 - 3 c_inf^2 r^2 + 2 c_inf r C_energyparameter),
+the last line being  C_energy-upper / (1 - (2 c_inf r / (C_energyparameter + c_inf r))^2); it requires
+C_energyparameter > c_inf r, i.e. the bound on ||w||_{C^0} to be < 1.
 """
 from __future__ import annotations
 
@@ -30,7 +31,7 @@ def energy_of_harmonic_map(E_lower, E_upper, min_W, norm_X, r_str):
     formula is monotone in these inputs in the direction in which they are rounded, so evaluating
     it on the rounded bounds (in ball arithmetic, with the balls of c_inf and c_5) gives rigorous
     bounds: C_energyparameter and C_energy-lower2 are lower bounds, the rest upper bounds."""
-    c_inf, _, c_5 = sobolev_constants(True)
+    c_inf, _, c_5, _ = sobolev_constants(True)
     rb = Ball.from_fraction(Fraction(r_str))
     a = c_inf * rb                                                   # >= ||v||_{C^0}
     C8 = Ball.exact(min_W) - a                                       # C_energyparameter
@@ -40,7 +41,7 @@ def energy_of_harmonic_map(E_lower, E_upper, min_W, norm_X, r_str):
     ok = float(margin.lower()) > 0
     dw = (c_5 * rb / C8) * (1.0 + 4.0 * c_inf * Ball.exact(norm_X) / C8)    # >= ||dw||_{L^2}
     C6 = Ball.exact(E_lower) - dw * dw * 0.5
-    C7 = Ball.exact(E_upper) * (C8 + a) / margin if ok else None
+    C7 = Ball.exact(E_upper) * (C8 + a) * (C8 + a) / (C8 * C8 - 3.0 * a * a + 2.0 * a * C8) if ok else None
     return {"c_5": float(c_5.upper()), "min_abs_Wbar": min_W, "C_energyparameter": float(C8.lower()),
             "w_C0_bound": float(w_sup.upper()), "dw_L2_bound": float(dw.upper()),
             "C_energy_lower2": float(C6.lower()), "C_energy_upper2": float(C7.upper()) if ok else None,

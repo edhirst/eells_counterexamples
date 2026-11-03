@@ -1,0 +1,13 @@
+Hopf invariant q=6, degree D=184: 1847 modes, grid 554 x 159 (exact to degree 1106)
+  it  0  |R| = 8.604e-07   ||F(0)||_L2 ~ 8.578e-07   E/8pi^2 ~ 2.652381683146   sup||W|^2-1| = 2.18e-08   min W.V = 0.0890   (33s)
+        step 1, |delta| = 3.336e-09
+  it  1  |R| = 1.468e-14   ||F(0)||_L2 ~ 2.139e-12   E/8pi^2 ~ 2.652381683146   sup||W|^2-1| = 3.73e-14   min W.V = 0.0890   (114s)
+wrote data/Wbar_q6_D184.json
+{
+ "energy_over_8pi2": 2.6523816831458062,
+ "residual_L2": 2.1385558780127697e-12,
+ "sup_abs_norm2_minus_1": 3.730349362740526e-14,
+ "min_Wbar_dot_V": 0.08901698369135491,
+ "norm_X": 193.98968832617157,
+ "sup_norm": 1.0000000000000178
+}
