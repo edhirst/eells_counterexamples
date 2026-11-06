@@ -38,7 +38,7 @@ from fractions import Fraction
 import numpy as np
 
 from . import arith as ar
-from .ball import Ball, cos_sin_table, pi_ball, asball
+from .ball import Ball, cos_sin_table, pi_ball
 
 
 class OrbitGrid:
@@ -137,7 +137,6 @@ class OrbitGrid:
         two_over = ar.const(Fraction(2, self.Nphi), rig)
         fa = (f @ Cc) * two_over                       # [i, n]:  a_n(s_i) = (2/Nphi) sum_b f cos(n phi_b)
         fb = (f @ Cs) * two_over
-        half = ar.const(0.5, rig)
         if rig:
             scale = Ball(np.where(np.arange(N) == 0, 0.5, 1.0))
         else:

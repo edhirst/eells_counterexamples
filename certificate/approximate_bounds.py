@@ -7,14 +7,12 @@
               written with delta = |Wbar|^4 - 1 as  1/(1+delta) = 1 - delta + delta^2/(1+delta):
                   E = (1/2) [ int N - int N delta ] + err,   |err| <= (1/2) (sup delta^2 / (1 - sup|delta|)) int N,
               the two integrals being exact (polynomial integrands) and sup|delta| a rigorous bound.
-* homotopy:   min Wbar . V >= C_homotopy for the reference field V = V_{q,alpha} of eq. (referencemap)
-              and Remark rem:family (Chebyshev-Fourier bound of the degree D + 2q polynomial).
+* homotopy:   min Wbar . V_q >= C_homotopy for the reference field V_q = (w^2 - zbar^{2q}/4, Re(z^q w))
+              (Chebyshev-Fourier bound of the degree D + 2q polynomial).
 * min |Wbar|: a lower bound (Chebyshev-Fourier bound of |Wbar|^2), used for C_energyparameter in
               Proposition 4.2 (energy_estimate.py).
 """
 from __future__ import annotations
-
-import numpy as np
 
 from eells import arith as ar
 from eells.ball import Ball
@@ -57,9 +55,9 @@ def energy_bounds(W_quad, grid_quad, W_bound, grid_bound, deg, D):
             "sup_abs_norm4_minus_1": dmax, "int_N": I1, "int_N_delta": I2}
 
 
-def homotopy_bound(W_bound, grid_bound, D, q, alpha):
-    """Lower bound C_homotopy of  Wbar . V_{q,alpha}  over S^3 (and an upper bound)."""
-    V = reference_field(grid_bound, q, alpha)
+def homotopy_bound(W_bound, grid_bound, D, q):
+    """Lower bound C_homotopy of  Wbar . V_q  over S^3 (and an upper bound)."""
+    V = reference_field(grid_bound, q)
     f = dot(W_bound.val, V)
     lo, hi = grid_bound.analyse(f, D + 2 * q).bounds(N1=max(8192, 16 * D), N2=max(1024, 16 * (D // (q + 1))))
     return lo, hi

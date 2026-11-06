@@ -1,5 +1,5 @@
-"""The reference field of Section 2.3 (Proposition 2.9 and Remark rem:family), the extended Hopf
-map (Proposition 2.7) and the Sobolev constants of Propositions 2.3 and 2.4."""
+"""The reference field V_q of Section 2.3 and Remark rem:family, the extended Hopf map
+(Proposition 2.7) and the Sobolev constants of Propositions 2.3 and 2.4."""
 from __future__ import annotations
 
 from fractions import Fraction
@@ -10,33 +10,28 @@ from . import arith as ar
 from .ball import Ball, pi_ball
 
 
-# The scaling alpha_q of the reference field used for the Hopf invariant q (Remark rem:family);
-# alpha = 1 gives the field V of eq. (referencemap) for q = 2.
-REFERENCE_ALPHA = {2: 1, 3: 1, 4: 2, 5: 2, 6: 2}
+def reference_field(grid, q=2):
+    """V_q = ( w^2 - zbar^{2q}/4,  Re(z^q w) )  as a real 3-vector on the grid (degree 2q).
 
-
-def reference_field(grid, q=2, alpha=1):
-    """V_{q,alpha} = ( w^2 - alpha^{-2} zbar^{2q},  2 alpha^{-1} Re(z^q w) )  as a real 3-vector on the
-    grid (degree 2q, alpha a positive integer); V_{2,1} is the field V of eq. (referencemap).
-
+    V_q = (1/4) (4 w^2 - zbar^{2q}, 4 Re(z^q w)) is orthogonal to kappa.h(z^q, 2w), and
+    h(z^q, 2w) is homotopic to h(z^q, w) (Proposition prop:homotopy, Remark rem:family).
     At (z, w) = (sqrt s, sqrt(1-s) e^{i phi}):  w^2 = (1-s) e^{2 i phi},  zbar^{2q} = s^q,
-    Re(z^q w) = s^{q/2} sqrt(1-s) cos phi.   Its norm is |w|^2 + alpha^{-2} |z|^{2q} <= 1."""
+    Re(z^q w) = s^{q/2} sqrt(1-s) cos phi.   Its norm is |w|^2 + |z|^{2q}/4, which lies in (0, 1]."""
     rig = grid.rigorous
     one_minus_s = (grid.rc * grid.rc).reshape(-1, 1)
     rs_q = (grid.rs ** q).reshape(-1, 1)
     c2, s2 = grid.cos_n_phi(2).reshape(1, -1), grid.sin_n_phi(2).reshape(1, -1)
     c1 = grid.cos_n_phi(1).reshape(1, -1)
-    inv_a2 = ar.const(Fraction(1, alpha * alpha), rig)
-    two_over_a = ar.const(Fraction(2, alpha), rig)
-    return [one_minus_s * c2 - (rs_q * rs_q) * inv_a2 * ar.ones((1, grid.Nphi), rig),
+    quarter = ar.const(Fraction(1, 4), rig)
+    return [one_minus_s * c2 - (rs_q * rs_q) * quarter * ar.ones((1, grid.Nphi), rig),
             one_minus_s * s2,
-            (rs_q * grid.rc.reshape(-1, 1)) * c1 * two_over_a]
+            (rs_q * grid.rc.reshape(-1, 1)) * c1]
 
 
-def reference_norm_min(q, alpha=1):
-    """min over S^3 of |V_{q,alpha}| = 1 - s + s^q / alpha^2 (s = |z|^2); 3/4 for (q, alpha) = (2, 1)."""
+def reference_norm_min(q):
+    """min over S^3 of |V_q| = 1 - s + s^q / 4 (s = |z|^2): 1/4 for q <= 4 (at s = 1), less for q >= 5."""
     s = np.linspace(0, 1, 100001)
-    return float((1 - s + s ** q / alpha ** 2).min())
+    return float((1 - s + s ** q / 4).min())
 
 
 def extended_hopf_map(z, w, q=2):

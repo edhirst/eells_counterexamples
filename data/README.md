@@ -16,7 +16,7 @@
   | `Wbar_q5_D152.json` | 5 | 152 | 1482 |
   | `Wbar_q6_D184.json` | 6 | 184 | 1847 |
 
-  Produced by `numerics/solve_approximate.py`: for $q=2$ directly from the projection of $V/|V|$,
+  Produced by `numerics/solve_approximate.py`: for $q=2$ directly from the projection of $V_2/|V_2|$,
   for $q\ge3$ by continuation in the degree from a low-degree solution in `start/` (see below).
 * `start/Wbar_q<q>_D<D>.json` — the intermediate solutions of the continuation: the first one of
   each $q$ is computed from the projection of $V_q/|V_q|$, each further one starts from the previous

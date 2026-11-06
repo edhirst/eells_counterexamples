@@ -1,17 +1,16 @@
 """certificate/index_estimate.py: the negative-definiteness test, the perturbation constant delta,
 and the enclosure Q = Qt +- |E| of the form (with the rational coefficients 1/|W|^2, 1/|W|^4)
-by its polynomial proxy, checked on W = V_0 (|V_0| = 1 - |z|^2|w|^2 is far from 1, so the error
-term is O(1) and really tested) against a direct floating-point evaluation of Q_W."""
-from fractions import Fraction
-
+by its polynomial proxy, checked on W = V_0 = (w^2 - zbar^4, 2 Re(z^2 w)) (|V_0| = 1 - |z|^2|w|^2 is
+far from 1, so the error term is O(1) and really tested) against a direct floating-point
+evaluation of Q_W."""
 import numpy as np
 
 from eells.ball import Ball
 from eells.grid import OrbitGrid
 from eells.harmonics import HarmonicEvaluator, Mode, norm_constant_squared_times_2pi2
 from eells.fields import field_from_coefficients
-from eells.reference import reference_field, sobolev_constants
-from eells.equation import dot, cross
+from eells.reference import sobolev_constants
+from eells.equation import cross
 from eells.sectors import sector_modes, complex_field, real_part
 from certificate import index_estimate as ie
 
@@ -72,7 +71,10 @@ def test_proxy_enclosure_on_reference_field():
     Hq, Hf, Hb = HarmonicEvaluator(gq, max_degree=L), HarmonicEvaluator(gf, max_degree=L), HarmonicEvaluator(gb, max_degree=D)
     modes, values = _reference_modes()
     Wq, Wf, Wb = (field_from_coefficients(modes, values, H) for H in (Hq, Hf, Hb))
-    V0 = reference_field(gf)
+    z = gf.rs.reshape(-1, 1) + 0j
+    w = gf.rc.reshape(-1, 1) * np.exp(2j * np.pi * np.arange(gf.Nphi) / gf.Nphi)
+    zeta = w ** 2 - np.conj(z) ** 4
+    V0 = [zeta.real, zeta.imag, 2 * (z ** 2 * w).real]
     assert max(np.abs(Wf.val[c] - V0[c]).max() for c in range(3)) < 1e-13
     kappa1, kappa2, s = ie.rho_bounds(Wb, gb, D)
     # sup |rho - 1| = 7/16 exactly; the rigorous bound adds a Lipschitz remainder (~1e-3)
@@ -92,7 +94,6 @@ def test_proxy_enclosure_on_reference_field():
             grad = [[(g, z) for g in row] for row in gr]
             f = np.stack([v[0] for v in valf]).astype(complex)
             df = np.stack([np.stack([g[0] for g in row]) for row in gradf]).astype(complex)
-            coeffs_h = None
         else:
             f = np.stack([v[0] + 1j * v[1] for v in valf])
             df = np.stack([np.stack([g[0] + 1j * g[1] for g in row]) for row in gradf])

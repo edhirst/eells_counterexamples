@@ -1,37 +1,36 @@
-Hopf invariant q = 4:  Wbar of degree 112, 969 coefficients;  cutoff l = 60;  reference V_(q,alpha), alpha = 2
-quadrature grid 563 x 225, bounding grid 451 x 361  (9s)
-Wbar evaluated on both grids (208s)
-[3.1] ||F(0)||_L2 <= 3.8546e-11   (ball of the square: mid 3.090e-22, radius 1.2e-21)  (208s)
-[3.1] energy of Wbar/|Wbar|: [177.768980788539380, 177.768980793646534]  = 8 pi^2 x [2.251470443548351, 2.251470443613036]  (209s)
-[3.1] min Wbar . V >= 0.191796   (max <= 1.000671)  (211s)
+Hopf invariant q = 4:  Wbar of degree 112, 969 coefficients;  cutoff l = 60
+quadrature grid 563 x 225, bounding grid 451 x 361  (10s)
+Wbar evaluated on both grids (267s)
+[3.1] ||F(0)||_L2 <= 3.8546e-11   (ball of the square: mid 3.090e-22, radius 1.2e-21)  (267s)
+[3.1] energy of Wbar/|Wbar|: [177.768980788539380, 177.768980793646534]  = 8 pi^2 x [2.251470443548351, 2.251470443613036]  (268s)
+[3.1] min Wbar . V >= 0.191796   (max <= 1.000671)  (271s)
   eta <= 4.118e-08 (grid 7.776e-13),  b1 <= 22.9234 (grid 22.8707),  b0 <= 16.4480 (grid 16.3762),  ||Wbar||_inf <= 1.000000
-[3.3] gamma >= 2405.4851  (l = 60)  (216s)
-    grid rows 26/563 (3s)
-    grid rows 78/563 (10s)
-    grid rows 130/563 (17s)
-    grid rows 182/563 (25s)
-    grid rows 234/563 (32s)
-    grid rows 286/563 (39s)
-    grid rows 338/563 (46s)
-    grid rows 390/563 (54s)
-    grid rows 442/563 (61s)
-    grid rows 494/563 (69s)
-    grid rows 546/563 (76s)
-    grid rows 563/563 (78s)
-  A block 285x285;  ||B|| <= 490.2218 (float 490.2218),  ||C|| <= 373.7533 (float 373.7533)  [coupled modes up to degree 508, 78s]
+[3.3] gamma >= 2405.4851  (l = 60)  (276s)
+    grid rows 26/563 (5s)
+    grid rows 78/563 (14s)
+    grid rows 130/563 (24s)
+    grid rows 182/563 (34s)
+    grid rows 234/563 (43s)
+    grid rows 286/563 (52s)
+    grid rows 338/563 (62s)
+    grid rows 390/563 (72s)
+    grid rows 442/563 (82s)
+    grid rows 494/563 (92s)
+    grid rows 546/563 (101s)
+    grid rows 563/563 (104s)
+  A block 285x285;  ||B|| <= 490.2218 (float 490.2218),  ||C|| <= 373.7533 (float 373.7533)  [coupled modes up to degree 508, 104s]
   ||E|| <= 1.318e-08,  ||Z|| <= 0.1275  =>  ||A^-1|| <= 0.1275   (1/sigma_min(mid A) = 0.1091)
   ||Z B|| <= 1.5105e-01,  ||A^-1 B|| <= 1.5105e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 2.3469e-02
-[3.3] ||L^-1||_(L2->L2) <= 0.1353,   ||L^-1||_(Y->X) <= M = 77.6690  (294s)
+[3.3] ||L^-1||_(L2->L2) <= 0.1353,   ||L^-1||_(Y->X) <= M = 77.6690  (380s)
 [4]   C_nl <= 0.03534,  ||Wbar||_X <= 130.9747,  r = 6e-9:  M k = 8.475e-04 < 1 True,  M(eps + k r) = 2.999e-09 <= r True,  C_hom - c_inf r = 0.19180 > 0 True
 [4.2] min |Wbar| >= 0.9999999982 (max |Wbar| <= 1.0000000018),  C_energyparameter >= 0.9999999974,  ||w||_C0 <= 1.697e-09 < 1 True,  ||dw||_L2 <= 1.416e-07
-[4.2] energy of the harmonic map u: [177.768980788539295, 177.768980793646847]  (295s)
-CERTIFICATE PASSED  (295s)
+[4.2] energy of the harmonic map u: [177.768980788539295, 177.768980793646847]  (381s)
+CERTIFICATE PASSED  (381s)
 wrote certificate/output/q4_D112_l60.json
 
                        q  exact  4
                 deg Wbar  exact  112
                        l  exact  60
-                   alpha  exact  2
                    c_inf  exact  \sqrt{\frac{\pi^2/6-5/4}{2\pi^2}}
                      c_4  exact  \left(\frac{2}{9\pi^2}\right)^{1/4}
                      c_5  exact  \frac{2\sqrt2}{9}

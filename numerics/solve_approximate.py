@@ -18,9 +18,9 @@ derivative with respect to the outer factor Wbar of the residual (1/2) Wbar x (W
 integrands have degree <= 6D + 2 and are integrated exactly; the matrices are accumulated over
 blocks of grid rows.
 
-Starting point: the L^2-projection of V / |V| for the reference field V = V_{q,alpha} of
-eq. (referencemap) and Remark rem:family, or (--start) a coefficient file of the same q, e.g. the
-solution at a lower degree (continuation in D).
+Starting point: the L^2-projection of V_q / |V_q| for the reference field
+V_q = (w^2 - zbar^{2q}/4, Re(z^q w)) (eells/reference.py), or (--start) a coefficient file of the
+same q, e.g. the solution at a lower degree (continuation in D).
 
 This script is plain floating point (no rigour); the certificate re-verifies everything.
 
@@ -40,7 +40,7 @@ from eells.grid import OrbitGrid
 from eells.harmonics import HarmonicEvaluator, vector_modes
 from eells.fields import field_from_coefficients, save_coefficients, load_coefficients
 from eells.equation import OperatorCoefficients, dot
-from eells.reference import reference_field, REFERENCE_ALPHA
+from eells.reference import reference_field
 
 
 class GalerkinSystem:
@@ -106,7 +106,7 @@ class GalerkinSystem:
         N = sum(rho * dot(W.grad[k], W.grad[k]) - dot(W.val, W.grad[k]) ** 2 for k in range(4))
         energy = 0.5 * float((self.grid.omega * N / rho ** 2).sum())
         L2res = np.sqrt(float((self.grid.omega * dot(F0, F0)).sum()))
-        hom = dot(W.val, reference_field(self.grid, self.q, REFERENCE_ALPHA.get(self.q, 1)))
+        hom = dot(W.val, reference_field(self.grid, self.q))
         normX = np.sqrt(sum((m.l + 1) ** 4 * c ** 2 for m, c in zip(self.modes, a)))
         return {"energy_over_8pi2": energy / (8 * np.pi ** 2), "residual_L2": float(L2res),
                 "sup_abs_norm2_minus_1": float(np.abs(rho - 1).max()), "min_Wbar_dot_V": float(hom.min()),
@@ -118,7 +118,7 @@ def solve(D, q, max_iter=40, tol=1e-13, log=print, start=None, kappa=10.0):
     g = sys_.grid
     log(f"Hopf invariant q={q}, degree D={D}: {len(sys_.modes)} modes, grid {g.Ns + 1} x {g.Nphi} (exact to degree {sys_.deg})")
     if start is None:
-        V = reference_field(g, q, REFERENCE_ALPHA.get(q, 1))
+        V = reference_field(g, q)
         nV = np.sqrt(dot(V, V))
         a = sys_.project([v / nV for v in V])
         log("start: projection of V/|V|")

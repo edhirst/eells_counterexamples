@@ -7,7 +7,6 @@ Inputs
     --coefficients  JSON with the coefficients of Wbar in the basis of Proposition 2.2 (its header
                     gives the Hopf invariant q)
     --cutoff        the mode cutoff l of the linear estimate (Section 3.3)
-    --alpha         the scaling of the reference field V_{q,alpha} (default: REFERENCE_ALPHA[q])
 
 Steps (all arithmetic rigorous: ball arithmetic of eells/ball.py, exact quadrature of eells/grid.py)
     1. grids: a quadrature grid exact for every integrand that is integrated, and a bounding grid
@@ -41,7 +40,7 @@ from eells.grid import OrbitGrid
 from eells.harmonics import HarmonicEvaluator
 from eells.fields import field_from_coefficients, load_coefficients
 from eells.equation import degrees
-from eells.reference import REFERENCE_ALPHA, SOBOLEV_CONSTANTS_TEX
+from eells.reference import SOBOLEV_CONSTANTS_TEX
 from . import approximate_bounds as ab
 from . import linear_estimate as le
 from . import nonlinear_estimate as ne
@@ -61,16 +60,14 @@ def grids(D, q, l):
     return quad, bound, deg
 
 
-def certify(coeff_path, l, alpha=None, out_dir="certificate/output", name=None, log=print, index_basis=None,
-            chunk_points=6000):
+def certify(coeff_path, l, out_dir="certificate/output", name=None, log=print, index_basis=None, chunk_points=6000):
     t0 = time.time()
     modes, values, data = load_coefficients(coeff_path)
     q = modes[0].q
-    alpha = alpha or REFERENCE_ALPHA[q]
     D = max(m.l for m in modes)                      # validated against the header by the loader
     name = name or f"q{q}_D{D}_l{l}"
     cache = Path(out_dir) / "cache"
-    log(f"Hopf invariant q = {q}:  Wbar of degree {D}, {len(modes)} coefficients;  cutoff l = {l};  reference V_(q,alpha), alpha = {alpha}")
+    log(f"Hopf invariant q = {q}:  Wbar of degree {D}, {len(modes)} coefficients;  cutoff l = {l}")
     quad, bound, deg = grids(D, q, l)
     log(f"quadrature grid {quad.Ns + 1} x {quad.Nphi}, bounding grid {bound.Ns + 1} x {bound.Nphi}  ({time.time() - t0:.0f}s)")
     Hq = HarmonicEvaluator(quad, max_degree=max(D, l), cache_dir=str(cache))
@@ -78,7 +75,7 @@ def certify(coeff_path, l, alpha=None, out_dir="certificate/output", name=None, 
     Wq = field_from_coefficients(modes, values, Hq, batch=16)
     Wb = field_from_coefficients(modes, values, Hb, batch=16)
     log(f"Wbar evaluated on both grids ({time.time() - t0:.0f}s)")
-    out = {"inputs": {"coefficients": str(coeff_path), "hopf_invariant": q, "deg_Wbar": D, "cutoff_l": l, "alpha": alpha,
+    out = {"inputs": {"coefficients": str(coeff_path), "hopf_invariant": q, "deg_Wbar": D, "cutoff_l": l,
                       "quadrature_grid": [quad.Ns + 1, quad.Nphi], "bounding_grid": [bound.Ns + 1, bound.Nphi]}}
 
     # ---- Proposition 3.1
@@ -87,7 +84,7 @@ def certify(coeff_path, l, alpha=None, out_dir="certificate/output", name=None, 
     energy = ab.energy_bounds(Wq, quad, Wb, bound, deg, D)
     log(f"[3.1] energy of Wbar/|Wbar|: [{energy['E_lower']:.15f}, {energy['E_upper']:.15f}]  "
         f"= 8 pi^2 x [{energy['E_over_8pi2_lower']:.15f}, {energy['E_over_8pi2_upper']:.15f}]  ({time.time() - t0:.0f}s)")
-    hom_lo, hom_hi = ab.homotopy_bound(Wb, bound, D, q, alpha)
+    hom_lo, hom_hi = ab.homotopy_bound(Wb, bound, D, q)
     log(f"[3.1] min Wbar . V >= {hom_lo:.6f}   (max <= {hom_hi:.6f})  ({time.time() - t0:.0f}s)")
     nX = ne.norm_X(modes, values)
 
@@ -134,7 +131,6 @@ def certify(coeff_path, l, alpha=None, out_dir="certificate/output", name=None, 
         ("q", r"$H$", str(q), "exact"),
         ("deg Wbar", r"$\deg\bar W$", str(D), "exact"),
         ("l", r"$l$", str(l), "exact"),
-        ("alpha", r"$\alpha_q$", str(alpha), "exact"),
         ("c_inf", r"$c_\infty$", SOBOLEV_CONSTANTS_TEX["c_inf"], "exact"),
         ("c_4", r"$c_4$", SOBOLEV_CONSTANTS_TEX["c_4"], "exact"),
         ("c_5", r"$c_5$", SOBOLEV_CONSTANTS_TEX["c_5"], "exact"),
@@ -170,7 +166,7 @@ def certify(coeff_path, l, alpha=None, out_dir="certificate/output", name=None, 
     out["table_A1"] = [{"name": a, "latex": b, "value": c, "kind": d} for a, b, c, d in table]
     out["details"] = {"residual_square": {"mid": float(sq.m), "radius": float(sq.r)},
                       "energy": {k: (float(v.m) if hasattr(v, "m") else v) for k, v in energy.items()},
-                      "homotopy": {"min_lower": hom_lo, "max_upper": hom_hi, "alpha": alpha}, "coefficient_bounds": cb,
+                      "homotopy": {"min_lower": hom_lo, "max_upper": hom_hi}, "coefficient_bounds": cb,
                       "gamma": gamma, "blocks": binfo, "inverse": ainfo, "schur": sinfo, "L2_inverse": L2inv, "M": M,
                       "nonlinear": {"C_nl": Cnl, "norm_X": nX}, "newton_kantorovich": nk,
                       "min_abs_Wbar": {"min_lower": minW_lo, "max_upper": maxW_hi}, "energy_of_u": en, "index": ix,
@@ -186,13 +182,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--coefficients", default="data/Wbar_q2_D40.json")
     ap.add_argument("--cutoff", type=int, default=40, help="mode cutoff l of the linear estimate")
-    ap.add_argument("--alpha", type=int, default=None, help="scaling of the reference field (default REFERENCE_ALPHA[q])")
     ap.add_argument("--out-dir", default="certificate/output")
     ap.add_argument("--name", default=None)
     ap.add_argument("--chunk-points", type=int, default=6000, help="grid points per block in the Gram accumulation")
     ap.add_argument("--index-basis", default=None, help="test fields of Section 5 (q = 2; default data/index_basis_q2.json)")
     args = ap.parse_args()
-    out = certify(args.coefficients, args.cutoff, args.alpha, args.out_dir, args.name, index_basis=args.index_basis,
+    out = certify(args.coefficients, args.cutoff, args.out_dir, args.name, index_basis=args.index_basis,
                   chunk_points=args.chunk_points)
     print()
     for row in out["table_A1"]:

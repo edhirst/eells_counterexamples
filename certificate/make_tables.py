@@ -31,7 +31,6 @@ from .rounding import round_down, round_up, sci
 ROWS = [
     ("deg Wbar", r"$\deg\bar W$", None),
     ("l", r"$l$", None),
-    ("alpha", r"$\alpha_q$", None),
     ("C_residual", r"$\Cr{const:residual}=\varepsilon$", None),
     ("C_energy-lower", r"$\Cr{const:energy-lower}$", 13),
     ("C_energy-upper", r"$\Cr{const:energy-upper}$", 13),
@@ -92,7 +91,8 @@ def master_table(certs):
     passed = all(c["passed"] for c in certs)
     caption = (r"Constants of the certificate for the approximate solutions $\bar W=\bar W_q$ of Hopf invariant "
                r"$q=2,\dots,6$ (Remark~\ref{rem:family}; $q=2$ is \cref{thm:main}), with the cutoff $l$ of "
-               r"\S\ref{subsection:linear-estimate} and the scaling $\alpha_q$ of the reference map. Upper bounds are "
+               r"\S\ref{subsection:linear-estimate}; $\Cr{const:homotopy}$ refers to the reference map "
+               r"$V_q=(w^2-\frac14\bar z^{2q},\Re(z^qw))$. Upper bounds are "
                r"rounded up and lower bounds down. In every column $Mk<1$, $M(\varepsilon+kr)\le r$, "
                r"$\Cr{const:homotopy}-c_\infty r>0$ and $\|w\|_{C^0}<1$; for $q=2$, moreover, $\lambda^*+\delta<0$ "
                r"(\cref{prop:indexbound,prop:quadraticestimate}). The constants $c_\infty,c_4,c_5,\beta$ are the exact "

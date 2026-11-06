@@ -4,7 +4,6 @@
   "hopf_invariant": 6,
   "deg_Wbar": 184,
   "cutoff_l": 80,
-  "alpha": 2,
   "quadrature_grid": [
    923,
    264
@@ -31,12 +30,6 @@
    "name": "l",
    "latex": "$l$",
    "value": "80",
-   "kind": "exact"
-  },
-  {
-   "name": "alpha",
-   "latex": "$\\alpha_q$",
-   "value": "2",
    "kind": "exact"
   },
   {
@@ -223,9 +216,8 @@
    "int_N_delta": 1.6112488225311567e-13
   },
   "homotopy": {
-   "min_lower": 0.08728889690838317,
-   "max_upper": 1.0017259964590632,
-   "alpha": 2
+   "min_lower": 0.08728889690839683,
+   "max_upper": 1.001725996459044
   },
   "coefficient_bounds": {
    "eta": 2.0968796428242097e-07,
@@ -246,7 +238,7 @@
    "max_radius_CtC": 0.00034333885978128225,
    "max_radius_BBt": 0.00034103133228793826,
    "chunks": 42,
-   "seconds": 173.71893978118896
+   "seconds": 244.90561819076538
   },
   "inverse": {
    "normE": 2.286416211620651e-08,
@@ -270,7 +262,7 @@
    "k": 8.776867604647954e-05,
    "Mk": 0.014532418046078594,
    "M_eps_plus_kr": 1.1052022305551087e-08,
-   "homotopy_margin": 0.0872888937965227,
+   "homotopy_margin": 0.08728889379653637,
    "conditions": {
     "Mk_lt_1": true,
     "M_eps_plus_kr_le_r": true,
@@ -296,7 +288,7 @@
    "all_ok": true
   },
   "index": null,
-  "seconds": 929.6218121051788
+  "seconds": 1288.656685590744
  },
  "passed": true
 }

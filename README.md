@@ -17,7 +17,7 @@ $e^{i\theta}\cdot(z,w)=(e^{i\theta}z,e^{-iq\theta}w)$ (acting on the target by $
 complex conjugation $\kappa$ and $S(z,w)=(z,-w)$ (acting by $t\mapsto-t$); $G_2$ is the group $G$
 of Section 2.1.  The equivariant basis of Proposition 2.2 becomes
 $(\mathrm{Re}\,Y_{qn-2q,n,j},\mathrm{Im}\,Y_{qn-2q,n,j},0)$, $n$ even, and $\sqrt2(0,0,\mathrm{Re}\,Y_{qn,n,j})$,
-$n$ odd, and the reference map is $V_q=(w^2-\alpha_q^{-2}\bar z^{2q},\,2\alpha_q^{-1}\mathrm{Re}(z^qw))$.
+$n$ odd, and the reference map is $V_q=(w^2-\tfrac14\bar z^{2q},\,\mathrm{Re}(z^qw))$.
 Everything else (the equation $F(v)=0$, the estimates of Sections 3 and 4) is as in the paper.
 The code follows the notation of the paper; each module says which statement it implements.
 
@@ -26,10 +26,10 @@ The code follows the notation of the paper; each module says which statement it 
 | $q$ | $\deg\bar W$ | cutoff $l$ | $\varepsilon=\|F(0)\|_{L^2}$ | $M$ | $r$ | $E(u_q)/8\pi^2$ | certificate time |
 |---|---|---|---|---|---|---|---|
 | 2 | 40 | 40 | 1.987e-8 | 23.67 | 9.5e-7 | [1.58661993295, 1.58661993297] | 1 min |
-| 3 | 80 | 40 | 5.18e-11 | 48.63 | 5.1e-9 | [1.97074310310, 1.97074310315] | 2 min |
-| 4 | 112 | 60 | 3.855e-11 | 77.67 | 6e-9 | [2.25147044354, 2.25147044362] | 5 min |
-| 5 | 152 | 60 | 4.657e-11 | 122.7 | 1.2e-8 | [2.47161001814, 2.47161001826] | 10 min |
-| 6 | 184 | 80 | 6.482e-11 | 165.6 | 2.2e-8 | [2.65238168307, 2.65238168322] | 15 min |
+| 3 | 80 | 40 | 5.179e-11 | 48.63 | 5.1e-9 | [1.97074310310, 1.97074310315] | 3 min |
+| 4 | 112 | 60 | 3.855e-11 | 77.67 | 6e-9 | [2.25147044354, 2.25147044362] | 6 min |
+| 5 | 152 | 60 | 4.657e-11 | 122.7 | 1.2e-8 | [2.47161001814, 2.47161001826] | 14 min |
+| 6 | 184 | 80 | 6.482e-11 | 165.6 | 2.2e-8 | [2.65238168307, 2.65238168322] | 21 min |
 
 All five certificates pass (`certificate/output/q<q>_D<D>_l<l>.json`, `.log`).  The certificate is
 deterministic: re-running it on the same data reproduces every bound bit for bit (no random

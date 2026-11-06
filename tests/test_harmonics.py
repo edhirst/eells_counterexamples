@@ -6,7 +6,7 @@ from scipy.special import eval_jacobi
 from eells.grid import OrbitGrid
 import pytest
 
-from eells.harmonics import vector_modes, HarmonicEvaluator, jacobi_table, jacobi_explicit, Mode
+from eells.harmonics import vector_modes, HarmonicEvaluator, jacobi_table, jacobi_explicit
 
 
 @pytest.mark.parametrize("q", [2, 3, 4, 5, 6])

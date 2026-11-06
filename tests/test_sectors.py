@@ -7,7 +7,7 @@ from scipy.special import eval_jacobi
 
 from eells.grid import OrbitGrid
 from eells.harmonics import HarmonicEvaluator, norm_constant_squared_times_2pi2
-from eells.sectors import GMode, sector_modes, complex_field, make_mode, _cfactors
+from eells.sectors import sector_modes, complex_field, make_mode, _cfactors
 
 
 # ---------------------------------------------------------------- direct evaluation at arbitrary points
