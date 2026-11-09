@@ -2,7 +2,7 @@
   <img src="analysis/figures/pole_fibres.png" alt="The preimages of the north and south poles under the maps u_q, q = 1 to 6, linked q times" width="55%">
 </p>
 
-# A counterexample to Eells' conjecture: numerics and computer-assisted certificate
+# Numerical verification for harmonic maps: Counterexamples to Eells' conjecture
 
 The construction of the approximate harmonic maps $\bar W_q:S^3\to\mathbb R^3$ and the rigorous
 verification of every constant in Table A.1 of the paper give the Newton–Kantorovich certificate
