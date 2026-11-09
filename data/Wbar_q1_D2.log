@@ -1,0 +1,24 @@
+Hopf invariant q=1, degree D=2: 3 modes, grid 8 x 8 (exact to degree 14)
+start: projection of V/|V|
+  it  0  |R| = 1.457e+01   ||F(0)||_L2 ~ 6.199e+00   E/8pi^2 ~ 1.042460024573   sup||W|^2-1| = 6.46e-01   min W.V = 0.1578   (0s)
+        step 0.5, |delta| = 2.532e+00
+  it  1  |R| = 8.283e+00   ||F(0)||_L2 ~ 4.037e+00   E/8pi^2 ~ 1.004370412175   sup||W|^2-1| = 2.53e-01   min W.V = 0.2714   (0s)
+        step 1, |delta| = 3.358e-01
+  it  2  |R| = 9.250e-01   ||F(0)||_L2 ~ 5.391e-01   E/8pi^2 ~ 1.000113498619   sup||W|^2-1| = 3.17e-02   min W.V = 0.2522   (0s)
+        step 1, |delta| = 4.993e-02
+  it  3  |R| = 1.342e-02   ||F(0)||_L2 ~ 7.198e-03   E/8pi^2 ~ 1.000000021955   sup||W|^2-1| = 5.40e-04   min W.V = 0.2500   (0s)
+        step 1, |delta| = 7.610e-04
+  it  4  |R| = 3.893e-06   ||F(0)||_L2 ~ 2.021e-06   E/8pi^2 ~ 1.000000000000   sup||W|^2-1| = 1.74e-07   min W.V = 0.2500   (0s)
+        step 1, |delta| = 2.320e-07
+  it  5  |R| = 3.672e-13   ||F(0)||_L2 ~ 1.757e-13   E/8pi^2 ~ 1.000000000000   sup||W|^2-1| = 1.73e-14   min W.V = 0.2500   (0s)
+        step 1, |delta| = 2.258e-14
+  it  6  |R| = 2.211e-15   ||F(0)||_L2 ~ 6.015e-15   E/8pi^2 ~ 1.000000000000   sup||W|^2-1| = 4.44e-16   min W.V = 0.2500   (0s)
+wrote data/Wbar_q1_D2.json
+{
+ "energy_over_8pi2": 1.0,
+ "residual_L2": 6.014778569349823e-15,
+ "sup_abs_norm2_minus_1": 4.440892098500626e-16,
+ "min_Wbar_dot_V": 0.25,
+ "norm_X": 39.9859464434253,
+ "sup_norm": 1.0000000000000002
+}

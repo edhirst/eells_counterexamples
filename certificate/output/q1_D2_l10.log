@@ -1,0 +1,50 @@
+Hopf invariant q = 1:  Wbar of degree 2, 3 coefficients;  cutoff l = 10
+quadrature grid 21 x 21, bounding grid 11 x 21  (0s)
+Wbar evaluated on both grids (0s)
+[3.1] ||F(0)||_L2 <= 1.8906e-12   (ball of the square: mid 1.966e-29, radius 3.6e-24)  (0s)
+[3.1] energy of Wbar/|Wbar|: [78.956835208708029, 78.956835208721699]  = 8 pi^2 x [0.999999999999913, 1.000000000000087]  (1s)
+[3.1] min Wbar . V >= 0.249497   (max <= 1.000503)  (3s)
+  eta <= 7.125e-13 (grid 1.332e-15),  b1 <= 5.6569 (grid 5.6569),  b0 <= 1.0000 (grid 1.0000),  ||Wbar||_inf <= 1.000000
+[3.3] gamma >= 74.3539  (l = 10)  (6s)
+    grid rows 21/21 (0s)
+  A block 27x27;  ||B|| <= 32.4456 (float 32.4037),  ||C|| <= 19.4422 (float 19.4422)  [coupled modes up to degree 18, 0s]
+  ||E|| <= 2.481e-11,  ||Z|| <= 0.1885  =>  ||A^-1|| <= 0.1885   (1/sigma_min(mid A) = 0.1408)
+  ||Z B|| <= 2.8238e-01,  ||A^-1 B|| <= 2.8238e-01,  ||A^-1 B|| ||D^-1|| ||C|| <= 7.3838e-02
+[3.3] ||L^-1||_(L2->L2) <= 0.2430,   ||L^-1||_(Y->X) <= M = 10.5055  (6s)
+[4]   C_nl <= 0.03534,  ||Wbar||_X <= 39.9859,  r = 4e-11:  M k = 7.123e-08 < 1 True,  M(eps + k r) = 1.986e-11 <= r True,  C_hom - c_inf r = 0.24950 > 0 True
+[4.2] min |Wbar| >= 1.0000000000 (max |Wbar| <= 1.0000000000),  C_energyparameter >= 1.0000000000,  ||w||_C0 <= 1.132e-11 < 1 True,  ||dw||_L2 <= 2.970e-10
+[4.2] energy of the harmonic map u: [78.956835208707986, 78.956835208721841]  (6s)
+CERTIFICATE PASSED  (6s)
+wrote certificate/output/q1_D2_l10.json
+
+                       q  exact  1
+                deg Wbar  exact  2
+                       l  exact  10
+                   c_inf  exact  \sqrt{\frac{\pi^2/6-5/4}{2\pi^2}}
+                     c_4  exact  \left(\frac{2}{9\pi^2}\right)^{1/4}
+                     c_5  exact  \frac{2\sqrt2}{9}
+                    beta  exact  (2\pi^2)^{-1/4}
+              C_residual  upper  1.891e-12
+          C_energy-lower  lower  78.95683520870802
+          C_energy-upper  upper  78.95683520872170
+              C_homotopy  lower  0.2494
+                    C_nl  upper  0.03534
+         C_energy-lower2  lower  78.95683520870798
+         C_energy-upper2  upper  78.95683520872185
+       C_energyparameter  lower  0.99999999
+            norm_X(Wbar)  upper  39.986
+              sup |Wbar|  upper  1.00001
+                     eta  upper  7.126e-13
+                     b_1  upper  5.657
+                     b_0  upper  1.001
+                   gamma  lower  74.35
+                ||A^-1||  upper  0.1886
+                   ||B||  upper  32.45
+                   ||C||  upper  19.45
+              ||A^-1 B||  upper  0.2824
+             ||L^-1||_L2  upper  0.2431
+                       M  upper  10.51
+                       r  exact  4e-11
+                      Mk  upper  7.13e-8
+               M(eps+kr)  upper  1.99e-11
+                    w_C0  upper  1.14e-11

@@ -1,7 +1,7 @@
 """The certificate: rigorous verification of every constant of Table A.1 (master-table) of
 "A counterexample to Eells' conjecture via a computer-assisted proof", for the approximate
 solution Wbar of Hopf invariant q read from a coefficient file (q = 2 is the paper's main case;
-q = 3, ..., 6 are the family of Remark rem:family).
+q = 3, ..., 6 are the family of Remark rem:family; q = 1, where Wbar is the Hopf map, is a check).
 
 Inputs
     --coefficients  JSON with the coefficients of Wbar in the basis of Proposition 2.2 (its header

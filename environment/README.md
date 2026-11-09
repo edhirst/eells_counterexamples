@@ -16,7 +16,7 @@ pip install --upgrade pip
 pip install -r environment/requirements.txt
 ```
 
-Check the installation by running the unit tests (about one minute):
+Check the installation by running the unit tests (about 10 seconds):
 
 ```bash
 python -m pytest tests
@@ -24,6 +24,8 @@ python -m pytest tests
 
 All scripts are run from the repository root as modules (`python -m numerics.solve_approximate`,
 `python -m certificate.certify`, ...), so no installation of the `eells` package is needed.
+
+The figures in `analysis/` also need matplotlib (`pip install matplotlib`); the certificate does not.
 
 ## Reproducibility notes
 

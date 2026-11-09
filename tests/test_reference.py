@@ -14,7 +14,7 @@ def _V(q, z, w):
     return np.stack([zeta.real, zeta.imag, (z ** q * w).real])
 
 
-@pytest.mark.parametrize("q", [2, 3, 4, 5, 6])
+@pytest.mark.parametrize("q", [1, 2, 3, 4, 5, 6])
 def test_reference_field_values_and_norm(q):
     g = OrbitGrid(40, 32, False, q)
     V = np.stack(reference_field(g, q))
@@ -29,7 +29,7 @@ def test_reference_field_values_and_norm(q):
         assert abs(reference_norm_min(q) - 0.25) < 1e-9                    # 1/4 <= |V_q| <= 1 (attained at w = 0)
 
 
-@pytest.mark.parametrize("q", [2, 3, 4, 5, 6])
+@pytest.mark.parametrize("q", [1, 2, 3, 4, 5, 6])
 def test_reference_field_is_equivariant(q):
     """V_q(g.x) = g.V_q(x) for the generators of G_q, so that Wbar . V_q is G_q-invariant."""
     rng = np.random.default_rng(q)
@@ -43,7 +43,7 @@ def test_reference_field_is_equivariant(q):
     assert np.abs(_V(q, z, -w) - V * np.array([1, 1, -1]).reshape(3, 1)).max() < 1e-14
 
 
-@pytest.mark.parametrize("q", [2, 3, 4, 5, 6])
+@pytest.mark.parametrize("q", [1, 2, 3, 4, 5, 6])
 def test_kappa_h_is_orthogonal_to_reference_field(q):
     """V_q is orthogonal to kappa.h(z^q, 2w) (Proposition prop:homotopy, part (4))."""
     g = OrbitGrid(40, 32, False, q)
@@ -68,4 +68,4 @@ def test_sobolev_constants():
     # c_5^2 = max_{l>=2} l(l+2)/(l+1)^4 = 8/81, attained at l = 2 (Proposition 2.4)
     assert max(l * (l + 2) / (l + 1) ** 4 for l in range(2, 1000)) == 8 / 81
     # the constants assume that X contains no modes of degree 0 or 1, for every q
-    assert all(min(m.l for m in vector_modes(40, q)) == 2 for q in (2, 3, 4, 5, 6))
+    assert all(min(m.l for m in vector_modes(40, q)) == 2 for q in (1, 2, 3, 4, 5, 6))

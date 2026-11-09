@@ -84,7 +84,7 @@ def load_coefficients(path):
     largest degree present."""
     data = json.loads(Path(path).read_text())
     q = int(data.get("hopf_invariant", 2))
-    assert q >= 2
+    assert q >= 1, "the Hopf invariant must be >= 1"
     modes, values = [], []
     for c in data["coefficients"]:
         kind, n, j, l, v = c["kind"], int(c["n"]), int(c["j"]), int(c["l"]), float(c["value"])

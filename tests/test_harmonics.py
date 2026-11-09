@@ -9,7 +9,7 @@ import pytest
 from eells.harmonics import vector_modes, HarmonicEvaluator, jacobi_table, jacobi_explicit
 
 
-@pytest.mark.parametrize("q", [2, 3, 4, 5, 6])
+@pytest.mark.parametrize("q", [1, 2, 3, 4, 5, 6])
 def test_mode_counts_and_selection_rules(q):
     for D in (2, 3, 12, 40):
         ms = vector_modes(D, q)
@@ -20,7 +20,7 @@ def test_mode_counts_and_selection_rules(q):
     # the lowest modes are w^2 (l = 2) and Re(z^q w) (l = q + 1)
     assert min(m.l for m in vector_modes(12, q) if m.kind == "V") == q + 1
     assert len(vector_modes(40, 2)) == 217
-    assert [len(vector_modes(40, k)) for k in (3, 4, 5, 6)] == [165, 130, 110, 93]
+    assert [len(vector_modes(40, k)) for k in (1, 3, 4, 5, 6)] == [330, 165, 130, 110, 93]
 
 
 def test_jacobi_recurrence_matches_scipy_and_paper_formula():
@@ -34,7 +34,7 @@ def test_jacobi_recurrence_matches_scipy_and_paper_formula():
                 assert np.allclose(P[j], jacobi_explicit(a, b, j, (1 - x) / 2), rtol=1e-11, atol=1e-11 * np.abs(ref).max())
 
 
-@pytest.mark.parametrize("q", [2, 3, 6])
+@pytest.mark.parametrize("q", [1, 2, 3, 6])
 def test_orthonormality_green_identity_tangentiality_supbound(q):
     D = 14
     g = OrbitGrid.for_quadrature(2 * D + 2, q)

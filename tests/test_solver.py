@@ -7,7 +7,7 @@ from eells.reference import reference_field
 from eells.equation import dot
 
 
-@pytest.mark.parametrize("q", [2, 3])
+@pytest.mark.parametrize("q", [1, 2, 3])
 def test_solver_jacobian_matches_finite_differences(q):
     sys_ = GalerkinSystem(8, q, kappa=10.0, chunk_points=200)
     rng = np.random.default_rng(0)

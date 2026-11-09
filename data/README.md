@@ -10,13 +10,14 @@
 
   | file | $q$ | $D$ | coefficients |
   |---|---|---|---|
+  | `Wbar_q1_D2.json`   | 1 | 2   | 3    |
   | `Wbar_q2_D40.json`  | 2 | 40  | 217  |
   | `Wbar_q3_D80.json`  | 3 | 80  | 630  |
   | `Wbar_q4_D112.json` | 4 | 112 | 969  |
   | `Wbar_q5_D152.json` | 5 | 152 | 1482 |
   | `Wbar_q6_D184.json` | 6 | 184 | 1847 |
 
-  Produced by `numerics/solve_approximate.py`: for $q=2$ directly from the projection of $V_2/|V_2|$,
+  Produced by `numerics/solve_approximate.py`: for $q=1,2$ directly from the projection of $V_q/|V_q|$,
   for $q\ge3$ by continuation in the degree from a low-degree solution in `start/` (see below).
 * `start/Wbar_q<q>_D<D>.json` — the intermediate solutions of the continuation: the first one of
   each $q$ is computed from the projection of $V_q/|V_q|$, each further one starts from the previous

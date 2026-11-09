@@ -1,0 +1,119 @@
+{
+ "description": "coefficients a_k of Wbar = sum_k a_k Psi_k in the orthonormal basis of Proposition 2.2 for the Hopf invariant q (U: (Re Y_{qn-2q,n,j}, Im Y_{qn-2q,n,j}, 0), n even; V: sqrt(2) (0, 0, Re Y_{qn,n,j}), n odd); values are exact IEEE doubles",
+ "hopf_invariant": 1,
+ "degree": 2,
+ "coefficients": [
+  {
+   "kind": "U",
+   "n": 0,
+   "j": 0,
+   "l": 2,
+   "value": -2.565099660323728
+  },
+  {
+   "kind": "U",
+   "n": 2,
+   "j": 0,
+   "l": 2,
+   "value": 2.565099660323728
+  },
+  {
+   "kind": "V",
+   "n": 1,
+   "j": 0,
+   "l": 2,
+   "value": 2.565099660323728
+  }
+ ],
+ "meta": {
+  "solver": "numerics/solve_approximate.py (Newton-Galerkin with weak normalisation)",
+  "kappa": 10.0,
+  "start": "projection of V/|V|",
+  "grid": {
+   "Ns": 7,
+   "Nphi": 8,
+   "exact_degree": 14
+  },
+  "iterations": 7,
+  "final": {
+   "energy_over_8pi2": 1.0,
+   "residual_L2": 6.014778569349823e-15,
+   "sup_abs_norm2_minus_1": 4.440892098500626e-16,
+   "min_Wbar_dot_V": 0.25,
+   "norm_X": 39.9859464434253,
+   "sup_norm": 1.0000000000000002
+  },
+  "history": [
+   {
+    "iteration": 0,
+    "galerkin_residual": 14.569063070783193,
+    "energy_over_8pi2": 1.0424600245729125,
+    "residual_L2": 6.199208374018444,
+    "sup_abs_norm2_minus_1": 0.6455581040400069,
+    "min_Wbar_dot_V": 0.1577930869941605,
+    "norm_X": 38.621802601823035,
+    "sup_norm": 1.2827930869941602
+   },
+   {
+    "iteration": 1,
+    "galerkin_residual": 8.283029787327495,
+    "energy_over_8pi2": 1.0043704121750001,
+    "residual_L2": 4.037269113873767,
+    "sup_abs_norm2_minus_1": 0.252561483376772,
+    "min_Wbar_dot_V": 0.2714392981495842,
+    "norm_X": 42.38655104594693,
+    "sup_norm": 1.1191789326898411
+   },
+   {
+    "iteration": 2,
+    "galerkin_residual": 0.9250060634351926,
+    "energy_over_8pi2": 1.0001134986190328,
+    "residual_L2": 0.5391392592320723,
+    "sup_abs_norm2_minus_1": 0.03167212027268129,
+    "min_Wbar_dot_V": 0.2522002064118052,
+    "norm_X": 40.206461805405624,
+    "sup_norm": 1.0157126169703128
+   },
+   {
+    "iteration": 3,
+    "galerkin_residual": 0.013420117261870647,
+    "energy_over_8pi2": 1.00000002195547,
+    "residual_L2": 0.0071982750075808045,
+    "sup_abs_norm2_minus_1": 0.0005403728392192608,
+    "min_Wbar_dot_V": 0.25002071822149624,
+    "norm_X": 39.98944359859624,
+    "sup_norm": 1.0002701499291176
+   },
+   {
+    "iteration": 4,
+    "galerkin_residual": 3.8933475521220026e-06,
+    "energy_over_8pi2": 1.000000000000002,
+    "residual_L2": 2.020968455813073e-06,
+    "sup_abs_norm2_minus_1": 1.7365752347231478e-07,
+    "min_Wbar_dot_V": 0.25000000152863117,
+    "norm_X": 39.985947355023264,
+    "sup_norm": 1.000000086828758
+   },
+   {
+    "iteration": 5,
+    "galerkin_residual": 3.672142318169182e-13,
+    "energy_over_8pi2": 1.0000000000000004,
+    "residual_L2": 1.7567269277722524e-13,
+    "sup_abs_norm2_minus_1": 1.7319479184152442e-14,
+    "min_Wbar_dot_V": 0.24999999999999986,
+    "norm_X": 39.985946443425384,
+    "sup_norm": 1.0000000000000087
+   },
+   {
+    "iteration": 6,
+    "galerkin_residual": 2.2106698610237515e-15,
+    "energy_over_8pi2": 1.0,
+    "residual_L2": 6.014778569349823e-15,
+    "sup_abs_norm2_minus_1": 4.440892098500626e-16,
+    "min_Wbar_dot_V": 0.25,
+    "norm_X": 39.9859464434253,
+    "sup_norm": 1.0000000000000002
+   }
+  ]
+ }
+}
