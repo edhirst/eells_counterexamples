@@ -1,4 +1,4 @@
-"""Stand-alone run of the index certificate of Section 5 (certificate/index_estimate.py), q = 2.
+"""Stand-alone run of the index certificate of Theorem 1.3 (certificate/index_estimate.py), q = 2.
 
 Reads the certified constants r, ||Wbar||_X and C_energyparameter from an existing certificate
 JSON (certificate/certify.py writes them), builds grids that are exact for the integrands of
@@ -43,7 +43,7 @@ def run(coeff_path, basis_path, cert_path, out_dir="certificate/output", name=No
     det = cert["details"]
     r_str, nX, C8 = det["newton_kantorovich"]["r"], det["nonlinear"]["norm_X"], det["energy_of_u"]["C_energyparameter"]
     assert det["newton_kantorovich"]["all_ok"] and det["energy_of_u"]["all_ok"], \
-        "the existence part of the certificate must have passed (r, ||Wbar||_X, C_8 are taken from it)"
+        "the existence part of the certificate must have passed (r, ||Wbar||_X, C_energyparameter are taken from it)"
     quad, bound = index_grids(D, L)
     cache = Path(out_dir) / "cache"
     Hq = HarmonicEvaluator(quad, max_degree=max(D, L), cache_dir=str(cache))
@@ -51,7 +51,7 @@ def run(coeff_path, basis_path, cert_path, out_dir="certificate/output", name=No
     Wq = field_from_coefficients(modes, values, Hq)
     Wb = field_from_coefficients(modes, values, Hb)
     log(f"Wbar degree {D}, test fields of degree <= {L}; quadrature grid {quad.Ns + 1} x {quad.Nphi}, bounding grid "
-        f"{bound.Ns + 1} x {bound.Nphi};  r = {r_str}, ||Wbar||_X <= {nX:.4f}, C_8 >= {C8:.8f}  ({time.time() - t0:.0f}s)")
+        f"{bound.Ns + 1} x {bound.Nphi};  r = {r_str}, ||Wbar||_X <= {nX:.4f}, C_energyparameter >= {C8:.8f}  ({time.time() - t0:.0f}s)")
     ix = ie.index_lower_bound(Wq, quad, Hq, Wb, bound, D, basis_path, r_str, nX, C8, log=log)
     log(f"INDEX CERTIFICATE {'PASSED' if ix['all_ok'] else 'FAILED'}: nine negative directions, Ind >= 9  ({time.time() - t0:.0f}s)")
     name = name or f"q2_D{D}_index"

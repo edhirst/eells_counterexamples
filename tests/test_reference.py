@@ -1,4 +1,4 @@
-"""Propositions 2.3, 2.4, 2.7, 2.9 and Remark rem:family: Sobolev constants, the Hopf map and the
+"""Propositions 2.5 and 2.6 and Section 2.3: Sobolev constants, the Hopf map and the
 reference field V_q = (w^2 - zbar^{2q}/4, Re(z^q w))."""
 import numpy as np
 import pytest
@@ -45,7 +45,9 @@ def test_reference_field_is_equivariant(q):
 
 @pytest.mark.parametrize("q", [1, 2, 3, 4, 5, 6])
 def test_kappa_h_is_orthogonal_to_reference_field(q):
-    """V_q is orthogonal to kappa.h(z^q, 2w) (Proposition prop:homotopy, part (4))."""
+    """V_q is pointwise orthogonal to kappa.h(z^q, 2w), a check of the formula for V_q.  (The paper
+    does not use this identity: it obtains H(V_q/|V_q|) = q from V_q = pi(z^q/2, w), Lemma 2.12 and
+    Proposition 2.14.)"""
     g = OrbitGrid(40, 32, False, q)
     V = reference_field(g, q)
     z = g.rs.reshape(-1, 1) + 0j
@@ -65,7 +67,7 @@ def test_sobolev_constants():
     assert all(b.lower() <= f <= b.upper() and b.r < 1e-15 for f, b in zip(cf, cb))
     # the series behind c_inf: sum_{l>=2} 1/(l+1)^2 = pi^2/6 - 5/4
     assert abs(sum(1 / (l + 1) ** 2 for l in range(2, 200000)) - (np.pi ** 2 / 6 - 1.25)) < 1e-5
-    # c_5^2 = max_{l>=2} l(l+2)/(l+1)^4 = 8/81, attained at l = 2 (Proposition 2.4)
+    # c_5^2 = max_{l>=2} l(l+2)/(l+1)^4 = 8/81, attained at l = 2 (Proposition 2.6)
     assert max(l * (l + 2) / (l + 1) ** 4 for l in range(2, 1000)) == 8 / 81
     # the constants assume that X contains no modes of degree 0 or 1, for every q
     assert all(min(m.l for m in vector_modes(40, q)) == 2 for q in (1, 2, 3, 4, 5, 6))

@@ -1,4 +1,4 @@
-"""Proposition 4.2: the elementary estimates for the radial map phi(X) = X/|X| and the energy constants."""
+"""Proposition 3.5: the elementary estimates for the radial map phi(X) = X/|X| and the energy constants."""
 import numpy as np
 
 from certificate.energy_estimate import energy_of_harmonic_map

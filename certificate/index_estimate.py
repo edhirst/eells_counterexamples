@@ -1,4 +1,5 @@
-"""Section 5: nine certified negative directions of the second variation (index >= 9).
+"""Theorem 1.3 (q = 2): nine certified negative directions of the second variation (index >= 9),
+through Propositions 2.19, 2.20, 3.2 and Lemma 2.21.
 
 For W nowhere zero and xi in H^1(S^3, R^3) the paper's form (eq. quadraticform) is
 
@@ -26,25 +27,27 @@ sectors (0,-), (1,-), (2,+), (2,-), (3,-) of eells/sectors.py, one polynomial fi
 real test fields are xi = f (real, nu = 0) and Re f, Im f (nu != 0), nine in all.  By the
 invariance of Q_Wbar and of the H^1 product under G, different sectors are orthogonal, and for
 nu != 0 the real 2 x 2 block of (Re f, Im f) is (1/2) Q^h(f, f) I_2 (eells/sectors.py).  Hence
-the matrices G_ab = Q_Wbar(xi_a, xi_b) and H_ab = <xi_a, xi_b>_{H^1} of the paper's lemma are
+the matrices G_ab = Q_Wbar(xi_a, xi_b) and H_ab = <xi_a, xi_b>_{H^1} of Lemma 2.21 are
 diagonal; they are nevertheless assembled as 9 x 9 ball matrices and the test of the lemma,
 G + delta H negative definite, is made with a general routine (Sylvester's law of inertia:
 V^T (G + delta H) V has negative Gershgorin discs for a float matrix V).
 
-**Perturbation.**  For the harmonic map W = Wbar + v, ||v||_X <= r, the paper's proposition
+**Perturbation.**  For the harmonic map W = Wbar + v, ||v||_X <= r, Proposition 2.20
 gives |Q_W(xi) - Q_Wbar(xi)| <= delta ||xi||_{H^1}^2 with
 
-    delta = r [ 2 beta ( 3 c_inf c_4 (||Wbar||_X + r) / C_8^2 + c_4 / C_8 )
-                + 12 beta^2 c_inf c_4^2 (||Wbar||_X + r)^2 / C_8^3
-                + 4 beta^2 c_4^2 (||Wbar||_X + r) / C_8^2 + 4 c_inf / C_8 ],   beta = (2 pi^2)^{-1/4},
+    delta = r [ 2 beta ( 3 c_inf c_4 (||Wbar||_X + r) / C^2 + c_4 / C )
+                + 12 beta^2 c_inf c_4^2 (||Wbar||_X + r)^2 / C^3
+                + 4 beta^2 c_4^2 (||Wbar||_X + r) / C^2 + 4 c_inf / C ],   beta = (2 pi^2)^{-1/4},
 
-C_8 = C_energyparameter = min |Wbar| - c_inf r (a lower bound of min |W|), and beta the constant
+C = C_energyparameter = min |Wbar| - c_inf r (a lower bound of min |W|; the variable C8 below), and
+beta the constant
 of ||xi||_{L^4} <= beta ||xi||_{H^1} on S^3.  The lemma then gives: if G + delta H is negative
-definite, the nine fields span a negative-definite subspace of Q_W, so Ind Q_u >= 9.
+definite, the nine fields span a negative-definite subspace of Q_W, so Ind Q_u >= 9
+(Proposition 2.19).
 
 Besides the literal check the certificate reports the largest t (a decimal) with G + t H
 negative definite, i.e. Q_Wbar(xi) <= -t ||xi||_{H^1}^2 on the span; lambda^* = -t is the bound
-of Proposition prop:indexbound, and lambda^* + delta < 0.
+of Proposition 3.2, and lambda^* + delta < 0.
 """
 from __future__ import annotations
 
@@ -63,7 +66,7 @@ from .rounding import round_down
 
 # ---------------------------------------------------------------------------- constants
 def perturbation_constant(r_str, nX, C8):
-    """delta of the paper's proposition (ball arithmetic; nX and C8 are the certified bounds)."""
+    """delta of Proposition 2.20 (ball arithmetic; nX and C8 = C_energyparameter are the certified bounds)."""
     c_inf, c_4, _, beta = sobolev_constants(True)
     rb = Ball.from_fraction(Fraction(r_str))
     n = Ball.exact(nX) + rb
@@ -186,7 +189,7 @@ def negative_definite(M: Ball):
 
 # ---------------------------------------------------------------------------- main routine
 def index_lower_bound(Wq, quad, Hq, Wb, bound, D, basis_path, r_str, nX, C8, log=print):
-    """The certificate of Section 5: returns a dict with G, H (9 x 9 balls), delta, the checks."""
+    """The index certificate (Theorem 1.3): returns a dict with G, H (9 x 9 balls), delta, the checks."""
     t0 = time.time()
     fields, data = load_index_basis(basis_path)
     L = max(max(m.l for m in f["modes"]) for f in fields)

@@ -74,7 +74,7 @@ def degrees(D, q=2):
             "M": 4 * D + 1,                   # each M_a
             "M0": 4 * D + 2,
             "Kp": 4 * D + 2,                  # L Psi and L^* Psi have degree l + Kp as evaluated here
-            "K": 4 * D,                       # band width of the paper (K = 4 deg Wbar)
+            "K": 4 * D,                       # band width of L: B and C couple modes up to degree l + K
             "energy": 4 * D + 2,              # sum_a |Wbar x d_a Wbar|^2
             "V": 2 * q}                       # the reference field V_q
 

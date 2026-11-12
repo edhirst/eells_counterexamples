@@ -1,8 +1,8 @@
 # Data files
 
 * `Wbar_q<q>_D<D>.json` — coefficients $a_k$ of the approximate solution $\bar W_q=\sum_k a_k\Psi_k$
-  of Hopf invariant $q$ and degree $D$ in the orthonormal basis of Proposition 2.2 (for $q\ne2$:
-  Remark rem:family), one entry per basis field: type U/V, $n$, $j$, degree $l$, value.  For type U
+  of Hopf invariant $q$ and degree $D$ in the orthonormal basis of Proposition 2.4,
+  one entry per basis field: type U/V, $n$, $j$, degree $l$, value.  For type U
   the field is $(\mathrm{Re}\,Y_{m,n,j},\mathrm{Im}\,Y_{m,n,j},0)$ with $m=qn-2q$, $n$ even; for type V
   it is $\sqrt2(0,0,\mathrm{Re}\,Y_{m,n,j})$ with $m=qn$, $n$ odd.  The values are IEEE doubles and
   are used exactly by the certificate.  The header gives `hopf_invariant` and `degree`; the `meta`
@@ -23,7 +23,7 @@
   each $q$ is computed from the projection of $V_q/|V_q|$, each further one starts from the previous
   degree (`--start`).
 * `*.log` — the solver logs.
-* `index_basis_q2.json` — the five test fields $f_1,\dots,f_5$ of Proposition prop:indexbound
+* `index_basis_q2.json` — the five test fields $f_1,\dots,f_5$ of Proposition 3.2
   ($q=2$): for each, its sector $(\nu,p)$ and its Gaussian-integer coefficients on the modes
-  $P_{m,n,j},M_{m,n,j},T_{m,n,j}$ (eq. basisPMT) of degree $\le8$ (Table tab:index-fields).
+  $P_{m,n,j},M_{m,n,j},T_{m,n,j}$ (eq. (C.1)) of degree $\le8$ (Table C.1).
   Produced by `python -m numerics.index_basis`.

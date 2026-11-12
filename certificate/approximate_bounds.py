@@ -10,7 +10,7 @@
 * homotopy:   min Wbar . V_q >= C_homotopy for the reference field V_q = (w^2 - zbar^{2q}/4, Re(z^q w))
               (Chebyshev-Fourier bound of the degree D + 2q polynomial).
 * min |Wbar|: a lower bound (Chebyshev-Fourier bound of |Wbar|^2), used for C_energyparameter in
-              Proposition 4.2 (energy_estimate.py).
+              Proposition 3.5 (energy_estimate.py).
 """
 from __future__ import annotations
 

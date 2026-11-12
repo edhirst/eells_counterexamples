@@ -2,7 +2,7 @@
 
 * coefficient bounds   eta >= sup | |Wbar|^4 - 1 |,  b_1^2 >= sup sum_a ||M_a||_F^2,
                        b_0^2 >= sup ||M_0||_F^2   (Chebyshev-Fourier bounds on the bounding grid),
-                       and  ||Wbar||_{C^0}  (for C_nl of Proposition 3.2).
+                       and  ||Wbar||_{C^0}  (for C_nl of Proposition 3.4).
 * gamma = (1 - eta)(l+1)(l+3) - b_1 sqrt((l+1)(l+3)) - b_0 > 0,    ||D^{-1}||_{L^2 -> L^2} <= 1/gamma.
 * the finite block  A = (<Psi_a, L Psi_b>)_{l_a, l_b <= l}  by exact quadrature in ball arithmetic.
 * ||A^{-1}||_2 <= sqrt(||Z||_1 ||Z||_inf) / (1 - sqrt(||E||_1 ||E||_inf)),  E = I - Z A,  Z ~ mid(A)^{-1}.

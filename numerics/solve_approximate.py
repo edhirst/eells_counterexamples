@@ -1,7 +1,7 @@
 """Newton-Galerkin construction of the approximate solution Wbar (Section 3.1).
 
 Wbar is sought, for the Hopf invariant q, in the span of the basis fields Psi_k of
-Proposition 2.2 with degree l_k <= D, as a zero of the Galerkin system
+Proposition 2.4 with degree l_k <= D, as a zero of the Galerkin system
 
         R_k(a) := < Psi_k ,  F_{Wbar}(0) + kappa (|Wbar|^2 - 1) Wbar >_{L^2} = 0,   l_k <= D,
 
@@ -25,7 +25,7 @@ same q, e.g. the solution at a lower degree (continuation in D).
 This script is plain floating point (no rigour); the certificate re-verifies everything.
 
 Usage:  python -m numerics.solve_approximate --hopf 2 --degree 40
-        python -m numerics.solve_approximate --hopf 3 --degree 80 --start data/Wbar_q3_D64.json
+        python -m numerics.solve_approximate --hopf 3 --degree 80 --start data/start/Wbar_q3_D32.json
 """
 from __future__ import annotations
 

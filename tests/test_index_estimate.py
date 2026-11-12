@@ -1,6 +1,7 @@
 """certificate/index_estimate.py: the negative-definiteness test, the perturbation constant delta,
 and the enclosure Q = Qt +- |E| of the form (with the rational coefficients 1/|W|^2, 1/|W|^4)
-by its polynomial proxy, checked on W = V_0 = (w^2 - zbar^4, 2 Re(z^2 w)) (|V_0| = 1 - |z|^2|w|^2 is
+by its polynomial proxy, checked on the test field W = V_0 = (w^2 - zbar^4, 2 Re(z^2 w)), i.e.
+pi(z^2, w) for the extended Hopf fibration pi of Definition 2.11 (not the paper's V_2; |V_0| = 1 - |z|^2|w|^2 is
 far from 1, so the error term is O(1) and really tested) against a direct floating-point
 evaluation of Q_W."""
 import numpy as np
@@ -40,7 +41,7 @@ def test_perturbation_constant_formula():
 
 
 def _reference_modes():
-    """V_0 = (w^2 - zbar^4, 2 Re(z^2 w)) in the basis of Proposition 2.2."""
+    """V_0 = (w^2 - zbar^4, 2 Re(z^2 w)) in the basis of Proposition 2.4."""
     c = lambda a, b: float(np.sqrt(float(norm_constant_squared_times_2pi2(a, b, 0)) / (2 * np.pi ** 2)))
     modes = [Mode(2, "U", 2, 0), Mode(4, "U", 0, 0), Mode(3, "V", 1, 0)]
     values = [1.0 / c(0, 2), -1.0 / c(4, 0), np.sqrt(2.0) / c(2, 1)]

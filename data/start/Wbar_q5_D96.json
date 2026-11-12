@@ -1,5 +1,5 @@
 {
- "description": "coefficients a_k of Wbar = sum_k a_k Psi_k in the orthonormal basis of Proposition 2.2 for the Hopf invariant q (U: (Re Y_{qn-2q,n,j}, Im Y_{qn-2q,n,j}, 0), n even; V: sqrt(2) (0, 0, Re Y_{qn,n,j}), n odd); values are exact IEEE doubles",
+ "description": "coefficients a_k of Wbar = sum_k a_k Psi_k in the orthonormal basis of Proposition 2.4 for the Hopf invariant q (U: (Re Y_{qn-2q,n,j}, Im Y_{qn-2q,n,j}, 0), n even; V: sqrt(2) (0, 0, Re Y_{qn,n,j}), n odd); values are exact IEEE doubles",
  "hopf_invariant": 5,
  "degree": 96,
  "coefficients": [

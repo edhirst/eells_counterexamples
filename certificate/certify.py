@@ -1,10 +1,10 @@
 """The certificate: rigorous verification of every constant of Table A.1 (master-table) of
-"A counterexample to Eells' conjecture via a computer-assisted proof", for the approximate
-solution Wbar of Hopf invariant q read from a coefficient file (q = 2 is the paper's main case;
-q = 3, ..., 6 are the family of Remark rem:family; q = 1, where Wbar is the Hopf map, is a check).
+"Numerical verification for harmonic maps: Counterexamples to Eells' conjecture", for the
+approximate solution Wbar of Hopf invariant q read from a coefficient file (q = 2, ..., 6 are the
+maps of Theorem 1.1; q = 1, where Wbar is the Hopf map, is a check that is not part of the paper).
 
 Inputs
-    --coefficients  JSON with the coefficients of Wbar in the basis of Proposition 2.2 (its header
+    --coefficients  JSON with the coefficients of Wbar in the basis of Proposition 2.4 (its header
                     gives the Hopf invariant q)
     --cutoff        the mode cutoff l of the linear estimate (Section 3.3)
 
@@ -14,17 +14,20 @@ Steps (all arithmetic rigorous: ball arithmetic of eells/ball.py, exact quadratu
     2. Proposition 3.1: C_residual = eps, the energy interval, C_homotopy  (approximate_bounds.py);
     3. Section 3.3: eta, b_1, b_0, gamma, ||A^{-1}||, ||B||, ||C||, ||A^{-1} B||, ||L^{-1}||, M
        (linear_estimate.py);
-    4. Proposition 3.2 and Theorem 2.10: C_nl, r, and the inequalities M k < 1, M(eps + k r) <= r,
+    4. Proposition 3.4 and Theorem 2.22: C_nl, r, and the inequalities M k < 1, M(eps + k r) <= r,
        C_homotopy - c_inf r > 0  (nonlinear_estimate.py);
-    5. Proposition 4.2: min |Wbar|, C_energyparameter and the energy enclosure
+    5. Proposition 3.5: min |Wbar|, C_energyparameter and the energy enclosure
        [C_energy-lower2, C_energy-upper2] of the harmonic map, with ||w||_{C^0} < 1  (energy_estimate.py);
-    6. Section 5, for q = 2 (if data/index_basis_q2.json exists, see numerics/index_basis.py): the
+    6. Propositions 2.20 and 3.2, for q = 2 (if data/index_basis_q2.json exists, see
+       numerics/index_basis.py): the
        constants delta and lambda^* and the matrices G, H of the nine test fields, with the check
        that G + delta H is negative definite, so that the Morse index of the harmonic map is >= 9
        (index_estimate.py).
-The Sobolev constants c_inf, c_4, c_5, beta of Propositions 2.3 and 2.4 enter as balls enclosing
+The Sobolev constants c_inf, c_4, c_5, beta of Propositions 2.5 and 2.6 enter as balls enclosing
 their exact values (eells/reference.py).
-Outputs: certificate/output/<name>.json (all bounds, rounded outward) and <name>.log.
+Outputs: certificate/output/<name>.json (all bounds, rounded outward) and <name>.log.  The log
+tags are [3.1] Proposition 3.1, [3.3] Section 3.3, [4] Proposition 3.4 and the inequalities of
+Theorem 2.22 (used in Section 4), [4.2] Proposition 3.5 and [5] the index step.
 
 Usage:  python -u -m certificate.certify --coefficients data/Wbar_q2_D40.json --cutoff 40
 """
@@ -99,14 +102,14 @@ def certify(coeff_path, l, out_dir="certificate/output", name=None, log=print, i
     M = le.M_bound(cb["eta"], cb["b1"], cb["b0"], L2inv)
     log(f"[3.3] ||L^-1||_(L2->L2) <= {L2inv:.4f},   ||L^-1||_(Y->X) <= M = {M:.4f}  ({time.time() - t0:.0f}s)")
 
-    # ---- Proposition 3.2 / Theorem 2.10
+    # ---- Proposition 3.4 / Theorem 2.22
     Cnl = ne.nonlinear_constant(cb["W_sup"])
     nk = ne.newton_kantorovich(M, eps, Cnl, nX, hom_lo)
     log(f"[4]   C_nl <= {Cnl:.5f},  ||Wbar||_X <= {nX:.4f},  r = {nk['r']}:  M k = {nk['Mk']:.3e} < 1 {nk['conditions']['Mk_lt_1']},  "
         f"M(eps + k r) = {nk['M_eps_plus_kr']:.3e} <= r {nk['conditions']['M_eps_plus_kr_le_r']},  "
         f"C_hom - c_inf r = {nk['homotopy_margin']:.5f} > 0 {nk['conditions']['homotopy_margin_positive']}")
 
-    # ---- Proposition 4.2
+    # ---- Proposition 3.5
     minW_lo, maxW_hi = ab.min_norm_bound(Wb, bound, D)
     en = ee.energy_of_harmonic_map(energy["E_lower"], energy["E_upper"], minW_lo, nX, nk["r"])
     log(f"[4.2] min |Wbar| >= {minW_lo:.10f} (max |Wbar| <= {maxW_hi:.10f}),  C_energyparameter >= {en['C_energyparameter']:.10f},  "
@@ -114,7 +117,7 @@ def certify(coeff_path, l, out_dir="certificate/output", name=None, log=print, i
     log(f"[4.2] energy of the harmonic map u: [{en['C_energy_lower2']:.15f}, "
         + (f"{en['C_energy_upper2']:.15f}]" if en["all_ok"] else "no upper bound (||w||_C0 bound >= 1)]") + f"  ({time.time() - t0:.0f}s)")
 
-    # ---- Section 5 (q = 2): nine negative directions (index >= 9), when the test fields exist
+    # ---- Propositions 2.20 and 3.2 (q = 2): nine negative directions (index >= 9), when the test fields exist
     ix = None
     basis = index_basis if index_basis is not None else "data/index_basis_q2.json"
     if q == 2 and Path(basis).exists() and nk["all_ok"] and en["all_ok"]:
@@ -185,7 +188,7 @@ def main():
     ap.add_argument("--out-dir", default="certificate/output")
     ap.add_argument("--name", default=None)
     ap.add_argument("--chunk-points", type=int, default=6000, help="grid points per block in the Gram accumulation")
-    ap.add_argument("--index-basis", default=None, help="test fields of Section 5 (q = 2; default data/index_basis_q2.json)")
+    ap.add_argument("--index-basis", default=None, help="test fields of Proposition 3.2 (q = 2; default data/index_basis_q2.json)")
     args = ap.parse_args()
     out = certify(args.coefficients, args.cutoff, args.out_dir, args.name, index_basis=args.index_basis,
                   chunk_points=args.chunk_points)

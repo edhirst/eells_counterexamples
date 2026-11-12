@@ -1,4 +1,5 @@
-"""Negative directions of the quadratic form Q_Wbar of Section 5 (floating point).
+"""Negative directions of the quadratic form Q_Wbar of Section 2.5 (floating point): the test fields
+of Proposition 3.2 and Appendix C.
 
 In each sector S_{nu,p} (eells/sectors.py) the Hermitian Galerkin matrix
 
@@ -7,7 +8,7 @@ In each sector S_{nu,p} (eells/sectors.py) the Hermitian Galerkin matrix
 
 of the L^2-orthonormal modes Phi_k of degree <= L is assembled by exact quadrature and
 diagonalised.  Its negative eigenvalues approximate the negative eigenvalues of the Jacobi
-operator of ubar = Wbar/|Wbar| (the L^2 mass matrix is the identity, Proposition 2.2 / Lemma 2.1),
+operator of ubar = Wbar/|Wbar| (the L^2 mass matrix is the identity, Proposition 2.4 / Lemma 2.3),
 and the H^1 Gram matrix is diag(1 + l_k (l_k + 2)).  The eigenvectors with clearly negative
 eigenvalue are written to a coefficient file; the certificate (certificate/index_estimate.py)
 re-verifies, in ball arithmetic, that they span a negative-definite subspace of Q_W for the
@@ -22,10 +23,10 @@ directions Re f and Im f.
 eigenvectors.  Each eigenvector is therefore rotated (nu != 0: its largest coefficient made real
 and positive), scaled so that its largest coefficient is ``--scale`` (default 100) and rounded to
 Gaussian integers; zero coefficients are dropped.  Rounding is symmetric, so for nu = 0 the
-rounded field is still real.  The stored fields are these short integer combinations (Table
-tab:index-fields of the paper), and the certificate uses them exactly.
+rounded field is still real.  The stored fields are these short integer combinations (Table C.1
+of the paper), and the certificate uses them exactly.
 
-The index part of the paper concerns the Hopf invariant q = 2 (the group G of Section 2.1).
+The index part of the paper (Theorem 1.3) concerns the Hopf invariant q = 2.
 
 Usage:  python -m numerics.index_basis --coefficients data/Wbar_q2_D40.json --max-degree 8
 """

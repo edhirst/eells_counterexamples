@@ -65,7 +65,7 @@ def save_coefficients(path, modes, values, meta=None):
     q = modes[0].q
     assert all(m.q == q for m in modes)
     data = {"description": "coefficients a_k of Wbar = sum_k a_k Psi_k in the orthonormal basis of "
-                           "Proposition 2.2 for the Hopf invariant q (U: (Re Y_{qn-2q,n,j}, Im Y_{qn-2q,n,j}, 0), "
+                           "Proposition 2.4 for the Hopf invariant q (U: (Re Y_{qn-2q,n,j}, Im Y_{qn-2q,n,j}, 0), "
                            "n even; V: sqrt(2) (0, 0, Re Y_{qn,n,j}), n odd); values are exact IEEE doubles",
             "hopf_invariant": q,
             "degree": max(m.l for m in modes),
@@ -78,7 +78,7 @@ def save_coefficients(path, modes, values, meta=None):
 
 def load_coefficients(path):
     """Read and validate a coefficient file.  Every mode must be one of the basis fields of
-    Proposition 2.2 for the file's Hopf invariant q (U with n even, V with n odd >= 1, j >= 0,
+    Proposition 2.4 for the file's Hopf invariant q (U with n even, V with n odd >= 1, j >= 0,
     l = |m| + |n| + 2j), the modes must be distinct (the coefficient-squares formula for
     ||Wbar||_X needs orthonormality), the values finite, and the header degree must equal the
     largest degree present."""

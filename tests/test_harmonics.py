@@ -1,4 +1,4 @@
-"""Proposition 2.2 (orthonormality), the gradient formulas (Green's identity, tangentiality),
+"""Proposition 2.4 (orthonormality), the gradient formulas (Green's identity, tangentiality),
 the sup bound (l+1)/sqrt(2 pi^2), and the Jacobi-polynomial conventions of the paper."""
 import numpy as np
 from scipy.special import eval_jacobi

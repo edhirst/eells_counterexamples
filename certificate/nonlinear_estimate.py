@@ -1,4 +1,4 @@
-"""Proposition 3.2 and Theorem 2.10: the nonlinear constant and the Newton-Kantorovich check.
+"""Proposition 3.4 and Theorem 2.22: the nonlinear constant and the Newton-Kantorovich check.
 
     C_nl = 4 ||Wbar||_inf (c_inf^3 + 2 c_inf^2 c_4^2),
     k(r) = C_nl r (3 ||Wbar||_X^2 + 3 r ||Wbar||_X + r^2),

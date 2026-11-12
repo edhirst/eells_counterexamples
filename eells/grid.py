@@ -7,8 +7,8 @@ therefore a function ``f(s, phi)``, and (volume element ``ds dpsi_1 dpsi_2 / 2``
 
     int_{S^3} f dvol = pi * int_0^1 ds int_0^{2 pi} f(s, phi) dphi.
 
-**Polynomial structure.**  For the group G_q of the Hopf invariant q (eells/harmonics.py; q = 2
-is the group G of Section 2.1) a G_q-invariant polynomial of degree ``p`` in ``(z, zbar, w, wbar)``
+**Polynomial structure.**  For the group G_q of the Hopf invariant q (Section 2.1 of the paper;
+eells/harmonics.py) a G_q-invariant polynomial of degree ``p`` in ``(z, zbar, w, wbar)``
 is, in the variables ``x = 1 - 2 s in [-1, 1]`` and ``phi``, a polynomial of degree ``<= p/2`` in
 ``x`` times trigonometric polynomials of degree ``<= p/(q+1)`` in ``phi`` with even frequencies
 only (a monomial ``z^a zbar^b w^c wbar^d`` is circle-invariant iff ``a - b = q(c - d)``, and

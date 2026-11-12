@@ -2,10 +2,10 @@
 
 * tableA1.tex          Table A.1 (master-table): the certified constants for every Hopf invariant q,
                        one column per q (certificate/output/q{q}_D{D}_l{l}.json);
-* coefficients.tex     the leading coefficients of the approximate solutions Wbar_q (tab:coefficients):
+* coefficients.tex     the leading coefficients of the approximate solutions Wbar_q (Table B.1, tab:coefficients):
                        every basis field whose coefficient has modulus >= --threshold for some q, with
                        the field labelled by (type, n, j) so that rows are comparable across q;
-* index_fields.tex     the test fields f_1, ..., f_5 of Proposition prop:indexbound (tab:index-fields):
+* index_fields.tex     the test fields f_1, ..., f_5 of Proposition 3.2 (Table C.1, tab:index-fields):
                        their Gaussian-integer coefficients and the certified Rayleigh-quotient bounds.
 
 Every number of tableA1.tex is an outward-rounded rigorous bound (rounded in the certificate); the
@@ -76,7 +76,7 @@ def master_table(certs):
     lines = ["Hopf invariant $q$ & " + " & ".join(f"${q}$" for q in qs) + r"\\", r"\midrule"]
     for name, sym, digits in ROWS:
         cells = [(_value(rows[q][name], digits) if name in rows[q] else "--") for q in qs]
-        if name == "M":                      # the bound M of the injectivity estimate, as used in Theorem thm:NK
+        if name == "M":                      # the bound M of the injectivity estimate, as used in Theorem 2.22 (thm:NK)
             cells = [c.replace(r"\le ", r"\le M=") for c in cells]
         lines.append(f"{sym} & " + " & ".join(cells) + r"\\")
     lines.append(r"\midrule")
@@ -90,7 +90,7 @@ def master_table(certs):
     body = "\n".join(lines)
     passed = all(c["passed"] for c in certs)
     caption = (r"Constants of the certificate for the approximate solutions $\bar W=\bar W_q$ of Hopf invariant "
-               r"$q=2,\dots,6$ (Remark~\ref{rem:family}; $q=2$ is \cref{thm:main}), with the cutoff $l$ of "
+               r"$q=2,\dots,6$ in \cref{thm:main}, with the cutoff $l$ of "
                r"\S\ref{subsection:linear-estimate}; $\Cr{const:homotopy}$ refers to the reference map "
                r"$V_q=(w^2-\frac14\bar z^{2q},\Re(z^qw))$. Upper bounds are "
                r"rounded up and lower bounds down. In every column $Mk<1$, $M(\varepsilon+kr)\le r$, "
@@ -133,7 +133,7 @@ def coefficient_table(files, threshold=1e-2, digits=6):
     lines.append(r"\multicolumn{3}{l}{number of coefficients} & " + " & ".join(f"${meta[q][1]}$" for q in qs) + r"\\")
     body = "\n".join(lines)
     caption = (r"Leading coefficients $a_k$ of the approximate solutions $\bar W_q=\sum_k a_k\Psi_k$ in the orthonormal "
-               r"basis of \cref{prop:harmonic-bases} and Remark~\ref{rem:family}: type U is the field "
+               r"basis of \cref{prop:harmonic-bases}: type U is the field "
                r"$(\Re Y_{m,n,j},\Im Y_{m,n,j},0)$ with $m=qn-2q$, type V is $\sqrt2(0,0,\Re Y_{m,n,j})$ with $m=qn$. "
                f"Listed are all basis fields whose coefficient has modulus at least ${sci(str(threshold))}$ for some $q$, "
                f"rounded to {digits} decimals. The complete lists, with the exact IEEE double coefficients used by "

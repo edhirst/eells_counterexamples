@@ -6,7 +6,8 @@ Conventions (as in eells/harmonics.py and eells/grid.py).  A point of S^3 is (z,
 circle of G_q acts by (e^{i th} z, e^{-i q th} w) on S^3 and by zeta -> e^{-2 i q th} zeta on the
 target (zeta, t) in S^2 (zeta in C, t in R).  Every orbit meets the slice
 {(sqrt s, sqrt(1-s) e^{i phi})} (z real >= 0) exactly once, so the orbit space S^3/S^1 is the
-2-sphere with height x = 1 - 2s = |w|^2 - |z|^2 and longitude phi = arg(z^q w); in these coordinates
+2-sphere with height 2s - 1 = |z|^2 - |w|^2 (the grid variable is x = 1 - 2s) and longitude
+phi = arg(z^q w); in these coordinates
 dvol_{S^3} = pi ds dphi, so equal areas on this sphere are equal volumes in S^3 (Archimedes).
 G_q-invariant quantities (the height t of u_q, the energy density) are functions on it.
 """

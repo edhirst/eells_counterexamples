@@ -2,7 +2,7 @@
 
 H(z, w) = (w^2 - zbar^2, 2 Re(z w)) is G_1-equivariant, has |H| = 1 on S^3, and is the Hopf map
 (a, b) -> (2 a bbar, |a|^2 - |b|^2) composed with the isometry (z, w) -> (a, bbar),
-a = (w + zbar)/sqrt 2, b = (w - zbar)/sqrt 2, of R^4.  In the basis of Proposition 2.2 (q = 1) it is
+a = (w + zbar)/sqrt 2, b = (w - zbar)/sqrt 2, of R^4.  In the basis of Proposition 2.4 (q = 1) it is
 pi sqrt(2/3) (U_{0,2,0} - U_{-2,0,0} + V_{1,1,0}) (Y_{0,2,0} = sqrt(3/(2 pi^2)) w^2,
 Y_{-2,0,0} = sqrt(3/(2 pi^2)) zbar^2, sqrt 2 Re Y_{1,1,0} = (sqrt 6/pi) Re(z w)).  Its energy density
 |dH|^2/2 is 4 everywhere, so E(H) = 8 pi^2.

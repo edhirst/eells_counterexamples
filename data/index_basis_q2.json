@@ -1,5 +1,5 @@
 {
- "description": "test fields xi for the index lower bound (Section 5): each field is sum_k c_k Phi_k over the modes P_{m,n,j} = (Y,-iY,0)/sqrt2, M_{m,n,j} = (Y,iY,0)/sqrt2, T_{m,n,j} = (0,0,Y) of its sector S_{nu,parity}; c_k = re + i im with exact doubles. For nu = 0 the test field is Re(sum_k c_k Phi_k); for nu != 0 the two real test fields are the real and imaginary parts.",
+ "description": "test fields xi for the index lower bound (Proposition 3.2 and Appendix C): each field is sum_k c_k Phi_k over the modes P_{m,n,j} = (Y,-iY,0)/sqrt2, M_{m,n,j} = (Y,iY,0)/sqrt2, T_{m,n,j} = (0,0,Y) of its sector S_{nu,parity}; c_k = re + i im with exact doubles. For nu = 0 the test field is Re(sum_k c_k Phi_k); for nu != 0 the two real test fields are the real and imaginary parts.",
  "fields": [
   {
    "name": "f_1",

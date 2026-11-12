@@ -1,12 +1,14 @@
-"""Sectors of C^3-valued fields under the circle action and the antipodal map (Section 5).
+"""Sectors of C^3-valued fields under the circle action and the antipodal map (Appendix C, q = 2).
 
 G acts on fields xi: S^3 -> R^3 (or C^3) by  (g.xi)(x) = g xi(g^{-1} x), with the actions of
-Section 2.1:  e^{i theta}.(z, w) = (e^{i theta} z, e^{-2 i theta} w),  e^{i theta}.(zeta, t) =
+Section 2.1 for q = 2:  e^{i theta}.(z, w) = (e^{i theta} z, e^{-2 i theta} w),  e^{i theta}.(zeta, t) =
 (e^{-4 i theta} zeta, t),  epsilon.(z, w) = -(z, w),  epsilon.(zeta, t) = (zeta, -t), where
+`epsilon` denotes here the antipodal element, which the paper writes e^{i pi} epsilon (the paper's
+epsilon is (z, w) -> (z, -w), called S in eells/harmonics.py), and
 zeta = xi_1 + i xi_2 and t = xi_3.  For complex fields zeta = xi_1 + i xi_2 and
 zeta' = xi_1 - i xi_2 are independent, and e^{i theta} multiplies zeta' by e^{4 i theta}.
 
-**Modes.**  From the Jacobi harmonics Y = Y_{m,n,j} of Lemma 2.1 (e^{i theta}.Y = e^{i(m-2n)theta} Y,
+**Modes.**  From the Jacobi harmonics Y = Y_{m,n,j} of Lemma 2.3 (e^{i theta}.Y = e^{i(m-2n)theta} Y,
 epsilon.Y = (-1)^{m+n} Y = (-1)^l Y, l = |m| + |n| + 2j) build the C^3-valued fields
 
     P_{m,n,j} = (Y, -iY, 0) / sqrt 2     (zeta = sqrt2 Y, zeta' = 0),
@@ -26,7 +28,7 @@ with given (nu, p) and degree <= L span the degree-<= L part of the sector
 
 Complex conjugation maps S_{nu,p} onto S_{-nu,p} (conj P_{m,n,j} = M_{-m,-n,j},
 conj T_{m,n,j} = T_{-m,-n,j}), so S_{0,p} is conjugation invariant and its real fields are the
-real sector; the G-symmetric fields of Proposition 2.2 are the real, kappa-even fields of S_{0,+}.
+real sector; the G-symmetric fields of Proposition 2.4 are the real, kappa-even fields of S_{0,+}.
 
 **Orthogonality.**  A G-invariant symmetric bilinear form (Q_W of eq. (quadraticform) for an
 equivariant W, the L^2 and the H^1 products) vanishes between different sectors: if B(g.xi, g.eta)
@@ -165,7 +167,7 @@ def real_part(val, grad):
 # ---------------------------------------------------------------------------- coefficient files
 def save_index_basis(path, fields, meta=None):
     """fields: list of dicts {name, nu, parity, modes, coeffs (complex), diagnostics}."""
-    data = {"description": "test fields xi for the index lower bound (Section 5): each field is "
+    data = {"description": "test fields xi for the index lower bound (Proposition 3.2 and Appendix C): each field is "
                            "sum_k c_k Phi_k over the modes P_{m,n,j} = (Y,-iY,0)/sqrt2, M_{m,n,j} = (Y,iY,0)/sqrt2, "
                            "T_{m,n,j} = (0,0,Y) of its sector S_{nu,parity}; c_k = re + i im with exact doubles. "
                            "For nu = 0 the test field is Re(sum_k c_k Phi_k); for nu != 0 the two real test fields "

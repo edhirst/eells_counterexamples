@@ -1,4 +1,4 @@
-"""Proposition 4.2: the Dirichlet energy of the harmonic map u = (Wbar + v) / |Wbar + v|.
+"""Proposition 3.5: the Dirichlet energy of the harmonic map u = (Wbar + v) / |Wbar + v|.
 
 Let ubar = Wbar / |Wbar| and w = ubar - u.  Since u is harmonic and |u| = |ubar| = 1,
     E(ubar) = E(u) + (1/2) ||dw||_{L^2}^2 - (1/2) int |du|^2 |w|^2,
@@ -6,7 +6,7 @@ so that, provided ||w||_{C^0} < 1,
     E(ubar) - (1/2) ||dw||_{L^2}^2  <=  E(u)  <=  E(ubar) / (1 - ||w||_{C^0}^2).
 With ||v||_X <= r the constants of the proposition are
     C_energyparameter = min |Wbar| - c_inf r        (<= |Wbar + t v| for t in [0, 1]; it is positive
-                                                     because C_homotopy - c_inf r > 0 and |V_0| <= 1),
+                                                     because C_homotopy - c_inf r > 0 and |V_q| <= 1),
     ||w||_{C^0}  <= 2 c_inf r / (C_energyparameter + c_inf r)         (|a/|a| - b/|b|| <= 2 |a - b| / |a|),
     ||dw||_{L^2} <= (c_5 r / C_energyparameter) (1 + 4 c_inf ||Wbar||_X / C_energyparameter)
                                        (|d phi_X| <= 1/|X|,  |d^2 phi_X| <= 4/|X|^2  for phi(X) = X/|X|),
@@ -25,7 +25,7 @@ from eells.reference import sobolev_constants
 
 
 def energy_of_harmonic_map(E_lower, E_upper, min_W, norm_X, r_str):
-    """The quantities of Proposition 4.2 for the certified radius r (an exact decimal string).
+    """The quantities of Proposition 3.5 for the certified radius r (an exact decimal string).
 
     E_lower <= E(Wbar/|Wbar|) <= E_upper,  min_W <= min |Wbar|,  norm_X >= ||Wbar||_X.  Every
     formula is monotone in these inputs in the direction in which they are rounded, so evaluating
