@@ -217,6 +217,19 @@ All commands are run from the repository root.
   $Q_{\bar W}$ and of the $H^1$ product, and for $\nu\ne0$ the two real fields $\Re f,\Im f$ of a
   complex field $f$ give the block $\tfrac12 Q^h(f,f)\,I_2$ (`eells/sectors.py`).
 
+## BibTeX Citation  
+``` 
+@misc{hirst2026numericalverificationharmonicmaps,
+      title={Numerical verification for harmonic maps: Counterexamples to Eells' conjecture}, 
+      author={Edward Hirst and Daniel Platt and Henrique N. Sá Earp and Jakob Stein},
+      year={2026},
+      eprint={2611.17697},
+      archivePrefix={arXiv},
+      primaryClass={math.DG},
+      url={https://arxiv.org/abs/2611.17697}, 
+}
+```
+
 ## License
 
 MIT, see [LICENSE](LICENSE).
